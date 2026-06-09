@@ -1,6 +1,6 @@
 # Skill Engineering Lab
 
-![Skill Engineering Lab 海报](assets/readme-hero.svg)
+![Skill Engineering Lab 海报](assets/readme-hero.png)
 
 ## 在线入口
 
