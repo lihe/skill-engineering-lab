@@ -44,7 +44,7 @@ without_skill -> with_skill_v1 -> with_skill_v2
 - v2 通过收紧 `description`、硬化 `SKILL.md` 契约、增加确定性校验脚本，将过度触发率从 50.0% 降到 0.0%。
 - v2 相比 v1 质量继续提升 25.0%，同时平均 Token 下降 18.2%。
 
-完整报告见 [report.md](report.md)。
+完整报告见 [docs/evaluation-report.html](docs/evaluation-report.html)，原始 Markdown 产物保留在 [report.md](report.md)。
 
 ## 可视化 Dashboard
 

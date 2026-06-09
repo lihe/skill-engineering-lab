@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skill Engineering Lab 评测报告</title>
+    <style>
+      :root {
+        --paper: #f7f7f5;
+        --paper-edge: #efefea;
+        --ink: #1a1a1a;
+        --ink-soft: #4a4a4a;
+        --ink-faint: #7a7a7a;
+        --rule: #d8d8d2;
+        --rule-soft: #e8e8e2;
+        --accent: #6f9bb8;
+        --accent-soft: #d9e6f0;
+        --accent-faint: #eef4f8;
+        --warn: #b88a4a;
+        --warn-soft: #f5ecdc;
+        --danger: #a05050;
+        --code-bg: #ececea;
+        --session: #6b7560;
+        --session-bg: #ecede5;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { font-size: 16px; scroll-behavior: smooth; }
+      body {
+        font-family:
+          ui-serif, "Charter", "Iowan Old Style", "Source Serif Pro", Georgia,
+          "Songti SC", "Source Han Serif SC", "Noto Serif CJK SC", serif;
+        background: var(--paper);
+        color: var(--ink);
+        line-height: 1.62;
+        -webkit-font-smoothing: antialiased;
+        padding: 64px 24px 96px;
+      }
+
+      .doc { max-width: 920px; margin: 0 auto; }
+      .doc-header {
+        border-bottom: 1px solid var(--rule);
+        padding-bottom: 28px;
+        margin-bottom: 34px;
+      }
+      .doc-eyebrow,
+      .doc-meta,
+      th,
+      code,
+      figcaption,
+      .num,
+      .callout-label,
+      .card-icon,
+      .toc a,
+      .status-pill,
+      footer h4 {
+        font-family:
+          ui-monospace, "SF Mono", Menlo,
+          "PingFang SC", "Hiragino Sans GB", monospace;
+      }
+      .doc-eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        margin-bottom: 14px;
+      }
+      .mascot {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        background: var(--accent);
+        margin-right: 8px;
+        vertical-align: middle;
+      }
+      .doc-title {
+        font-size: 36px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        line-height: 1.18;
+      }
+      .doc-subtitle {
+        font-size: 16px;
+        color: var(--ink-soft);
+        margin-top: 10px;
+        font-style: italic;
+      }
+      .doc-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        margin-top: 18px;
+        color: var(--ink-faint);
+        font-size: 11px;
+      }
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 24px;
+        padding: 2px 8px;
+        border: 1px solid var(--accent-soft);
+        background: var(--accent-faint);
+        color: var(--accent);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .tldr {
+        background: var(--accent-faint);
+        border-left: 2px solid var(--accent);
+        padding: 20px 24px;
+        margin-bottom: 28px;
+        font-size: 15px;
+      }
+      .tldr-label {
+        font-family:
+          ui-monospace, Menlo,
+          "PingFang SC", "Hiragino Sans GB", monospace;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 8px;
+        font-weight: 600;
+      }
+      .toc {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin: 0 0 48px;
+      }
+      .toc a {
+        display: block;
+        min-height: 44px;
+        padding: 10px 12px;
+        border: 1px solid var(--rule);
+        background: #fff;
+        color: var(--ink-soft);
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+      .toc a:hover { border-color: var(--accent); color: var(--accent); }
+
+      section { margin-bottom: 56px; }
+      h2 {
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: -0.005em;
+        margin-bottom: 18px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--rule);
+      }
+      h2 .num {
+        font-size: 12px;
+        color: var(--ink-faint);
+        font-weight: 500;
+        margin-right: 14px;
+        letter-spacing: 0.05em;
+      }
+      h3 {
+        font-size: 16px;
+        font-weight: 600;
+        margin: 28px 0 10px;
+      }
+      p { margin-bottom: 14px; }
+      a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-soft); }
+      a:hover { border-bottom-color: var(--accent); }
+      code {
+        font-size: 13px;
+        background: var(--code-bg);
+        padding: 1px 5px;
+        border-radius: 2px;
+      }
+      pre {
+        font-family:
+          ui-monospace, Menlo,
+          "PingFang SC", "Hiragino Sans GB", monospace;
+        font-size: 12.5px;
+        line-height: 1.55;
+        background: var(--code-bg);
+        padding: 14px 18px;
+        margin: 14px 0 18px;
+        overflow-x: auto;
+        border-left: 2px solid var(--rule);
+      }
+      ul, ol { margin: 8px 0 16px 22px; }
+      li { margin-bottom: 6px; }
+      strong { font-weight: 600; }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 14px 0 18px;
+        font-size: 14px;
+        background: #fff;
+      }
+      th, td {
+        text-align: left;
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--rule-soft);
+        vertical-align: top;
+      }
+      th {
+        font-weight: 600;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--ink-faint);
+        border-bottom: 1px solid var(--rule);
+      }
+      tbody tr:hover { background: rgba(0,0,0,0.015); }
+      td.num { font-family: ui-monospace, Menlo, monospace; font-size: 13px; }
+      td.accent { color: var(--accent); font-weight: 600; }
+      td.warn { color: var(--warn); font-weight: 600; }
+      td.good { color: var(--session); font-weight: 600; }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin: 20px 0 18px;
+      }
+      .cards.cols-4 { grid-template-columns: repeat(4, 1fr); }
+      .card {
+        border: 1px solid var(--rule);
+        background: #fff;
+        padding: 16px 16px 14px;
+      }
+      .card-icon {
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: var(--accent);
+      }
+      .card-name {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+      .card-where {
+        font-size: 12px;
+        color: var(--ink-faint);
+        font-style: italic;
+        margin-bottom: 10px;
+      }
+      .card-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+      .card.tone-b .card-icon { color: var(--warn); }
+      .card.tone-c .card-icon { color: var(--session); }
+
+      .callout {
+        border: 1px solid var(--rule);
+        background: #fff;
+        padding: 16px 18px;
+        margin: 16px 0 20px;
+      }
+      .callout.warn {
+        border-color: #e6d4a8;
+        background: var(--warn-soft);
+      }
+      .callout-label {
+        font-size: 10.5px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        margin-bottom: 8px;
+        font-weight: 600;
+      }
+      .callout.warn .callout-label { color: var(--warn); }
+
+      figure {
+        margin: 28px 0 32px;
+        border: 1px solid var(--rule);
+        background: #fff;
+      }
+      figure svg { display: block; width: 100%; height: auto; }
+      figcaption {
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        padding: 10px 16px;
+        border-top: 1px solid var(--rule-soft);
+        background: var(--paper-edge);
+      }
+      figcaption .fig-num {
+        color: var(--accent);
+        margin-right: 10px;
+        font-weight: 600;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+      }
+      .btn {
+        font-family:
+          ui-monospace, Menlo,
+          "PingFang SC", "Hiragino Sans GB", monospace;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 8px 14px;
+        background: #fff;
+        color: var(--ink);
+        border: 1px solid var(--rule);
+        text-decoration: none;
+      }
+      .btn.primary {
+        background: var(--accent);
+        color: #fff;
+        border-color: var(--accent);
+      }
+
+      footer {
+        margin-top: 80px;
+        padding-top: 24px;
+        border-top: 1px solid var(--rule);
+        font-size: 12px;
+        color: var(--ink-faint);
+      }
+      footer h4 {
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        color: var(--ink-soft);
+      }
+      footer ul { list-style: none; margin-left: 0; }
+      footer li { margin-bottom: 4px; }
+
+      @media (max-width: 820px) {
+        body { padding: 32px 16px 64px; }
+        .doc-title { font-size: 28px; }
+        .toc, .cards, .cards.cols-4 { grid-template-columns: 1fr; }
+        .doc-meta { gap: 10px; }
+      }
+    </style>
+  </head>
+  <body>
+    <article class="doc">
+      <header class="doc-header">
+        <div class="doc-eyebrow"><span class="mascot"></span>Skill Engineering Lab · Evaluation Report</div>
+        <h1 class="doc-title">Skill Engineering Lab 评测报告</h1>
+        <p class="doc-subtitle">一份面向作品集展示的 Agent Skill 工程化评测报告。</p>
+        <div class="doc-meta">
+          <span>STATUS · SHIP</span>
+          <span>ITERATION · iteration-001</span>
+          <span>PROVIDER · mock / deterministic-v1</span>
+          <span>CASES · 12</span>
+        </div>
+      </header>
+
+      <div class="tldr">
+        <div class="tldr-label">TL;DR</div>
+        本轮评测用同一批 12 条样例对比 <code>without_skill</code>、<code>with_skill_v1</code>、<code>with_skill_v2</code> 三种状态。
+        结果显示：Skill v2 将通过率提升到 <strong>100.0%</strong>，触发召回达到 <strong>100.0%</strong>，过度触发降到 <strong>0.0%</strong>，
+        同时相对 v1 平均 Token 下降 <strong>18.2%</strong>。结论：当前版本可以作为 MVP 发布，并继续沉淀真实回归样例。
+      </div>
+
+      <nav class="toc" aria-label="目录">
+        <a href="#summary">01 · Summary</a>
+        <a href="#metrics">02 · Metrics</a>
+        <a href="#lift">03 · Lift</a>
+        <a href="#diff">04 · Version Diff</a>
+        <a href="#badcases">05 · Badcases</a>
+        <a href="#governance">06 · Governance</a>
+      </nav>
+
+      <section id="summary">
+        <h2><span class="num">01</span>评测摘要</h2>
+        <p>
+          评测对象为 <code>ai-video-creator-style</code>。这个 Skill 的任务是把 AI 产品 brief 转成适合 B 站技术区的视频标题、
+          封面文案、Demo 方案、三段式大纲和口播稿。
+        </p>
+        <p>
+          本次报告关注的不是单次文案是否漂亮，而是 Skill 是否具备工程资产所需要的稳定性：
+          该触发时触发、不该触发时克制、触发后带来可量化净增益，并且失败样例能驱动下一轮迭代。
+        </p>
+        <div class="cards">
+          <div class="card">
+            <div class="card-icon">Outcome</div>
+            <div class="card-name">100.0%</div>
+            <div class="card-where">Skill v2 pass rate</div>
+            <div class="card-desc">标题、封面、Demo、大纲、口播和自检结构全部通过。</div>
+          </div>
+          <div class="card tone-b">
+            <div class="card-icon">Routing</div>
+            <div class="card-name">0.0%</div>
+            <div class="card-where">Negative over-trigger</div>
+            <div class="card-desc">新闻稿和项目计划不再误触发视频创作 Skill。</div>
+          </div>
+          <div class="card tone-c">
+            <div class="card-icon">Efficiency</div>
+            <div class="card-name">-18.2%</div>
+            <div class="card-where">v2 vs v1 avg token</div>
+            <div class="card-desc">通过边界和检查脚本收敛无效上下文消耗。</div>
+          </div>
+        </div>
+        <pre><code>without_skill -&gt; with_skill v1 -&gt; with_skill v2</code></pre>
+      </section>
+
+      <section id="metrics">
+        <h2><span class="num">02</span>核心指标</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>配置</th>
+              <th>通过率</th>
+              <th>触发召回率</th>
+              <th>过度触发率</th>
+              <th>平均 Token</th>
+              <th>平均耗时</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>无 Skill</strong></td>
+              <td class="warn">16.7%</td>
+              <td>不适用</td>
+              <td>不适用</td>
+              <td class="num">720</td>
+              <td class="num">480 ms</td>
+            </tr>
+            <tr>
+              <td><strong>使用 Skill v1</strong></td>
+              <td class="accent">75.0%</td>
+              <td class="accent">80.0%</td>
+              <td class="warn">50.0%</td>
+              <td class="num">1142</td>
+              <td class="num">828 ms</td>
+            </tr>
+            <tr>
+              <td><strong>使用 Skill v2</strong></td>
+              <td class="good">100.0%</td>
+              <td class="good">100.0%</td>
+              <td class="good">0.0%</td>
+              <td class="num">935</td>
+              <td class="num">625 ms</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <figure>
+          <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" font-family="ui-monospace, Menlo, monospace" font-size="12">
+            <rect width="760" height="300" fill="#fff"/>
+            <text x="36" y="38" fill="#1a1a1a" font-size="15" font-weight="700">PASS RATE / OVER-TRIGGER</text>
+            <line x1="72" y1="238" x2="700" y2="238" stroke="#d8d8d2"/>
+            <line x1="72" y1="72" x2="72" y2="238" stroke="#d8d8d2"/>
+            <g>
+              <rect x="130" y="210" width="72" height="28" fill="#f5ecdc"/>
+              <rect x="216" y="113" width="72" height="125" fill="#eef4f8"/>
+              <rect x="302" y="72" width="72" height="166" fill="#ecede5"/>
+              <text x="130" y="262" fill="#4a4a4a">BASE</text>
+              <text x="216" y="262" fill="#4a4a4a">V1</text>
+              <text x="302" y="262" fill="#4a4a4a">V2</text>
+              <text x="132" y="202" fill="#b88a4a">16.7%</text>
+              <text x="218" y="105" fill="#6f9bb8">75.0%</text>
+              <text x="304" y="64" fill="#6b7560">100%</text>
+            </g>
+            <g>
+              <rect x="504" y="155" width="72" height="83" fill="#f5ecdc"/>
+              <rect x="590" y="238" width="72" height="0" fill="#ecede5"/>
+              <text x="504" y="262" fill="#4a4a4a">V1 OVER</text>
+              <text x="590" y="262" fill="#4a4a4a">V2 OVER</text>
+              <text x="506" y="147" fill="#b88a4a">50.0%</text>
+              <text x="592" y="230" fill="#6b7560">0.0%</text>
+            </g>
+          </svg>
+          <figcaption><span class="fig-num">FIG 1</span>v2 同时提升通过率并消除负向过度触发</figcaption>
+        </figure>
+      </section>
+
+      <section id="lift">
+        <h2><span class="num">03</span>提升幅度</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>对比</th>
+              <th>质量提升</th>
+              <th>Token 变化</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>v1 相对基线</strong></td>
+              <td class="accent">+58.3%</td>
+              <td class="warn">+58.7%</td>
+            </tr>
+            <tr>
+              <td><strong>v2 相对基线</strong></td>
+              <td class="good">+83.3%</td>
+              <td class="warn">+29.9%</td>
+            </tr>
+            <tr>
+              <td><strong>v2 相对 v1</strong></td>
+              <td class="good">+25.0%</td>
+              <td class="good">-18.2%</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="callout">
+          <div class="callout-label">Interpretation</div>
+          v1 证明 Skill 能显著提升产出完整度，但也暴露出 description 过宽、边界较弱和成本偏高。
+          v2 的价值在于把经验改动变成可回归的工程动作，而不是继续凭感觉调提示词。
+        </div>
+      </section>
+
+      <section id="diff">
+        <h2><span class="num">04</span>v1 到 v2 的变化</h2>
+        <ul>
+          <li><strong>Description 收紧。</strong> 增加负向边界：不处理新闻稿、项目计划、issue 分诊或通用非视频写作。</li>
+          <li><strong>产出契约硬化。</strong> <code>SKILL.md</code> 明确要求标题、封面文案、Demo 方案、大纲、口播稿和自检。</li>
+          <li><strong>检查项前置。</strong> 标题数量、封面行长、Demo 优先开场、旧方式和新方式对比成为必检项。</li>
+          <li><strong>脚本化验证。</strong> 新增确定性校验脚本，用于检查创意包结构和文案行长。</li>
+        </ul>
+        <figure>
+          <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" font-family="ui-monospace, Menlo, monospace" font-size="12">
+            <rect width="760" height="280" fill="#fff"/>
+            <text x="36" y="38" fill="#1a1a1a" font-size="15" font-weight="700">SKILL ITERATION LOOP</text>
+            <g>
+              <rect x="44" y="88" width="128" height="70" fill="#eef4f8" stroke="#6f9bb8"/>
+              <text x="72" y="117" fill="#1a1a1a" font-weight="700">DESCRIPTION</text>
+              <text x="66" y="139" fill="#4a4a4a">routing boundary</text>
+              <line x1="172" y1="123" x2="238" y2="123" stroke="#d8d8d2" stroke-width="2"/>
+              <polygon points="238,123 226,116 226,130" fill="#d8d8d2"/>
+            </g>
+            <g>
+              <rect x="250" y="88" width="128" height="70" fill="#f5ecdc" stroke="#b88a4a"/>
+              <text x="286" y="117" fill="#1a1a1a" font-weight="700">SKILL.md</text>
+              <text x="278" y="139" fill="#4a4a4a">output contract</text>
+              <line x1="378" y1="123" x2="444" y2="123" stroke="#d8d8d2" stroke-width="2"/>
+              <polygon points="444,123 432,116 432,130" fill="#d8d8d2"/>
+            </g>
+            <g>
+              <rect x="456" y="88" width="128" height="70" fill="#ecede5" stroke="#6b7560"/>
+              <text x="492" y="117" fill="#1a1a1a" font-weight="700">SCRIPTS</text>
+              <text x="486" y="139" fill="#4a4a4a">deterministic checks</text>
+              <line x1="584" y1="123" x2="650" y2="123" stroke="#d8d8d2" stroke-width="2"/>
+              <polygon points="650,123 638,116 638,130" fill="#d8d8d2"/>
+            </g>
+            <g>
+              <rect x="620" y="184" width="96" height="48" fill="#fff" stroke="#d8d8d2"/>
+              <text x="642" y="213" fill="#1a1a1a" font-weight="700">EVAL</text>
+              <path d="M668 184 C668 64 108 64 108 88" fill="none" stroke="#d8d8d2" stroke-width="2" stroke-dasharray="5 5"/>
+              <polygon points="108,88 101,76 115,76" fill="#d8d8d2"/>
+            </g>
+          </svg>
+          <figcaption><span class="fig-num">FIG 2</span>badcase 驱动 description、SKILL.md 与脚本同步迭代</figcaption>
+        </figure>
+      </section>
+
+      <section id="badcases">
+        <h2><span class="num">05</span>失败样例与诊断</h2>
+        <h3>v1 主要失败样例</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>样例</th>
+              <th>类型</th>
+              <th>得分</th>
+              <th>失败模式</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>boundary-sparse-brief</code></td>
+              <td>边界</td>
+              <td class="warn">20.0%</td>
+              <td>触发不匹配、产出不完整、风格较弱、泛化风险</td>
+            </tr>
+            <tr>
+              <td><code>extension-cover-only</code></td>
+              <td>扩展</td>
+              <td class="warn">20.0%</td>
+              <td>触发不匹配、产出不完整、风格较弱、泛化风险</td>
+            </tr>
+            <tr>
+              <td><code>negative-press-release</code></td>
+              <td>负向</td>
+              <td class="warn">50.0%</td>
+              <td>触发不匹配、产出不完整、效率成本偏高</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>失败模式收敛</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>失败模式</th>
+              <th>无 Skill</th>
+              <th>v1</th>
+              <th>v2</th>
+              <th>建议动作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>产出不完整</td><td class="num">10</td><td class="num">3</td><td class="good">0</td><td>硬化必选产出检查清单。</td></tr>
+            <tr><td>效率成本偏高</td><td class="num">0</td><td class="num">9</td><td class="good">0</td><td>把确定性检查下沉到脚本，并裁剪参考资料。</td></tr>
+            <tr><td>泛化风险</td><td class="num">4</td><td class="num">2</td><td class="good">0</td><td>把改写和边界样例加入回归集。</td></tr>
+            <tr><td>触发不匹配</td><td class="num">0</td><td class="num">3</td><td class="good">0</td><td>收紧或扩展 <code>description</code> 的触发边界。</td></tr>
+            <tr><td>风格较弱</td><td class="num">10</td><td class="num">10</td><td class="good">0</td><td>补强参考资料和示例。</td></tr>
+          </tbody>
+        </table>
+        <div class="callout warn">
+          <div class="callout-label">Risk Control</div>
+          v2 当前没有失败样例，但这不代表 Skill 已经完成。下一轮最重要的是加入真实历史 brief，
+          并保留负向样例，防止 Skill 在相邻任务上再次过度触发。
+        </div>
+      </section>
+
+      <section id="governance">
+        <h2><span class="num">06</span>治理资产与下一步动作</h2>
+        <p>本项目已经把一次评测结果沉淀成可维护资产，而不只是一次演示输出。</p>
+        <ul>
+          <li><code>evals/cases.json</code>：12 条种子评测样例。</li>
+          <li><code>runs/iteration-001/benchmark.json</code>：基准汇总。</li>
+          <li><code>runs/iteration-001/*/trace.jsonl</code>：路由和参考资料加载轨迹。</li>
+          <li><code>runs/iteration-001/*/provider.json</code>：Provider、模型和 usage 信息。</li>
+          <li><code>providers/</code>：统一 mock、OpenAI、Anthropic 的模型运行适配层。</li>
+          <li><code>governance/versions.json</code>：版本假设、风险、指标和决策。</li>
+          <li><code>governance/reason_archive.json</code>：失败样例根因归档。</li>
+          <li><code>governance/regression_set.json</code>：必须保留的回归样例。</li>
+        </ul>
+        <ol>
+          <li><strong>补充真实样例。</strong> 从历史项目中加入 3-5 条真实产品信息作为回归样例。</li>
+          <li><strong>稳定真实模型回归。</strong> 将 OpenAI / Anthropic provider 接入稳定回归环境，补齐密钥管理和费用上限。</li>
+          <li><strong>引入 LLM Judge。</strong> 用作风格评价补充，但保留确定性检查作为主验收。</li>
+          <li><strong>持续记录 v3。</strong> 在 <code>governance/versions.json</code> 中记录下一轮变化。</li>
+          <li><strong>保留负向样例。</strong> 持续防止 Skill 对新闻稿、项目计划等相邻任务过度触发。</li>
+        </ol>
+        <div class="actions">
+          <a class="btn primary" href="/dashboard">Open Dashboard</a>
+          <a class="btn" href="/site">Research Site</a>
+          <a class="btn" href="/runs/iteration-001/report.md">Raw Markdown</a>
+        </div>
+      </section>
+
+      <footer>
+        <h4>References</h4>
+        <ul>
+          <li>Raw report · <a href="/runs/iteration-001/report.md"><code>runs/iteration-001/report.md</code></a></li>
+          <li>Benchmark data · <code>runs/iteration-001/benchmark.json</code></li>
+          <li>Dashboard · <a href="/dashboard">/dashboard</a></li>
+          <li>Methodology · <a href="/docs/ai-agent-skill-engineering">/docs/ai-agent-skill-engineering</a></li>
+        </ul>
+      </footer>
+    </article>
+  </body>
+</html>

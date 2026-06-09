@@ -1,6 +1,13 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/report.md",
+      "destination": "/docs/evaluation-report",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/",
