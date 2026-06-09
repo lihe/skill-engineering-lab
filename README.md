@@ -1,5 +1,17 @@
 # Skill Engineering Lab
 
+![Skill Engineering Lab 海报](assets/readme-hero.svg)
+
+## 在线入口
+
+| 入口 | 链接 | 用途 |
+| --- | --- | --- |
+| 方法论长文 | [AI Agent Skill 工程化实践：编写、评测与治理](https://skill-engineering-lab.vercel.app/docs/ai-agent-skill-engineering) | 项目的核心方法论总纲，适合直接分享给面试官或团队 |
+| 研究型项目站 | [skill-engineering-lab.vercel.app](https://skill-engineering-lab.vercel.app) | 对外展示项目命题、证据、架构和治理闭环 |
+| 评测 Dashboard | [Dashboard](https://skill-engineering-lab.vercel.app/dashboard) | 查看三态对照、case matrix、badcase 和 governance |
+| HTML 评测报告 | [Evaluation Report](https://skill-engineering-lab.vercel.app/docs/evaluation-report) | 作品集级别的评测报告页面 |
+| GitHub 仓库 | [lihe/skill-engineering-lab](https://github.com/lihe/skill-engineering-lab) | 源码、评测样例、运行产物和治理资产 |
+
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB)
 ![Eval](https://img.shields.io/badge/Eval-mock%20%2B%20provider%20adapter-16A34A)
 ![Skill](https://img.shields.io/badge/Agent%20Skill-engineering%20loop-2563EB)
