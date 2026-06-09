@@ -27,4 +27,4 @@ site-check:
 	node --check dashboard/app.js
 	node --check dashboard/data.js
 	node --check site/app.js
-	$(PYTHON) -c "from pathlib import Path; required=['dashboard/index.html','dashboard/style.css','dashboard/app.js','dashboard/data.js','site/index.html','site/styles.css','site/app.js','docs/ai-agent-skill-engineering.html']; missing=[p for p in required if not Path(p).exists()]; assert not missing, missing; print('static site assets ok')"
+	$(PYTHON) -c "from pathlib import Path; import json; required=['index.html','vercel.json','dashboard/index.html','dashboard/style.css','dashboard/app.js','dashboard/data.js','site/index.html','site/styles.css','site/app.js','docs/ai-agent-skill-engineering.html']; missing=[p for p in required if not Path(p).exists()]; assert not missing, missing; json.loads(Path('vercel.json').read_text(encoding='utf-8')); print('static site assets ok')"

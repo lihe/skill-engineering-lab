@@ -87,6 +87,28 @@ open docs/ai-agent-skill-engineering.html
 
 这两个页面与 Dashboard 互相链接，形成“研究站 -> 方法论 -> Dashboard -> 报告”的完整展示路径。
 
+## Vercel 部署
+
+项目已经准备好静态站点部署入口：
+
+- 根入口：[index.html](index.html)，自动跳转到研究型项目站。
+- Vercel 配置：[vercel.json](vercel.json)，将 `/` 重写到 `site/index.html`。
+
+推荐部署方式：
+
+1. 在 Vercel 导入 GitHub 仓库 `lihe/skill-engineering-lab`。
+2. Framework Preset 选择 `Other`。
+3. Root Directory 使用仓库根目录。
+4. Build Command 留空。
+5. Output Directory 使用 `.`。
+
+也可以用 Vercel CLI：
+
+```bash
+vercel
+vercel --prod
+```
+
 ## 核心能力
 
 这个项目覆盖了一个成熟 Skill 工程体系的最小闭环：
