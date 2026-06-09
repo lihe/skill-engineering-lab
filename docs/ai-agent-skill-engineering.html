@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Agent Skill 工程化实践</title>
+    <style>
+      :root {
+        --paper: #f7f7f5;
+        --paper-edge: #efefea;
+        --ink: #1a1a1a;
+        --ink-soft: #4a4a4a;
+        --ink-faint: #7a7a7a;
+        --rule: #d8d8d2;
+        --rule-soft: #e8e8e2;
+        --accent: #6f9bb8;
+        --accent-soft: #d9e6f0;
+        --accent-faint: #eef4f8;
+        --warn: #b88a4a;
+        --warn-soft: #f5ecdc;
+        --session: #6b7560;
+        --session-bg: #ecede5;
+        --code-bg: #ececea;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: ui-serif, Georgia, "Songti SC", "Source Han Serif SC", serif;
+        background: var(--paper);
+        color: var(--ink);
+        line-height: 1.72;
+        padding: 64px 24px 96px;
+      }
+      .doc { max-width: 880px; margin: 0 auto; }
+      .doc-header {
+        border-bottom: 1px solid var(--rule);
+        padding-bottom: 28px;
+        margin-bottom: 48px;
+      }
+      .doc-eyebrow, .doc-meta, .tldr-label, h2 .num, th, code, pre, figcaption, .card-icon, footer h4 {
+        font-family: ui-monospace, Menlo, "PingFang SC", "Hiragino Sans GB", monospace;
+      }
+      .doc-eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        margin-bottom: 14px;
+      }
+      .mascot {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        background: var(--accent);
+        margin-right: 8px;
+      }
+      .doc-title {
+        font-size: 36px;
+        font-weight: 600;
+        line-height: 1.2;
+      }
+      .doc-subtitle {
+        margin-top: 10px;
+        color: var(--ink-soft);
+        font-style: italic;
+      }
+      .doc-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        margin-top: 18px;
+        color: var(--ink-faint);
+        font-size: 11px;
+      }
+      .tldr {
+        background: var(--accent-faint);
+        border-left: 2px solid var(--accent);
+        padding: 20px 24px;
+        margin-bottom: 56px;
+        font-size: 15px;
+      }
+      .tldr-label {
+        margin-bottom: 8px;
+        color: var(--accent);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+      }
+      section { margin-bottom: 56px; }
+      h2 {
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 18px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--rule);
+      }
+      h2 .num {
+        margin-right: 14px;
+        color: var(--ink-faint);
+        font-size: 12px;
+        font-weight: 500;
+      }
+      h3 { font-size: 16px; margin: 28px 0 10px; }
+      p { margin-bottom: 14px; }
+      a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-soft); }
+      code {
+        background: var(--code-bg);
+        border-radius: 2px;
+        padding: 1px 5px;
+        font-size: 13px;
+      }
+      pre {
+        background: var(--code-bg);
+        border-left: 2px solid var(--rule);
+        margin: 14px 0 18px;
+        padding: 14px 18px;
+        overflow-x: auto;
+        font-size: 12.5px;
+      }
+      ul, ol { margin: 8px 0 16px 22px; }
+      li { margin-bottom: 6px; }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 14px 0 18px;
+        font-size: 14px;
+      }
+      th, td {
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--rule-soft);
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        color: var(--ink-faint);
+        border-bottom: 1px solid var(--rule);
+        font-size: 12px;
+        letter-spacing: 0.06em;
+      }
+      .callout {
+        border: 1px solid var(--rule);
+        background: #fff;
+        padding: 16px 18px;
+        margin: 16px 0 20px;
+      }
+      .callout.warn {
+        border-color: #e6d4a8;
+        background: var(--warn-soft);
+      }
+      .callout-label {
+        color: var(--ink-faint);
+        font-family: ui-monospace, Menlo, "PingFang SC", "Hiragino Sans GB", monospace;
+        font-size: 10.5px;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        margin-bottom: 8px;
+      }
+      figure {
+        margin: 28px 0 32px;
+        border: 1px solid var(--rule);
+        background: #fff;
+      }
+      figure svg { display: block; width: 100%; height: auto; }
+      figcaption {
+        padding: 10px 16px;
+        border-top: 1px solid var(--rule-soft);
+        background: var(--paper-edge);
+        color: var(--ink-faint);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .fig-num { color: var(--accent); margin-right: 10px; font-weight: 600; }
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin: 20px 0 18px;
+      }
+      .card {
+        border: 1px solid var(--rule);
+        background: #fff;
+        padding: 16px;
+      }
+      .card-icon {
+        margin-bottom: 8px;
+        color: var(--accent);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+      }
+      .card-name { margin-bottom: 6px; font-size: 17px; font-weight: 600; }
+      .card-desc { color: var(--ink-soft); font-size: 13px; line-height: 1.5; }
+      footer {
+        margin-top: 80px;
+        padding-top: 24px;
+        border-top: 1px solid var(--rule);
+        color: var(--ink-faint);
+        font-size: 12px;
+      }
+      footer h4 {
+        margin-bottom: 10px;
+        color: var(--ink-soft);
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      footer ul { list-style: none; margin-left: 0; }
+      @media (max-width: 720px) {
+        body { padding: 32px 16px 64px; }
+        .doc-title { font-size: 28px; }
+        .cards { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <article class="doc">
+      <header class="doc-header">
+        <div class="doc-eyebrow"><span class="mascot"></span>Skill Engineering Lab · Methodology Paper</div>
+        <h1 class="doc-title">AI Agent Skill 工程化实践</h1>
+        <p class="doc-subtitle">编写、评测、治理与持续迭代的一体化方法论</p>
+        <div class="doc-meta">
+          <span>STATUS · PORTFOLIO EDITION</span>
+          <span>DATE · 2026-06-09</span>
+          <span>PROJECT · Skill Engineering Lab</span>
+        </div>
+      </header>
+
+      <div class="tldr">
+        <div class="tldr-label">TL;DR</div>
+        Skill 不是长 Prompt，而是一个由路由入口、任务契约、参考资料、确定性脚本、评测资产和治理资产组成的能力包。成熟的 Skill 不应只证明“能跑”，而应证明它在正确场景稳定触发、相对无 Skill 基线带来可验证净增益，并能通过失败样例、回归集和版本记录持续治理。
+      </div>
+
+      <section>
+        <h2><span class="num">01</span>三个核心判断</h2>
+        <p>第一，Skill 不是把 Prompt 写长。它的价值在于让 Agent 在正确场景加载正确知识，沿着稳定执行路径完成任务，并避免把所有上下文一次性塞进主提示。</p>
+        <p>第二，评测不是证明它能跑。真正要测的是该触发时会不会触发、不该触发时会不会克制、触发后是否带来净增益，以及这种增益是否值得额外成本。</p>
+        <p>第三，治理不是可选项。没有治理，Skill 会逐渐变成上下文税、规则堆和无法退休的历史包袱。</p>
+        <div class="callout">
+          <div class="callout-label">CORE CLAIM</div>
+          成熟的 Skill，不是某次任务里“刚好成功”的说明书，而是能稳定触发、持续带来可验证净增益、并能被团队长期评测和治理的能力资产。
+        </div>
+      </section>
+
+      <section>
+        <h2><span class="num">02</span>重新定义 Skill</h2>
+        <pre><code>Skill = 路由入口
+      + 任务契约
+      + 按需加载的知识与模板
+      + 确定性脚本
+      + 评测资产
+      + 治理资产</code></pre>
+        <table>
+          <thead>
+            <tr><th>组成部分</th><th>主要职责</th><th>工程含义</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>name / description</code></td><td>让主 Agent 发现并决定是否使用</td><td>它是路由入口，不是装饰摘要。</td></tr>
+            <tr><td><code>SKILL.md</code></td><td>定义任务契约、主流程、边界与关键规则</td><td>首要读者是 Agent，而不是人类。</td></tr>
+            <tr><td><code>references / templates</code></td><td>承载长知识、模板、示例和分支说明</td><td>用于渐进披露，避免主文档膨胀。</td></tr>
+            <tr><td><code>scripts</code></td><td>承载校验、解析、格式转换等确定性动作</td><td>能脚本化的事情，不要靠自然语言反复提醒。</td></tr>
+            <tr><td><code>evals / governance</code></td><td>验证净增益，沉淀回归和版本决策</td><td>决定 Skill 是一次性技巧还是团队资产。</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2><span class="num">03</span>生命周期视角</h2>
+        <figure>
+          <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" font-family="ui-monospace, Menlo, monospace" font-size="12">
+            <rect width="760" height="260" fill="#fff"/>
+            <g fill="#eef4f8" stroke="#6f9bb8" stroke-width="1.5">
+              <rect x="28" y="82" width="94" height="72"/>
+              <rect x="142" y="82" width="94" height="72"/>
+              <rect x="256" y="82" width="94" height="72"/>
+              <rect x="370" y="82" width="94" height="72"/>
+              <rect x="484" y="82" width="94" height="72"/>
+              <rect x="598" y="82" width="132" height="72"/>
+            </g>
+            <g fill="#1a1a1a" text-anchor="middle">
+              <text x="75" y="113">场景选择</text>
+              <text x="189" y="113">能力抽象</text>
+              <text x="303" y="113">编写实现</text>
+              <text x="417" y="113">评测验证</text>
+              <text x="531" y="113">迭代优化</text>
+              <text x="664" y="113">发布治理</text>
+            </g>
+            <g stroke="#b88a4a" stroke-width="2" marker-end="url(#arrow)">
+              <line x1="122" y1="118" x2="142" y2="118"/>
+              <line x1="236" y1="118" x2="256" y2="118"/>
+              <line x1="350" y1="118" x2="370" y2="118"/>
+              <line x1="464" y1="118" x2="484" y2="118"/>
+              <line x1="578" y1="118" x2="598" y2="118"/>
+              <path d="M664 154 C664 206 310 216 310 154" fill="none"/>
+            </g>
+            <defs>
+              <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <path d="M0,0 L10,3 L0,6 Z" fill="#b88a4a"/>
+              </marker>
+            </defs>
+            <text x="380" y="34" fill="#4a4a4a" text-anchor="middle">Skill 不是写完即交付，而是在评测与治理闭环中变成熟</text>
+            <text x="380" y="224" fill="#7a7a7a" text-anchor="middle">badcase → root cause → targeted change → regression</text>
+          </svg>
+          <figcaption><span class="fig-num">FIG 1</span>Skill 生命周期 · 从设计到治理的闭环</figcaption>
+        </figure>
+      </section>
+
+      <section>
+        <h2><span class="num">04</span>高质量 Skill 的编写原则</h2>
+        <div class="cards">
+          <div class="card">
+            <div class="card-icon">ROUTE</div>
+            <div class="card-name">先定义边界</div>
+            <div class="card-desc">明确解决什么任务、典型输入、成功标准、不负责什么，以及最容易和哪些 Skill 冲突。</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">CONTRACT</div>
+            <div class="card-name">主文档短硬</div>
+            <div class="card-desc"><code>SKILL.md</code> 只放任务契约、主流程、关键边界、必检项和何时读取哪个 reference。</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">SCRIPT</div>
+            <div class="card-name">确定性逻辑脚本化</div>
+            <div class="card-desc">JSON 解析、schema 校验、文件结构检查、格式转换、固定规则判定都应优先交给脚本。</div>
+          </div>
+        </div>
+        <div class="callout warn">
+          <div class="callout-label">COMMON FAILURE</div>
+          很多 Skill 失败不在正文，而在 <code>description</code>。写得太泛会过度触发，写得太窄会漏掉真实表达；只写能力、不写场景，会让主 Agent 无法判断何时使用。
+        </div>
+      </section>
+
+      <section>
+        <h2><span class="num">05</span>评测要看 lift，不只看 pass</h2>
+        <p>每条关键样例至少跑三类配置：<code>without_skill</code>、<code>with_skill</code>、<code>old_skill</code>。真正值得看的不是绝对分，而是差值。</p>
+        <pre><code>lift = with_skill pass rate - without_skill pass rate
+net_value = quality lift - token/time/complexity cost</code></pre>
+        <table>
+          <thead>
+            <tr><th>层级</th><th>核心问题</th><th>如果出问题，优先改哪里</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>触发层</td><td>该触发时是否触发，不该触发时是否沉默</td><td><code>description</code>、负面样例、边界</td></tr>
+            <tr><td>结果层</td><td>最终产物是否可用</td><td>主流程、模板、schema、示例</td></tr>
+            <tr><td>执行层</td><td>是否遵守规则与约束</td><td><code>SKILL.md</code> 指令、checklist</td></tr>
+            <tr><td>效率层</td><td>是否更省、更稳、更少绕路</td><td>渐进披露、脚本化、流程收缩</td></tr>
+            <tr><td>泛化层</td><td>换说法、换场景、换噪声时是否仍成立</td><td>补边界、补反例、扩展样例分布</td></tr>
+            <tr><td>治理层</td><td>是否便于回归、定位、维护和退休</td><td>版本记录、失败归因、回归集</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2><span class="num">06</span>从失败样例到迭代</h2>
+        <p>badcase 不是问题清单，而是优化驱动器。每个失败都应该被翻译成可执行动作：改入口、改契约、补示例、拆 references，或者把确定性逻辑下沉到 scripts。</p>
+        <pre><code>{
+  "case_id": "boundary-sparse-brief",
+  "run_config": "with_skill_v1",
+  "human_expected": "稀疏输入也应触发视频创作 Skill",
+  "observed_behavior": "v1 没有触发",
+  "failure_pattern": "触发不匹配",
+  "root_cause": "description 没覆盖创作者式稀疏表达",
+  "suggested_action": "扩展 description 并加入回归集"
+}</code></pre>
+      </section>
+
+      <section>
+        <h2><span class="num">07</span>Skill Engineering Lab 的落地样例</h2>
+        <p>本仓库用 <code>ai-video-creator-style</code> 作为示例 Skill，构建了 12 条样例、三态对照、规则评分器、确定性校验器、报告和治理资产。</p>
+        <table>
+          <thead>
+            <tr><th>配置</th><th>通过率</th><th>触发召回率</th><th>过度触发率</th><th>平均 Token</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>无 Skill</td><td>16.7%</td><td>不适用</td><td>不适用</td><td>720</td></tr>
+            <tr><td>Skill v1</td><td>75.0%</td><td>80.0%</td><td>50.0%</td><td>1142</td></tr>
+            <tr><td>Skill v2</td><td>100.0%</td><td>100.0%</td><td>0.0%</td><td>935</td></tr>
+          </tbody>
+        </table>
+        <p>这个结果展示的不是“视频文案生成器更会写”，而是一个 Skill 如何通过 <code>description</code>、<code>SKILL.md</code>、references、scripts、evals 和 governance assets 进入工程闭环。</p>
+      </section>
+
+      <footer>
+        <h4>References</h4>
+        <ul>
+          <li>Anthropic Claude Docs · <a href="https://docs.claude.com/en/docs/claude-code/skills">Agent Skills</a></li>
+          <li>Claude Code Docs · <a href="https://code.claude.com/docs/en/skills">Extend Claude with skills</a></li>
+          <li>OpenAI API Reference · <a href="https://platform.openai.com/docs/api-reference/evals">Evals</a></li>
+          <li>OpenAI Cookbook · <a href="https://cookbook.openai.com/examples/evaluation/getting_started_with_openai_evals">Getting Started with OpenAI Evals</a></li>
+          <li>Project artifact · <a href="../dashboard/index.html">Skill Engineering Lab Dashboard</a></li>
+          <li>Project artifact · <a href="../site/index.html">Research Site</a></li>
+        </ul>
+      </footer>
+    </article>
+  </body>
+</html>

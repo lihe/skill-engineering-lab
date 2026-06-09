@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Skill Engineering Lab · Research Site</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="../README.md">
+        <span class="brand-glyph" aria-hidden="true"></span>
+        Skill Engineering Lab
+      </a>
+      <nav>
+        <a href="../dashboard/index.html">Dashboard</a>
+        <a href="../docs/ai-agent-skill-engineering.html">方法论文章</a>
+        <a href="../report.md">评测报告</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Agent Skill Engineering</p>
+          <h1>把 Skill 从提示词，升级成可评测、可治理的工程资产。</h1>
+          <p class="hero-lead">
+            这个研究型项目站展示了一个 AI Agent Skill 如何经历编写、评测、失败归因和治理闭环。核心不是“输出一次好结果”，而是用对照实验证明 Skill 是否带来稳定净增益。
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="../dashboard/index.html">打开 Dashboard</a>
+            <a class="button" href="../docs/ai-agent-skill-engineering.html">阅读方法论</a>
+          </div>
+        </div>
+        <div class="hero-visual" aria-label="Skill 工程化闭环示意图">
+          <svg viewBox="0 0 620 420" role="img">
+            <rect x="20" y="22" width="580" height="376" rx="18" fill="#ffffff" stroke="#d7dee8" />
+            <text x="52" y="66" class="svg-title">Skill Lifecycle Harness</text>
+            <g class="loop">
+              <circle cx="170" cy="165" r="58" />
+              <circle cx="310" cy="165" r="58" />
+              <circle cx="450" cy="165" r="58" />
+              <circle cx="310" cy="300" r="58" />
+            </g>
+            <g class="loop-text">
+              <text x="170" y="158">编写</text>
+              <text x="170" y="178">契约</text>
+              <text x="310" y="158">评测</text>
+              <text x="310" y="178">对照</text>
+              <text x="450" y="158">归因</text>
+              <text x="450" y="178">修正</text>
+              <text x="310" y="293">治理</text>
+              <text x="310" y="313">回归</text>
+            </g>
+            <path d="M228 165H252" />
+            <path d="M368 165H392" />
+            <path d="M424 214C394 272 370 300 368 300" />
+            <path d="M252 300C210 278 178 250 170 223" />
+            <text x="52" y="360" class="svg-note">without_skill → v1 → v2 · trace / grading / timing / governance</text>
+          </svg>
+        </div>
+      </section>
+
+      <section class="thesis-band">
+        <div>
+          <p class="eyebrow">Thesis</p>
+          <h2>成熟 Skill 的标准不是“能跑”，而是“可验证地更好”。</h2>
+        </div>
+        <p>
+          本项目把 Skill 评测拆成触发、产出、风格、效率、泛化和治理。每个失败样例都必须回到一个明确动作：改 description、改 SKILL.md、补 references、补 scripts，或加入回归集。
+        </p>
+      </section>
+
+      <section class="metrics-section" id="benchmark">
+        <div class="section-heading">
+          <p class="eyebrow">Benchmark</p>
+          <h2>同一批样例，三种状态对照</h2>
+        </div>
+        <div class="config-tabs" id="configTabs"></div>
+        <div class="metric-panels" id="metricPanels"></div>
+      </section>
+
+      <section class="evidence-section">
+        <div class="section-heading">
+          <p class="eyebrow">Evidence Map</p>
+          <h2>方法论依据与项目落点</h2>
+        </div>
+        <div class="evidence-grid" id="evidenceGrid"></div>
+      </section>
+
+      <section class="system-section">
+        <div class="section-heading">
+          <p class="eyebrow">System</p>
+          <h2>项目不是脚本合集，而是一个 Skill Evaluation Harness</h2>
+        </div>
+        <div class="system-map">
+          <div class="system-node">evals/cases.json<span>样例库</span></div>
+          <div class="system-arrow"></div>
+          <div class="system-node">run_eval.py<span>三态运行</span></div>
+          <div class="system-arrow"></div>
+          <div class="system-node">grade_output.py<span>分层评分</span></div>
+          <div class="system-arrow"></div>
+          <div class="system-node">governance/<span>治理资产</span></div>
+        </div>
+      </section>
+
+      <section class="case-section">
+        <div class="section-heading">
+          <p class="eyebrow">Regression View</p>
+          <h2>样例级回归矩阵</h2>
+        </div>
+        <div class="case-grid" id="caseGrid"></div>
+      </section>
+
+      <section class="handoff">
+        <div>
+          <p class="eyebrow">Project Handoff</p>
+          <h2>把这套方法变成可展示、可复用、可继续扩展的作品。</h2>
+        </div>
+        <div class="handoff-links">
+          <a href="../dashboard/index.html">Dashboard</a>
+          <a href="../docs/ai-agent-skill-engineering.html">方法论 HTML</a>
+          <a href="../docs/portfolio-one-pager.md">作品集一页纸</a>
+          <a href="../docs/evaluation-methodology.md">评测方法论</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>Skill Engineering Lab · Research Site</span>
+      <span>Built from local eval and governance assets</span>
+    </footer>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

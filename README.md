@@ -46,6 +46,47 @@ without_skill -> with_skill_v1 -> with_skill_v2
 
 完整报告见 [report.md](report.md)。
 
+## 可视化 Dashboard
+
+项目内置一个纯静态 Dashboard，用来展示 Skill 版本质量、触发表现、失败模式和治理状态：
+
+- 入口文件：[dashboard/index.html](dashboard/index.html)
+- 数据文件：[dashboard/data.js](dashboard/data.js)
+- 数据来源：`runs/iteration-001/benchmark.json` 与 `governance/*.json`
+
+打开方式：
+
+```bash
+make dashboard-data
+open dashboard/index.html
+```
+
+Dashboard 展示内容：
+
+- 核心指标卡：质量提升、触发召回、过度触发下降、Token 变化。
+- 三态对照表：无 Skill、Skill v1、Skill v2 的质量和成本。
+- 失败模式收敛图：展示 v1 的问题如何在 v2 中被消除。
+- 样例级回归视图：逐条 case 展示三种配置下的得分。
+- 治理资产概览：版本决策、回归样例、失败归因和后续风险。
+
+## 研究站点与方法论文章
+
+为了便于作品集展示，本项目还提供两个面向读者的展示入口：
+
+| 入口 | 文件 | 用途 |
+| --- | --- | --- |
+| 研究型项目站 | [site/index.html](site/index.html) | 以公开研究站的方式讲清楚项目命题、证据、架构、benchmark 和治理闭环 |
+| 方法论单页文章 | [docs/ai-agent-skill-engineering.html](docs/ai-agent-skill-engineering.html) | 将《AI Agent Skill 工程化实践优化版》排版成 paper-style 的高级 HTML 文档 |
+
+打开方式：
+
+```bash
+open site/index.html
+open docs/ai-agent-skill-engineering.html
+```
+
+这两个页面与 Dashboard 互相链接，形成“研究站 -> 方法论 -> Dashboard -> 报告”的完整展示路径。
+
 ## 核心能力
 
 这个项目覆盖了一个成熟 Skill 工程体系的最小闭环：
@@ -120,8 +161,10 @@ python3 skills/ai-video-creator-style/scripts/validate_package.py \
 
 ```bash
 make eval
+make dashboard-data
 make verify
 make check
+make site-check
 ```
 
 ## 评测设计
@@ -170,9 +213,20 @@ skill-engineering-lab/
 │   ├── versions.json
 │   ├── reason_archive.json
 │   └── regression_set.json
+├── dashboard/
+│   ├── index.html
+│   ├── app.js
+│   ├── style.css
+│   └── data.js
+├── site/
+│   ├── index.html
+│   ├── app.js
+│   └── styles.css
 ├── docs/
+│   ├── ai-agent-skill-engineering.html
 │   ├── architecture.md
 │   ├── evaluation-methodology.md
+│   ├── research-site-brief.md
 │   └── portfolio-one-pager.md
 ├── Makefile
 ├── report.md
@@ -184,6 +238,8 @@ skill-engineering-lab/
 - 把 Skill 从“提示词文件”升级为带版本、评测、回归和治理的工程资产。
 - 用确定性评测保障分享演示稳定，不依赖网络、模型波动或 API 费用。
 - 用对照实验量化 Skill 的净增益，而不是只展示单次成功输出。
+- 用静态 Dashboard 将触发质量、失败模式和治理资产可视化，便于作品集展示和现场讲解。
+- 用研究型项目站和 paper-style 方法论文章增强公开展示质感，适合简历、作品集和面试讲解。
 - 将失败样例沉淀为可行动的根因归档，直接驱动下一轮 `description`、`SKILL.md` 和脚本迭代。
 - 将可脚本化的结构检查下沉到 Python 校验器，降低自然语言评测的不确定性。
 
@@ -193,8 +249,14 @@ skill-engineering-lab/
 
 > 我做了一个 Agent Skill 工程化评测实验室，用同一批样例对比无 Skill、Skill v1、Skill v2，自动生成触发、质量、效率和治理报告，展示 Skill 如何从提示词沉淀为可回归的团队能力资产。
 
+带 Dashboard 版本：
+
+> 我做了一个 Agent Skill 工程化评测实验室和可视化 Dashboard，用同一批样例对比无 Skill、Skill v1、Skill v2，展示触发召回、过度触发、质量提升、Token 成本和失败归因，形成从 Skill 编写、评测到治理的完整闭环。
+
 项目讲解材料：
 
+- [site/index.html](site/index.html)：研究型项目站。
+- [docs/ai-agent-skill-engineering.html](docs/ai-agent-skill-engineering.html)：方法论 HTML。
 - [docs/portfolio-one-pager.md](docs/portfolio-one-pager.md)：项目OnePage。
 - [docs/architecture.md](docs/architecture.md)：系统架构与数据流。
 - [docs/evaluation-methodology.md](docs/evaluation-methodology.md)：评测方法论。
@@ -204,6 +266,6 @@ skill-engineering-lab/
 
 - 接入真实大模型调用，保留当前评分与治理接口。
 - 增加真实历史产品 brief 作为回归样例。
-- 增加 HTML dashboard，展示版本趋势、失败模式和样例明细。
+- 将当前研究站点发布到 Vercel 或 GitHub Pages。
 - 引入 LLM Judge 作为风格评价补充，但保留确定性检查作为主验收。
 - 支持多 Skill 横向对比，识别职责重叠、触发冲突和可退休 Skill。
