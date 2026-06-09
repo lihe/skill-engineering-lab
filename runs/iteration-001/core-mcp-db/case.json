@@ -1,0 +1,15 @@
+{
+  "id": "core-mcp-db",
+  "case_type": "core",
+  "risk_tag": [
+    "developer_tool"
+  ],
+  "should_trigger": true,
+  "prompt": "帮我把一个 MCP 数据库调试工具做成短视频创意包，要标题、封面、大纲和口播。",
+  "brief": {
+    "product": "MCP Debugger",
+    "category": "developer tool",
+    "visible_result": "把一次失败 tool call 直接变成可复现诊断报告",
+    "viewer": "MCP 开发者"
+  }
+}

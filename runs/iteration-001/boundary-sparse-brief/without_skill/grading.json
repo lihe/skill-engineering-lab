@@ -1,0 +1,48 @@
+{
+  "case_id": "boundary-sparse-brief",
+  "case_type": "boundary",
+  "config": "without_skill",
+  "overall_pass": false,
+  "score": 2,
+  "max_score": 8,
+  "score_ratio": 0.25,
+  "actual_triggered": false,
+  "should_trigger": true,
+  "checks": [
+    {
+      "id": "trigger",
+      "score": 2,
+      "max_score": 2,
+      "evidence": "baseline has no skill routing; excluded from trigger metrics"
+    },
+    {
+      "id": "outcome",
+      "score": 0,
+      "max_score": 2,
+      "evidence": "title_count=0; cover_count=0; has_demo=False; has_outline=False; has_script=False"
+    },
+    {
+      "id": "style_alignment",
+      "score": 0,
+      "max_score": 2,
+      "evidence": "hook_terms=[]; contrast=False; opening=False; cover_line_length=False"
+    },
+    {
+      "id": "efficiency",
+      "score": 2,
+      "max_score": 2,
+      "evidence": "token_estimate=760; baseline=900; delta=-15.56%"
+    },
+    {
+      "id": "generalization",
+      "score": 0,
+      "max_score": 2,
+      "evidence": "risk_tags=['sparse_input', 'implicit_trigger']; trigger=2; outcome=0"
+    }
+  ],
+  "failure_patterns": [
+    "outcome_incomplete",
+    "style_weak",
+    "generalization_risk"
+  ]
+}

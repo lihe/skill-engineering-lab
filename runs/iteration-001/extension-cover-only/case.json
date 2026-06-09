@@ -1,0 +1,16 @@
+{
+  "id": "extension-cover-only",
+  "case_type": "extension",
+  "risk_tag": [
+    "cover_only",
+    "line_length"
+  ],
+  "should_trigger": true,
+  "prompt": "只做封面文案：AI Agent 可以自动生成日报，给我 8 个封面短句。",
+  "brief": {
+    "product": "DailyAgent",
+    "category": "AI office agent",
+    "visible_result": "工作记录自动变日报",
+    "viewer": "职场用户"
+  }
+}

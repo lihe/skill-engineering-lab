@@ -1,0 +1,3 @@
+{"ts": "2026-06-09T03:30:29.389831+00:00", "event": "case_start", "case_id": "boundary-complex-brief", "config": "with_skill_v2"}
+{"ts": "2026-06-09T03:30:29.389838+00:00", "event": "skill_routing", "skill": "ai-video-creator-style", "triggered": true, "expected": true}
+{"ts": "2026-06-09T03:30:29.389840+00:00", "event": "reference_loaded", "files": ["title-formulas.md", "cover-style.md", "checklist.md"]}

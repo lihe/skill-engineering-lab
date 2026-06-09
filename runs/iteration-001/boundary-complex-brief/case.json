@@ -1,0 +1,16 @@
+{
+  "id": "boundary-complex-brief",
+  "case_type": "boundary",
+  "risk_tag": [
+    "complex_input",
+    "feature_list_risk"
+  ],
+  "should_trigger": true,
+  "prompt": "OmniDeploy 同时做 CI/CD、日志、告警、回滚、成本分析、权限审计，还接了 AI 自动修复。别写成参数堆叠，帮我做能发 B 站的视频创意包。",
+  "brief": {
+    "product": "OmniDeploy",
+    "category": "DevOps platform",
+    "visible_result": "一次线上故障从告警到修复自动闭环",
+    "viewer": "工程团队"
+  }
+}

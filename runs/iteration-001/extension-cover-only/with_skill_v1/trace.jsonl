@@ -1,0 +1,2 @@
+{"ts": "2026-06-09T03:30:29.430253+00:00", "event": "case_start", "case_id": "extension-cover-only", "config": "with_skill_v1"}
+{"ts": "2026-06-09T03:30:29.430260+00:00", "event": "skill_routing", "skill": "ai-video-creator-style", "triggered": false, "expected": true}

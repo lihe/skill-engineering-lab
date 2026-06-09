@@ -1,0 +1,11 @@
+{
+  "skill": "ai-video-creator-style",
+  "iteration": "iteration-001",
+  "must_keep_cases": [
+    "boundary-sparse-brief",
+    "extension-cover-only",
+    "negative-press-release",
+    "negative-project-plan"
+  ],
+  "reason": "These cases protect trigger recall, cover-only extension support, and over-trigger prevention."
+}

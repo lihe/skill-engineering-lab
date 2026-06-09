@@ -1,0 +1,2 @@
+{"ts": "2026-06-09T03:30:29.294057+00:00", "event": "case_start", "case_id": "core-cloud-inference", "config": "without_skill"}
+{"ts": "2026-06-09T03:30:29.294062+00:00", "event": "skill_routing", "skill": "ai-video-creator-style", "triggered": false, "expected": true}

@@ -1,0 +1,2 @@
+{"ts": "2026-06-09T03:30:29.218685+00:00", "event": "case_start", "case_id": "core-mcp-db", "config": "without_skill"}
+{"ts": "2026-06-09T03:30:29.218693+00:00", "event": "skill_routing", "skill": "ai-video-creator-style", "triggered": false, "expected": true}

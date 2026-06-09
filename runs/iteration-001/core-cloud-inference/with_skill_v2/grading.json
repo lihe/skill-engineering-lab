@@ -1,0 +1,44 @@
+{
+  "case_id": "core-cloud-inference",
+  "case_type": "core",
+  "config": "with_skill_v2",
+  "overall_pass": true,
+  "score": 10,
+  "max_score": 10,
+  "score_ratio": 1.0,
+  "actual_triggered": true,
+  "should_trigger": true,
+  "checks": [
+    {
+      "id": "trigger",
+      "score": 2,
+      "max_score": 2,
+      "evidence": "expected=True; actual=True"
+    },
+    {
+      "id": "outcome",
+      "score": 2,
+      "max_score": 2,
+      "evidence": "title_count=10; cover_count=8; has_demo=True; has_outline=True; has_script=True"
+    },
+    {
+      "id": "style_alignment",
+      "score": 2,
+      "max_score": 2,
+      "evidence": "hook_terms=['别再', '实测', '你现在看到', '不是', '而是', '真能']; contrast=True; opening=True; cover_line_length=True"
+    },
+    {
+      "id": "efficiency",
+      "score": 2,
+      "max_score": 2,
+      "evidence": "token_estimate=1010; baseline=900; delta=12.22%"
+    },
+    {
+      "id": "generalization",
+      "score": 2,
+      "max_score": 2,
+      "evidence": "not a generalization stress case"
+    }
+  ],
+  "failure_patterns": []
+}

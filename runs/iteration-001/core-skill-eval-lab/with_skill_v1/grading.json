@@ -1,0 +1,47 @@
+{
+  "case_id": "core-skill-eval-lab",
+  "case_type": "core",
+  "config": "with_skill_v1",
+  "overall_pass": true,
+  "score": 7,
+  "max_score": 10,
+  "score_ratio": 0.7,
+  "actual_triggered": true,
+  "should_trigger": true,
+  "checks": [
+    {
+      "id": "trigger",
+      "score": 2,
+      "max_score": 2,
+      "evidence": "expected=True; actual=True"
+    },
+    {
+      "id": "outcome",
+      "score": 2,
+      "max_score": 2,
+      "evidence": "title_count=8; cover_count=6; has_demo=True; has_outline=True; has_script=True"
+    },
+    {
+      "id": "style_alignment",
+      "score": 0,
+      "max_score": 2,
+      "evidence": "hook_terms=[]; contrast=False; opening=False; cover_line_length=True"
+    },
+    {
+      "id": "efficiency",
+      "score": 1,
+      "max_score": 2,
+      "evidence": "token_estimate=1250; baseline=900; delta=38.89%"
+    },
+    {
+      "id": "generalization",
+      "score": 2,
+      "max_score": 2,
+      "evidence": "not a generalization stress case"
+    }
+  ],
+  "failure_patterns": [
+    "style_weak",
+    "efficiency_cost"
+  ]
+}

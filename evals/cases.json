@@ -1,0 +1,162 @@
+{
+  "skill_name": "ai-video-creator-style",
+  "description": "Deterministic demo cases for showing Skill engineering from writing to evaluation to governance.",
+  "cases": [
+    {
+      "id": "core-skill-eval-lab",
+      "case_type": "core",
+      "risk_tag": ["full_package", "demo_hook"],
+      "should_trigger": true,
+      "prompt": "产品叫 SkillEval Lab，可以对比 without_skill、with_skill v1、with_skill v2，展示 Skill 从编写到评测再到治理的闭环。帮我做一个 B 站视频创意包。",
+      "brief": {
+        "product": "SkillEval Lab",
+        "category": "AI Agent Skill evaluation lab",
+        "visible_result": "同一批 case 跑出对照报告和 badcase 归因",
+        "viewer": "AI 工程师、Agent 产品经理"
+      }
+    },
+    {
+      "id": "core-agent-coding",
+      "case_type": "core",
+      "risk_tag": ["coding_tool", "bilibili_style"],
+      "should_trigger": true,
+      "prompt": "给一个 AI coding agent 做 B 站视频方案：它能读项目、拆任务、跑测试、生成交接记录。",
+      "brief": {
+        "product": "CodePilot Agent",
+        "category": "AI coding agent",
+        "visible_result": "一句话把 issue 拆成可运行 PR",
+        "viewer": "开发者"
+      }
+    },
+    {
+      "id": "core-mcp-db",
+      "case_type": "core",
+      "risk_tag": ["developer_tool"],
+      "should_trigger": true,
+      "prompt": "帮我把一个 MCP 数据库调试工具做成短视频创意包，要标题、封面、大纲和口播。",
+      "brief": {
+        "product": "MCP Debugger",
+        "category": "developer tool",
+        "visible_result": "把一次失败 tool call 直接变成可复现诊断报告",
+        "viewer": "MCP 开发者"
+      }
+    },
+    {
+      "id": "core-ai-image",
+      "case_type": "core",
+      "risk_tag": ["creative_model"],
+      "should_trigger": true,
+      "prompt": "一个 AI 图片模型，能把普通产品图改成电商主图。按 Jack-Cui 那种技术区口播感，做完整创意包。",
+      "brief": {
+        "product": "PicForge",
+        "category": "AI image model",
+        "visible_result": "普通手机图变成可投放主图",
+        "viewer": "电商运营、设计师"
+      }
+    },
+    {
+      "id": "core-cloud-inference",
+      "case_type": "core",
+      "risk_tag": ["cloud", "cost_contrast"],
+      "should_trigger": true,
+      "prompt": "做一个云推理平台的视频方案，它主打低成本跑开源大模型，想要有 B 站点击感。",
+      "brief": {
+        "product": "InferLite Cloud",
+        "category": "cloud inference",
+        "visible_result": "同样模型成本下降，延迟更稳",
+        "viewer": "AI 应用开发者"
+      }
+    },
+    {
+      "id": "core-meeting-agent",
+      "case_type": "core",
+      "risk_tag": ["agent_workflow"],
+      "should_trigger": true,
+      "prompt": "会议纪要 Agent：开完会自动整理结论、行动项、owner 和 deadline。帮我做 B 站视频脚本和封面。",
+      "brief": {
+        "product": "MeetingFlow Agent",
+        "category": "AI workflow agent",
+        "visible_result": "杂乱会议记录变成可执行任务表",
+        "viewer": "团队负责人、产品经理"
+      }
+    },
+    {
+      "id": "boundary-sparse-brief",
+      "case_type": "boundary",
+      "risk_tag": ["sparse_input", "implicit_trigger"],
+      "should_trigger": true,
+      "prompt": "FlowMind，自动整理工作记录，想发一个视频让人觉得它真的能干活。你帮我弄一版。",
+      "brief": {
+        "product": "FlowMind",
+        "category": "AI workflow tool",
+        "visible_result": "工作记录自动变成日报",
+        "viewer": "职场用户"
+      }
+    },
+    {
+      "id": "boundary-complex-brief",
+      "case_type": "boundary",
+      "risk_tag": ["complex_input", "feature_list_risk"],
+      "should_trigger": true,
+      "prompt": "OmniDeploy 同时做 CI/CD、日志、告警、回滚、成本分析、权限审计，还接了 AI 自动修复。别写成参数堆叠，帮我做能发 B 站的视频创意包。",
+      "brief": {
+        "product": "OmniDeploy",
+        "category": "DevOps platform",
+        "visible_result": "一次线上故障从告警到修复自动闭环",
+        "viewer": "工程团队"
+      }
+    },
+    {
+      "id": "extension-title-pool",
+      "case_type": "extension",
+      "risk_tag": ["titles_only"],
+      "should_trigger": true,
+      "prompt": "只要标题池：给一个 AI 3D 生成工具写 12 个 B 站标题，别太像发布会。",
+      "brief": {
+        "product": "MeshSnap",
+        "category": "AI 3D tool",
+        "visible_result": "几秒生成可编辑 3D 资产",
+        "viewer": "3D 创作者、游戏开发者"
+      }
+    },
+    {
+      "id": "extension-cover-only",
+      "case_type": "extension",
+      "risk_tag": ["cover_only", "line_length"],
+      "should_trigger": true,
+      "prompt": "只做封面文案：AI Agent 可以自动生成日报，给我 8 个封面短句。",
+      "brief": {
+        "product": "DailyAgent",
+        "category": "AI office agent",
+        "visible_result": "工作记录自动变日报",
+        "viewer": "职场用户"
+      }
+    },
+    {
+      "id": "negative-press-release",
+      "case_type": "negative",
+      "risk_tag": ["over_trigger", "non_video"],
+      "should_trigger": false,
+      "prompt": "帮我把这个 AI 产品写成一篇正式新闻稿，要公司口吻、发布会风格，不需要视频脚本。",
+      "brief": {
+        "product": "LaunchAI",
+        "category": "AI product",
+        "visible_result": "official announcement",
+        "viewer": "media"
+      }
+    },
+    {
+      "id": "negative-project-plan",
+      "case_type": "negative",
+      "risk_tag": ["project_management"],
+      "should_trigger": false,
+      "prompt": "我要用 Linear 管理 AI Agent 项目，帮我拆项目计划、里程碑、issue 状态流转。",
+      "brief": {
+        "product": "VibeFlow",
+        "category": "project management workflow",
+        "visible_result": "project plan",
+        "viewer": "builders"
+      }
+    }
+  ]
+}

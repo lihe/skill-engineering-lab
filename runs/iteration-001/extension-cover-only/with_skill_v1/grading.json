@@ -1,0 +1,49 @@
+{
+  "case_id": "extension-cover-only",
+  "case_type": "extension",
+  "config": "with_skill_v1",
+  "overall_pass": false,
+  "score": 2,
+  "max_score": 10,
+  "score_ratio": 0.2,
+  "actual_triggered": false,
+  "should_trigger": true,
+  "checks": [
+    {
+      "id": "trigger",
+      "score": 0,
+      "max_score": 2,
+      "evidence": "expected=True; actual=False"
+    },
+    {
+      "id": "outcome",
+      "score": 0,
+      "max_score": 2,
+      "evidence": "title_count=0; cover_count=0; has_demo=False; has_outline=False; has_script=False"
+    },
+    {
+      "id": "style_alignment",
+      "score": 0,
+      "max_score": 2,
+      "evidence": "hook_terms=[]; contrast=False; opening=False; cover_line_length=False"
+    },
+    {
+      "id": "efficiency",
+      "score": 2,
+      "max_score": 2,
+      "evidence": "token_estimate=820; baseline=900; delta=-8.89%"
+    },
+    {
+      "id": "generalization",
+      "score": 0,
+      "max_score": 2,
+      "evidence": "risk_tags=['cover_only', 'line_length']; trigger=0; outcome=0"
+    }
+  ],
+  "failure_patterns": [
+    "trigger_mismatch",
+    "outcome_incomplete",
+    "style_weak",
+    "generalization_risk"
+  ]
+}

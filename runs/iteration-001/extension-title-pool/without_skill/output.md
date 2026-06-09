@@ -1,0 +1,14 @@
+# Generic AI Product Content Plan
+
+## 标题建议
+1. MeshSnap 产品介绍
+2. MeshSnap 如何提升效率
+3. AI 工具的新机会
+
+## 内容大纲
+1. 产品背景
+2. 核心功能
+3. 应用场景
+
+## 备注
+这是一版通用内容方案，没有加载视频风格 Skill。

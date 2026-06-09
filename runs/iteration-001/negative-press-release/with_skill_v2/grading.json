@@ -1,0 +1,44 @@
+{
+  "case_id": "negative-press-release",
+  "case_type": "negative",
+  "config": "with_skill_v2",
+  "overall_pass": true,
+  "score": 10,
+  "max_score": 10,
+  "score_ratio": 1.0,
+  "actual_triggered": false,
+  "should_trigger": false,
+  "checks": [
+    {
+      "id": "trigger",
+      "score": 2,
+      "max_score": 2,
+      "evidence": "expected=False; actual=False"
+    },
+    {
+      "id": "outcome",
+      "score": 2,
+      "max_score": 2,
+      "evidence": "negative_case_video_sections=[False, False, False]"
+    },
+    {
+      "id": "style_alignment",
+      "score": 2,
+      "max_score": 2,
+      "evidence": "negative case; no video style expected"
+    },
+    {
+      "id": "efficiency",
+      "score": 2,
+      "max_score": 2,
+      "evidence": "token_estimate=560; baseline=900; delta=-37.78%"
+    },
+    {
+      "id": "generalization",
+      "score": 2,
+      "max_score": 2,
+      "evidence": "not a generalization stress case"
+    }
+  ],
+  "failure_patterns": []
+}

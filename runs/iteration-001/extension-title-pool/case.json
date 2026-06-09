@@ -1,0 +1,15 @@
+{
+  "id": "extension-title-pool",
+  "case_type": "extension",
+  "risk_tag": [
+    "titles_only"
+  ],
+  "should_trigger": true,
+  "prompt": "只要标题池：给一个 AI 3D 生成工具写 12 个 B 站标题，别太像发布会。",
+  "brief": {
+    "product": "MeshSnap",
+    "category": "AI 3D tool",
+    "visible_result": "几秒生成可编辑 3D 资产",
+    "viewer": "3D 创作者、游戏开发者"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "core-skill-eval-lab",
+  "case_type": "core",
+  "risk_tag": [
+    "full_package",
+    "demo_hook"
+  ],
+  "should_trigger": true,
+  "prompt": "产品叫 SkillEval Lab，可以对比 without_skill、with_skill v1、with_skill v2，展示 Skill 从编写到评测再到治理的闭环。帮我做一个 B 站视频创意包。",
+  "brief": {
+    "product": "SkillEval Lab",
+    "category": "AI Agent Skill evaluation lab",
+    "visible_result": "同一批 case 跑出对照报告和 badcase 归因",
+    "viewer": "AI 工程师、Agent 产品经理"
+  }
+}

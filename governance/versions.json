@@ -1,0 +1,41 @@
+{
+  "skill": "ai-video-creator-style",
+  "versions": [
+    {
+      "version": "v1",
+      "changed_parts": ["initial SKILL.md"],
+      "main_hypothesis": "A broad AI product video Skill can improve complete creative package generation over a no-skill baseline.",
+      "known_risks": [
+        "description too broad",
+        "weak negative boundaries",
+        "no deterministic output verifier",
+        "style rules not hardened"
+      ],
+      "iteration": "iteration-001",
+      "observed_metrics": {
+        "pass_rate": 0.75,
+        "trigger_recall": 0.8,
+        "over_trigger_rate": 0.5,
+        "avg_tokens": 1142
+      },
+      "decision": "iterate"
+    },
+    {
+      "version": "v2",
+      "changed_parts": ["description", "SKILL.md checklist", "scripts/validate_package.py"],
+      "main_hypothesis": "Adding trigger boundaries, an explicit output contract, and deterministic checks improves quality while reducing wasted context.",
+      "known_risks": [
+        "simulated eval should be replaced by real LLM calls before production use",
+        "case set needs more real historical briefs"
+      ],
+      "iteration": "iteration-001",
+      "observed_metrics": {
+        "pass_rate": 1.0,
+        "trigger_recall": 1.0,
+        "over_trigger_rate": 0.0,
+        "avg_tokens": 935
+      },
+      "decision": "ship_mvp"
+    }
+  ]
+}

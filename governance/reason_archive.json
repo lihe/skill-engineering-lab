@@ -1,0 +1,36 @@
+{
+  "skill": "ai-video-creator-style",
+  "iteration": "iteration-001",
+  "badcases": [
+    {
+      "case_id": "boundary-sparse-brief",
+      "run_config": "with_skill_v1",
+      "human_expected": "Sparse brief should still trigger the video creative Skill and ask only essential clarifying questions internally.",
+      "observed_behavior": "v1 did not trigger and fell back to a generic product content plan.",
+      "failure_pattern": "trigger_mismatch",
+      "root_cause": "description relied on explicit video/product wording and did not cover sparse creator-style requests.",
+      "suggested_action": "Broaden description to include creator brief, Bilibili-style video title, cover, demo, outline, or spoken script requests.",
+      "should_regress": true
+    },
+    {
+      "case_id": "extension-cover-only",
+      "run_config": "with_skill_v1",
+      "human_expected": "Cover-only request should trigger the Skill and load cover-specific rules.",
+      "observed_behavior": "v1 missed the request because it was not framed as a full video package.",
+      "failure_pattern": "trigger_mismatch",
+      "root_cause": "description did not clearly list cover text as a direct trigger.",
+      "suggested_action": "Add cover text, thumbnail copy, and title-cover pairing to trigger conditions.",
+      "should_regress": true
+    },
+    {
+      "case_id": "negative-press-release",
+      "run_config": "with_skill_v1",
+      "human_expected": "Official press-release writing should not trigger a Bilibili video creative Skill.",
+      "observed_behavior": "v1 triggered because its description said promotional content for AI products.",
+      "failure_pattern": "over_trigger",
+      "root_cause": "description lacked negative boundaries for press releases and generic non-video marketing copy.",
+      "suggested_action": "Add explicit do-not-use boundaries for press releases, official articles, project plans, and non-video content.",
+      "should_regress": true
+    }
+  ]
+}

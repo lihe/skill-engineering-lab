@@ -1,0 +1,15 @@
+{
+  "id": "negative-project-plan",
+  "case_type": "negative",
+  "risk_tag": [
+    "project_management"
+  ],
+  "should_trigger": false,
+  "prompt": "我要用 Linear 管理 AI Agent 项目，帮我拆项目计划、里程碑、issue 状态流转。",
+  "brief": {
+    "product": "VibeFlow",
+    "category": "project management workflow",
+    "visible_result": "project plan",
+    "viewer": "builders"
+  }
+}

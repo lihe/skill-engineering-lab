@@ -1,0 +1,16 @@
+{
+  "id": "negative-press-release",
+  "case_type": "negative",
+  "risk_tag": [
+    "over_trigger",
+    "non_video"
+  ],
+  "should_trigger": false,
+  "prompt": "帮我把这个 AI 产品写成一篇正式新闻稿，要公司口吻、发布会风格，不需要视频脚本。",
+  "brief": {
+    "product": "LaunchAI",
+    "category": "AI product",
+    "visible_result": "official announcement",
+    "viewer": "media"
+  }
+}

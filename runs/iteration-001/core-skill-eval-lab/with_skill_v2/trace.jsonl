@@ -1,0 +1,3 @@
+{"ts": "2026-06-09T03:30:29.150384+00:00", "event": "case_start", "case_id": "core-skill-eval-lab", "config": "with_skill_v2"}
+{"ts": "2026-06-09T03:30:29.150392+00:00", "event": "skill_routing", "skill": "ai-video-creator-style", "triggered": true, "expected": true}
+{"ts": "2026-06-09T03:30:29.150393+00:00", "event": "reference_loaded", "files": ["title-formulas.md", "cover-style.md", "checklist.md"]}

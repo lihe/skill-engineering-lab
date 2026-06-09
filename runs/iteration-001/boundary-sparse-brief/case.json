@@ -1,0 +1,16 @@
+{
+  "id": "boundary-sparse-brief",
+  "case_type": "boundary",
+  "risk_tag": [
+    "sparse_input",
+    "implicit_trigger"
+  ],
+  "should_trigger": true,
+  "prompt": "FlowMind，自动整理工作记录，想发一个视频让人觉得它真的能干活。你帮我弄一版。",
+  "brief": {
+    "product": "FlowMind",
+    "category": "AI workflow tool",
+    "visible_result": "工作记录自动变成日报",
+    "viewer": "职场用户"
+  }
+}
