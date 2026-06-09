@@ -8,7 +8,7 @@
   "prompt": "一个 AI 图片模型，能把普通产品图改成电商主图。按 Jack-Cui 那种技术区口播感，做完整创意包。",
   "brief": {
     "product": "PicForge",
-    "category": "AI image model",
+    "category": "AI 图片模型",
     "visible_result": "普通手机图变成可投放主图",
     "viewer": "电商运营、设计师"
   }

@@ -1,2 +1,2 @@
-{"ts": "2026-06-09T03:30:29.168520+00:00", "event": "case_start", "case_id": "core-agent-coding", "config": "without_skill"}
-{"ts": "2026-06-09T03:30:29.168527+00:00", "event": "skill_routing", "skill": "ai-video-creator-style", "triggered": false, "expected": true}
+{"ts": "2026-06-09T03:57:05.760958+00:00", "event": "case_start", "case_id": "core-agent-coding", "config": "without_skill"}
+{"ts": "2026-06-09T03:57:05.760967+00:00", "event": "skill_routing", "skill": "ai-video-creator-style", "triggered": false, "expected": true}

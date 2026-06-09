@@ -8,7 +8,7 @@
   "prompt": "会议纪要 Agent：开完会自动整理结论、行动项、owner 和 deadline。帮我做 B 站视频脚本和封面。",
   "brief": {
     "product": "MeetingFlow Agent",
-    "category": "AI workflow agent",
+    "category": "AI 工作流 Agent",
     "visible_result": "杂乱会议记录变成可执行任务表",
     "viewer": "团队负责人、产品经理"
   }

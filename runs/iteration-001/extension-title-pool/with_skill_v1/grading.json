@@ -13,35 +13,35 @@
       "id": "trigger",
       "score": 2,
       "max_score": 2,
-      "evidence": "expected=True; actual=True"
+      "evidence": "预期=True; 实际=True"
     },
     {
       "id": "outcome",
       "score": 2,
       "max_score": 2,
-      "evidence": "title_count=8; cover_count=6; has_demo=True; has_outline=True; has_script=True"
+      "evidence": "标题数量=8; 封面数量=6; 有Demo=True; 有大纲=True; 有口播稿=True"
     },
     {
       "id": "style_alignment",
       "score": 0,
       "max_score": 2,
-      "evidence": "hook_terms=[]; contrast=False; opening=False; cover_line_length=True"
+      "evidence": "命中钩子=[]; 有对比=False; 有开场=False; 封面行长合格=True"
     },
     {
       "id": "efficiency",
       "score": 1,
       "max_score": 2,
-      "evidence": "token_estimate=1250; baseline=900; delta=38.89%"
+      "evidence": "Token估算=1250; 基线=900; 变化=38.89%"
     },
     {
       "id": "generalization",
       "score": 2,
       "max_score": 2,
-      "evidence": "risk_tags=['titles_only']; trigger=2; outcome=2"
+      "evidence": "风险标签=['titles_only']; 触发得分=2; 产出得分=2"
     }
   ],
   "failure_patterns": [
-    "style_weak",
-    "efficiency_cost"
+    "风格较弱",
+    "效率成本偏高"
   ]
 }

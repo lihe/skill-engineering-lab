@@ -1,9 +1,9 @@
-# Project Plan: VibeFlow
+# 项目计划：VibeFlow
 
-## Milestones
-1. Clarify requirements.
-2. Create issue workflow.
-3. Define ready-for-agent status.
+## 里程碑
+1. 澄清项目需求。
+2. 创建 issue 流转规则。
+3. 定义可交给 Agent 执行的状态标准。
 
-## Status Flow
+## 状态流转
 needs-triage -> ready-for-agent -> in-progress -> review -> done

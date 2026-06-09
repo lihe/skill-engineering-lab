@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Summarize a Skill Engineering Lab run as Markdown."""
+"""把 Skill Engineering Lab 的评测结果汇总成 Markdown 报告。"""
 
 from __future__ import annotations
 
@@ -11,9 +11,9 @@ from typing import Any
 
 
 CONFIG_LABELS = {
-    "without_skill": "without_skill",
-    "with_skill_v1": "with_skill v1",
-    "with_skill_v2": "with_skill v2",
+    "without_skill": "无 Skill",
+    "with_skill_v1": "使用 Skill v1",
+    "with_skill_v2": "使用 Skill v2",
 }
 
 
@@ -74,15 +74,15 @@ def decision(v2_results: list[dict[str, Any]], v1_results: list[dict[str, Any]])
     v1_pass = pass_rate(v1_results)
     v2_over = over_trigger_rate(v2_results)
     if v2_pass >= 0.85 and v2_over == 0:
-        return "ship"
+        return "发布"
     if v2_pass > v1_pass:
-        return "iterate"
-    return "split_or_rewrite"
+        return "继续迭代"
+    return "拆分或重写"
 
 
 def metric_table(benchmark: dict[str, Any]) -> str:
     lines = [
-        "| Config | Pass Rate | Trigger Recall | Over-trigger | Avg Tokens | Avg Time |",
+        "| 配置 | 通过率 | 触发召回率 | 过度触发率 | 平均 Token | 平均耗时 |",
         "| --- | ---: | ---: | ---: | ---: | ---: |",
     ]
     for config in benchmark["configs"]:
@@ -91,8 +91,8 @@ def metric_table(benchmark: dict[str, Any]) -> str:
             "| {label} | {pass_rate} | {trigger} | {over} | {tokens:.0f} | {time:.0f} ms |".format(
                 label=CONFIG_LABELS[config],
                 pass_rate=pct(pass_rate(results)),
-                trigger="n/a" if config == "without_skill" else pct(trigger_recall(results)),
-                over="n/a" if config == "without_skill" else pct(over_trigger_rate(results)),
+                trigger="不适用" if config == "without_skill" else pct(trigger_recall(results)),
+                over="不适用" if config == "without_skill" else pct(over_trigger_rate(results)),
                 tokens=avg_token(results),
                 time=avg_duration(results),
             )
@@ -112,11 +112,11 @@ def lift_table(benchmark: dict[str, Any]) -> str:
     v2_tokens = avg_token(v2)
     return "\n".join(
         [
-            "| Comparison | Quality Lift | Token Delta |",
+            "| 对比 | 质量提升 | Token 变化 |",
             "| --- | ---: | ---: |",
-            f"| v1 vs baseline | {pct(v1_pass - base_pass)} | {pct((v1_tokens - base_tokens) / base_tokens)} |",
-            f"| v2 vs baseline | {pct(v2_pass - base_pass)} | {pct((v2_tokens - base_tokens) / base_tokens)} |",
-            f"| v2 vs v1 | {pct(v2_pass - v1_pass)} | {pct((v2_tokens - v1_tokens) / v1_tokens)} |",
+            f"| v1 相对基线 | {pct(v1_pass - base_pass)} | {pct((v1_tokens - base_tokens) / base_tokens)} |",
+            f"| v2 相对基线 | {pct(v2_pass - base_pass)} | {pct((v2_tokens - base_tokens) / base_tokens)} |",
+            f"| v2 相对 v1 | {pct(v2_pass - v1_pass)} | {pct((v2_tokens - v1_tokens) / v1_tokens)} |",
         ]
     )
 
@@ -124,14 +124,20 @@ def lift_table(benchmark: dict[str, Any]) -> str:
 def badcase_table(benchmark: dict[str, Any], config: str) -> str:
     badcases = top_badcases(benchmark, config)
     if not badcases:
-        return "No failing badcases."
+        return "没有失败样例。"
     lines = [
-        "| Case | Type | Score | Failure Patterns |",
+        "| 样例 | 类型 | 得分 | 失败模式 |",
         "| --- | --- | ---: | --- |",
     ]
+    type_labels = {
+        "core": "核心",
+        "boundary": "边界",
+        "extension": "扩展",
+        "negative": "负向",
+    }
     for result in badcases:
         lines.append(
-            f"| `{result['case_id']}` | {result['case_type']} | {pct(result['score_ratio'])} | {', '.join(result['failure_patterns']) or 'none'} |"
+            f"| `{result['case_id']}` | {type_labels.get(result['case_type'], result['case_type'])} | {pct(result['score_ratio'])} | {'、'.join(result['failure_patterns']) or '无'} |"
         )
     return "\n".join(lines)
 
@@ -142,17 +148,17 @@ def failure_pattern_table(benchmark: dict[str, Any]) -> str:
         grouped[config] = failure_summary(config_results(benchmark, config))
     all_patterns = sorted({pattern for counter in grouped.values() for pattern in counter})
     if not all_patterns:
-        return "No failure patterns recorded."
+        return "没有记录到失败模式。"
     lines = [
-        "| Pattern | without_skill | v1 | v2 | Suggested Action |",
+        "| 失败模式 | 无 Skill | v1 | v2 | 建议动作 |",
         "| --- | ---: | ---: | ---: | --- |",
     ]
     actions = {
-        "trigger_mismatch": "Tighten or broaden `description` boundaries.",
-        "outcome_incomplete": "Harden required output checklist.",
-        "style_weak": "Improve references and examples.",
-        "efficiency_cost": "Move deterministic checks into scripts and trim references.",
-        "generalization_risk": "Add paraphrase/boundary cases to regression set.",
+        "触发不匹配": "收紧或扩展 `description` 的触发边界。",
+        "产出不完整": "硬化必选产出检查清单。",
+        "风格较弱": "补强参考资料和示例。",
+        "效率成本偏高": "把确定性检查下沉到脚本，并裁剪参考资料。",
+        "泛化风险": "把改写和边界样例加入回归集。",
     }
     for pattern in all_patterns:
         lines.append(
@@ -161,7 +167,7 @@ def failure_pattern_table(benchmark: dict[str, Any]) -> str:
                 base=grouped["without_skill"][pattern],
                 v1=grouped["with_skill_v1"][pattern],
                 v2=grouped["with_skill_v2"][pattern],
-                action=actions.get(pattern, "Review badcase."),
+                action=actions.get(pattern, "复盘失败样例。"),
             )
         )
     return "\n".join(lines)
@@ -174,68 +180,68 @@ def summarize(run_dir: Path) -> str:
     v2 = config_results(benchmark, "with_skill_v2")
     final_decision = decision(v2, v1)
 
-    return f"""# Skill Engineering Lab Report
+    return f"""# Skill Engineering Lab 评测报告
 
-## Summary
+## 摘要
 
-Skill: `{benchmark['skill']}`  
-Iteration: `{benchmark['iteration']}`  
-Cases: {benchmark['cases']}  
-Decision: **{final_decision}**
+评测对象：`{benchmark['skill']}`  
+迭代版本：`{benchmark['iteration']}`  
+样例数：{benchmark['cases']}  
+结论：**{final_decision}**
 
-This lab compares the same evaluation set across three states:
+这个实验室用同一组评测样例对比三种状态：
 
 ```text
 without_skill -> with_skill v1 -> with_skill v2
 ```
 
-The point is not that the generated video copy is beautiful. The point is that Skill behavior becomes observable, gradable, and improvable.
+重点不是生成的视频文案有多漂亮，而是让 Skill 的行为变得可观察、可评分、可改进。
 
-## Metrics
+## 核心指标
 
 {metric_table(benchmark)}
 
-## Lift
+## 提升幅度
 
 {lift_table(benchmark)}
 
-## What Changed From v1 To v2
+## v1 到 v2 的变化
 
-- `description` now includes negative boundaries: no press releases, project plans, issue triage, or generic non-video writing.
-- `SKILL.md` now has a clear output contract: titles, cover text, demo plan, outline, script, self-check.
-- Required checks are hardened: title count, cover line length, demo-first opening, old/new contrast.
-- A deterministic verifier script exists for package structure and line-length checks.
+- `description` 增加负向边界：不处理新闻稿、项目计划、issue 分诊或通用非视频写作。
+- `SKILL.md` 增加清晰的产出契约：标题、封面文案、Demo 方案、大纲、口播稿和自检。
+- 必检项被硬化：标题数量、封面行长、Demo 优先开场、旧方式和新方式对比。
+- 新增确定性校验脚本，用于检查创意包结构和文案行长。
 
-## Top v1 Badcases
+## v1 主要失败样例
 
 {badcase_table(benchmark, "with_skill_v1")}
 
-## Top v2 Badcases
+## v2 主要失败样例
 
 {badcase_table(benchmark, "with_skill_v2")}
 
-## Failure Pattern Diagnosis
+## 失败模式诊断
 
 {failure_pattern_table(benchmark)}
 
-## Governance Assets Created
+## 已创建的治理资产
 
-- `evals/cases.json`: 12-case seed eval set.
-- `runs/{benchmark['iteration']}/benchmark.json`: benchmark summary.
-- `runs/{benchmark['iteration']}/*/trace.jsonl`: routing and reference-loading traces.
-- `runs/{benchmark['iteration']}/*/grading.json`: structured grading output.
-- `skills/ai-video-creator-style/scripts/validate_package.py`: deterministic verifier.
-- `governance/versions.json`: version hypotheses, risks, metrics, and decisions.
-- `governance/reason_archive.json`: badcase root-cause archive.
-- `governance/regression_set.json`: must-keep regression cases.
+- `evals/cases.json`：12 条种子评测样例。
+- `runs/{benchmark['iteration']}/benchmark.json`：基准汇总。
+- `runs/{benchmark['iteration']}/*/trace.jsonl`：路由和参考资料加载轨迹。
+- `runs/{benchmark['iteration']}/*/grading.json`：结构化评分结果。
+- `skills/ai-video-creator-style/scripts/validate_package.py`：确定性校验器。
+- `governance/versions.json`：版本假设、风险、指标和决策。
+- `governance/reason_archive.json`：失败样例根因归档。
+- `governance/regression_set.json`：必须保留的回归样例。
 
-## Next Actions
+## 下一步动作
 
-1. Add 3-5 real product briefs from past work as regression cases.
-2. Replace the deterministic simulator with real LLM calls behind the same grading interface.
-3. Add a small HTML dashboard if this will be used in live workshops.
-4. Track future v3 changes in `governance/versions.json`.
-5. Keep negative cases in the regression set to prevent over-triggering.
+1. 从历史项目中加入 3-5 条真实产品信息作为回归样例。
+2. 在相同评分接口后面，把确定性模拟器替换成真实大模型调用。
+3. 如果要用于现场分享，增加一个轻量 HTML 看板。
+4. 在 `governance/versions.json` 中持续记录未来 v3 的变化。
+5. 持续保留负向样例，防止 Skill 过度触发。
 """
 
 

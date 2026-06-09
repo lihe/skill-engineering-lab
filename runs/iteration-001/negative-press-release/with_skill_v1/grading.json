@@ -13,36 +13,36 @@
       "id": "trigger",
       "score": 0,
       "max_score": 2,
-      "evidence": "expected=False; actual=True"
+      "evidence": "预期=False; 实际=True"
     },
     {
       "id": "outcome",
       "score": 0,
       "max_score": 2,
-      "evidence": "negative_case_video_sections=[True, True, True]"
+      "evidence": "负向样例视频段落=[True, True, True]"
     },
     {
       "id": "style_alignment",
       "score": 2,
       "max_score": 2,
-      "evidence": "negative case; no video style expected"
+      "evidence": "负向样例，不需要视频风格"
     },
     {
       "id": "efficiency",
       "score": 1,
       "max_score": 2,
-      "evidence": "token_estimate=1250; baseline=900; delta=38.89%"
+      "evidence": "Token估算=1250; 基线=900; 变化=38.89%"
     },
     {
       "id": "generalization",
       "score": 2,
       "max_score": 2,
-      "evidence": "not a generalization stress case"
+      "evidence": "不是泛化压力样例"
     }
   ],
   "failure_patterns": [
-    "trigger_mismatch",
-    "outcome_incomplete",
-    "efficiency_cost"
+    "触发不匹配",
+    "产出不完整",
+    "效率成本偏高"
   ]
 }

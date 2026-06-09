@@ -1,4 +1,4 @@
-# Generic AI Product Content Plan
+# 通用 AI 产品内容方案
 
 ## 标题建议
 1. SkillEval Lab 产品介绍

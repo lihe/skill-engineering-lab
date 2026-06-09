@@ -13,36 +13,36 @@
       "id": "trigger",
       "score": 2,
       "max_score": 2,
-      "evidence": "baseline has no skill routing; excluded from trigger metrics"
+      "evidence": "无 Skill 基线没有路由过程，不计入触发指标"
     },
     {
       "id": "outcome",
       "score": 0,
       "max_score": 2,
-      "evidence": "title_count=0; cover_count=0; has_demo=False; has_outline=False; has_script=False"
+      "evidence": "标题数量=0; 封面数量=0; 有Demo=False; 有大纲=False; 有口播稿=False"
     },
     {
       "id": "style_alignment",
       "score": 0,
       "max_score": 2,
-      "evidence": "hook_terms=[]; contrast=False; opening=False; cover_line_length=False"
+      "evidence": "命中钩子=[]; 有对比=False; 有开场=False; 封面行长合格=False"
     },
     {
       "id": "efficiency",
       "score": 2,
       "max_score": 2,
-      "evidence": "token_estimate=760; baseline=900; delta=-15.56%"
+      "evidence": "Token估算=760; 基线=900; 变化=-15.56%"
     },
     {
       "id": "generalization",
       "score": 0,
       "max_score": 2,
-      "evidence": "risk_tags=['complex_input', 'feature_list_risk']; trigger=2; outcome=0"
+      "evidence": "风险标签=['complex_input', 'feature_list_risk']; 触发得分=2; 产出得分=0"
     }
   ],
   "failure_patterns": [
-    "outcome_incomplete",
-    "style_weak",
-    "generalization_risk"
+    "产出不完整",
+    "风格较弱",
+    "泛化风险"
   ]
 }

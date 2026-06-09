@@ -1,2 +1,2 @@
-{"ts": "2026-06-09T03:30:29.394725+00:00", "event": "case_start", "case_id": "extension-title-pool", "config": "without_skill"}
-{"ts": "2026-06-09T03:30:29.394731+00:00", "event": "skill_routing", "skill": "ai-video-creator-style", "triggered": false, "expected": true}
+{"ts": "2026-06-09T03:57:05.906784+00:00", "event": "case_start", "case_id": "extension-title-pool", "config": "without_skill"}
+{"ts": "2026-06-09T03:57:05.906788+00:00", "event": "skill_routing", "skill": "ai-video-creator-style", "triggered": false, "expected": true}

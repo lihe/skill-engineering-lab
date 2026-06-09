@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run deterministic Skill Engineering Lab evals."""
+"""运行 Skill Engineering Lab 的确定性评测。"""
 
 from __future__ import annotations
 
@@ -29,7 +29,7 @@ def should_trigger(config: str, case: dict[str, Any]) -> bool:
     if config == "with_skill_v2":
         return case["should_trigger"]
 
-    # v1 misses some implicit/boundary video requests and over-triggers a press-release case.
+    # v1 会漏掉部分隐式/边界视频请求，也会误触发新闻稿样例。
     if case["id"] in {"boundary-sparse-brief", "extension-cover-only"}:
         return False
     if case["id"] == "negative-press-release":
@@ -77,10 +77,10 @@ def titles(product: str, config: str) -> list[str]:
         "这不是写提示词，而是在造一个能力闭环",
         "一个 Skill 到底有没有用？这次直接跑给你看",
         "AI Agent 的隐藏用法：把经验变成可回归资产",
-        "以前靠感觉改 Skill，现在直接看 badcase",
+        "以前靠感觉改 Skill，现在直接看失败样例",
         "这才是我想要的 Skill 工程化流程",
         "把同一个任务跑三遍，差距一下就出来了",
-        "不是更长的 Prompt，而是可治理的能力包",
+        "不是更长的提示词，而是可治理的能力包",
         "Skill 评测能有多直观？我实测后有点意外",
     ]
 
@@ -102,32 +102,32 @@ def cover_texts(config: str) -> list[str]:
         "Skill闭环 / 当场跑出来",
         "不是长提示词 / 是能力资产",
         "同题跑三遍 / 差距看得见",
-        "badcase归因 / 下一版就改",
+        "失败归因 / 下一版就改",
         "标题封面脚本 / 一次全验收",
-        "触发对不对 / trace里见",
+        "触发对不对 / 轨迹里见",
         "AI真能干活 / 流程自己跑",
     ]
 
 
 def generic_non_video_output(case: dict[str, Any], config: str) -> str:
     if case["id"] == "negative-project-plan":
-        return f"""# Project Plan: {case['brief']['product']}
+        return f"""# 项目计划：{case['brief']['product']}
 
-## Milestones
-1. Clarify requirements.
-2. Create issue workflow.
-3. Define ready-for-agent status.
+## 里程碑
+1. 澄清项目需求。
+2. 创建 issue 流转规则。
+3. 定义可交给 Agent 执行的状态标准。
 
-## Status Flow
+## 状态流转
 needs-triage -> ready-for-agent -> in-progress -> review -> done
 """
-    return f"""# Official Announcement Draft: {case['brief']['product']}
+    return f"""# 官方新闻稿草稿：{case['brief']['product']}
 
-## Summary
-{case['brief']['product']} announces a new AI product update for enterprise users.
+## 摘要
+{case['brief']['product']} 面向企业用户发布一项新的 AI 产品更新。
 
-## Body
-This draft keeps an official release tone and avoids creator video scripting.
+## 正文
+这版草稿保持官方发布口吻，不生成创作者视频脚本。
 """
 
 
@@ -137,7 +137,7 @@ def positive_output(case: dict[str, Any], config: str, triggered: bool) -> str:
     viewer = case["brief"]["viewer"]
 
     if not triggered:
-        return f"""# Generic AI Product Content Plan
+        return f"""# 通用 AI 产品内容方案
 
 ## 标题建议
 1. {product} 产品介绍
@@ -154,53 +154,53 @@ def positive_output(case: dict[str, Any], config: str, triggered: bool) -> str:
 """
 
     if config == "with_skill_v1":
-        return f"""# AI Product Video Creative Package v1
+        return f"""# AI 产品视频创意包 v1
 
-## Title Candidates
+## 标题候选
 {chr(10).join(f"{idx + 1}. {title}" for idx, title in enumerate(titles(product, config)))}
 
-## Cover Text
+## 封面文案
 {chr(10).join(f"{idx + 1}. {text}" for idx, text in enumerate(cover_texts(config)))}
 
-## Demo Plan
+## Demo 方案
 展示 {product} 的主要功能，并说明它能帮助 {viewer} 提升效率。
 
-## Outline
+## 三段式大纲
 1. 产品背景：介绍 {product} 的能力和定位。
 2. 功能展示：列出核心功能和使用场景。
 3. 总结价值：说明它适合哪些用户。
 
-## Script
+## 口播稿
 今天给大家介绍一个 AI 产品，叫 {product}。它可以帮助 {viewer} 提升效率，完成更复杂的任务。我们会先看它的核心功能，再看几个实际场景。整体来说，它能把原来需要人工处理的流程变得更自动化。最后，如果你也在做类似工作，可以关注一下这个方向。
 """
 
-    return f"""# AI Video Creative Package v2
+    return f"""# AI 视频创意包 v2
 
-## Title Candidates
+## 标题候选
 {chr(10).join(f"{idx + 1}. {title}" for idx, title in enumerate(titles(product, config)))}
 
-## Cover Text
+## 封面文案
 {chr(10).join(f"{idx + 1}. {text}" for idx, text in enumerate(cover_texts(config)))}
 
-## Demo Plan
-开场直接展示可见结果：{visible}。随后把同一个 brief 分别跑过 without_skill、with_skill v1、with_skill v2，让观众看到标题、封面、脚本和 badcase 归因的差异。
+## Demo 方案
+开场直接展示可见结果：{visible}。随后把同一个产品信息分别跑过 without_skill、with_skill v1、with_skill v2，让观众看到标题、封面、脚本和失败样例归因的差异。
 
-## Outline
+## 三段式大纲
 1. 第一部分｜结果先上屏：先给观众看 {visible}，再解释这不是普通视频策划，而是 Skill 工程化闭环。
-2. 第二部分｜三轮对照实测：without_skill 泛、v1 有框架但有 badcase、v2 通过 description 和 checklist 收紧后更稳。
-3. 第三部分｜价值总结：不是把 Prompt 写长，而是把经验变成可触发、可评测、可治理的能力资产。
+2. 第二部分｜三轮对照实测：without_skill 泛、v1 有框架但有失败样例、v2 通过 description 和 checklist 收紧后更稳。
+3. 第三部分｜价值总结：不是把提示词写长，而是把经验变成可触发、可评测、可治理的能力资产。
 
-## Script
+## 口播稿
 第一部分｜产品引出
-你现在看到的这份报告，不是我手动整理的，而是同一批 case 跑了三遍之后自动生成的结果。第一遍没有 Skill，输出很泛；第二遍用了 v1，结构好了，但封面太长、标题不够 B 站；第三遍 v2 加了触发边界和检查脚本，badcase 直接少了一截。这次我用的是 {product}，它要展示的不是一个更会写文案的 AI，而是一套 Skill 从编写、评测到治理的闭环。
+你现在看到的这份报告，不是我手动整理的，而是同一批样例跑了三遍之后自动生成的结果。第一遍没有 Skill，输出很泛；第二遍用了 v1，结构好了，但封面太长、标题不够 B 站；第三遍 v2 加了触发边界和检查脚本，失败样例直接少了一截。这次我用的是 {product}，它要展示的不是一个更会写文案的 AI，而是一套 Skill 从编写、评测到治理的闭环。
 
 第二部分｜亮点 + 实测展示
-首先，我们给它一个真实 brief：{visible}。without_skill 会直接写成产品介绍，标题像发布会，大纲也偏功能列表。接下来切到 v1，可以看到它已经知道要写标题、封面、大纲和口播，但问题也很明显：封面文案过长，标题没有足够的创作者实测感，负面 case 里甚至会把新闻稿误判成视频任务。重点是，这些问题不是靠感觉改，而是都被评分器拆成 trigger、outcome、style、efficiency 和 generalization。最后再到 v2，我们改 description，明确不处理新闻稿和项目计划；改 checklist，要求标题数量、封面行长和 demo-first；再加一个脚本验证输出结构。这样，整个 Skill 的修正路径就清楚了。
+首先，我们给它一个真实产品信息：{visible}。without_skill 会直接写成产品介绍，标题像发布会，大纲也偏功能列表。接下来切到 v1，可以看到它已经知道要写标题、封面、大纲和口播，但问题也很明显：封面文案过长，标题没有足够的创作者实测感，负向样例里甚至会把新闻稿误判成视频任务。重点是，这些问题不是靠感觉改，而是都被评分器拆成触发、产出、风格、效率和泛化。最后再到 v2，我们改 description，明确不处理新闻稿和项目计划；改 checklist，要求标题数量、封面行长和 Demo 优先；再加一个脚本验证输出结构。这样，整个 Skill 的修正路径就清楚了。
 
 第三部分｜价值总结 + 行动号召
-真正关键的是，Skill 不是长提示词，而是一个能被持续验证的能力包。以前你可能是凭感觉改，现在你可以看 trace、看 badcase、看 lift。别再只问这个 Skill 会不会跑了，先问它有没有稳定带来净增益。如果你也在做 Agent 工作流，建议先从 12 条 case 开始，把你的 Skill 跑起来。
+真正关键的是，Skill 不是长提示词，而是一个能被持续验证的能力包。以前你可能是凭感觉改，现在你可以看轨迹、看失败样例、看质量提升。别再只问这个 Skill 会不会跑了，先问它有没有稳定带来净增益。如果你也在做 Agent 工作流，建议先从 12 条样例开始，把你的 Skill 跑起来。
 
-## Self Check
+## 自检清单
 - 标题数量：10 个。
 - 封面文案：8 个，包含 2-3 行短句。
 - Demo：首屏展示可见结果。
@@ -341,9 +341,9 @@ def main() -> int:
         iteration=args.iteration,
         write_report=not args.no_report,
     )
-    print(f"Wrote run artifacts to {run_dir}")
+    print(f"已写入评测产物：{run_dir}")
     if not args.no_report:
-        print(f"Wrote report to {run_dir / 'report.md'}")
+        print(f"已写入报告：{run_dir / 'report.md'}")
     return 0
 
 

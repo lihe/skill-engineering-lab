@@ -5,31 +5,31 @@
     {
       "case_id": "boundary-sparse-brief",
       "run_config": "with_skill_v1",
-      "human_expected": "Sparse brief should still trigger the video creative Skill and ask only essential clarifying questions internally.",
-      "observed_behavior": "v1 did not trigger and fell back to a generic product content plan.",
-      "failure_pattern": "trigger_mismatch",
-      "root_cause": "description relied on explicit video/product wording and did not cover sparse creator-style requests.",
-      "suggested_action": "Broaden description to include creator brief, Bilibili-style video title, cover, demo, outline, or spoken script requests.",
+      "human_expected": "信息很少时也应该触发视频创作 Skill，并只在内部补齐必要澄清。",
+      "observed_behavior": "v1 没有触发，退回到了通用产品内容方案。",
+      "failure_pattern": "触发不匹配",
+      "root_cause": "description 依赖显式的视频或产品措辞，没有覆盖稀疏的创作者风格请求。",
+      "suggested_action": "扩展 description，覆盖创作者产品信息、B 站视频标题、封面、Demo、大纲或口播稿请求。",
       "should_regress": true
     },
     {
       "case_id": "extension-cover-only",
       "run_config": "with_skill_v1",
-      "human_expected": "Cover-only request should trigger the Skill and load cover-specific rules.",
-      "observed_behavior": "v1 missed the request because it was not framed as a full video package.",
-      "failure_pattern": "trigger_mismatch",
-      "root_cause": "description did not clearly list cover text as a direct trigger.",
-      "suggested_action": "Add cover text, thumbnail copy, and title-cover pairing to trigger conditions.",
+      "human_expected": "只要封面文案的请求也应该触发 Skill，并加载封面专项规则。",
+      "observed_behavior": "v1 因为请求没有被表述成完整视频创意包而漏触发。",
+      "failure_pattern": "触发不匹配",
+      "root_cause": "description 没有把封面文案明确列为直接触发条件。",
+      "suggested_action": "把封面文案、缩略图文案、标题封面搭配加入触发条件。",
       "should_regress": true
     },
     {
       "case_id": "negative-press-release",
       "run_config": "with_skill_v1",
-      "human_expected": "Official press-release writing should not trigger a Bilibili video creative Skill.",
-      "observed_behavior": "v1 triggered because its description said promotional content for AI products.",
-      "failure_pattern": "over_trigger",
-      "root_cause": "description lacked negative boundaries for press releases and generic non-video marketing copy.",
-      "suggested_action": "Add explicit do-not-use boundaries for press releases, official articles, project plans, and non-video content.",
+      "human_expected": "正式新闻稿写作不应该触发 B 站视频创作 Skill。",
+      "observed_behavior": "v1 因为 description 写了 AI 产品宣传内容而误触发。",
+      "failure_pattern": "过度触发",
+      "root_cause": "description 缺少新闻稿和通用非视频营销文案的负向边界。",
+      "suggested_action": "为新闻稿、官方文章、项目计划和非视频内容增加明确的禁用边界。",
       "should_regress": true
     }
   ]

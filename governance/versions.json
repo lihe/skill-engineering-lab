@@ -3,13 +3,13 @@
   "versions": [
     {
       "version": "v1",
-      "changed_parts": ["initial SKILL.md"],
-      "main_hypothesis": "A broad AI product video Skill can improve complete creative package generation over a no-skill baseline.",
+      "changed_parts": ["初版 SKILL.md"],
+      "main_hypothesis": "宽泛的 AI 产品视频 Skill 可以相对无 Skill 基线提升完整创意包生成质量。",
       "known_risks": [
-        "description too broad",
-        "weak negative boundaries",
-        "no deterministic output verifier",
-        "style rules not hardened"
+        "description 过宽",
+        "负向边界较弱",
+        "没有确定性输出校验器",
+        "风格规则没有硬化"
       ],
       "iteration": "iteration-001",
       "observed_metrics": {
@@ -18,15 +18,15 @@
         "over_trigger_rate": 0.5,
         "avg_tokens": 1142
       },
-      "decision": "iterate"
+      "decision": "继续迭代"
     },
     {
       "version": "v2",
-      "changed_parts": ["description", "SKILL.md checklist", "scripts/validate_package.py"],
-      "main_hypothesis": "Adding trigger boundaries, an explicit output contract, and deterministic checks improves quality while reducing wasted context.",
+      "changed_parts": ["description", "SKILL.md 检查清单", "scripts/validate_package.py"],
+      "main_hypothesis": "增加触发边界、显式产出契约和确定性检查，可以在提升质量的同时减少无效上下文消耗。",
       "known_risks": [
-        "simulated eval should be replaced by real LLM calls before production use",
-        "case set needs more real historical briefs"
+        "上线前需要把模拟评测替换成真实大模型调用",
+        "样例集还需要补充更多历史真实产品信息"
       ],
       "iteration": "iteration-001",
       "observed_metrics": {
@@ -35,7 +35,7 @@
         "over_trigger_rate": 0.0,
         "avg_tokens": 935
       },
-      "decision": "ship_mvp"
+      "decision": "发布 MVP"
     }
   ]
 }

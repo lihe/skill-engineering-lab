@@ -1,2 +1,2 @@
-{"ts": "2026-06-09T03:30:29.502576+00:00", "event": "case_start", "case_id": "negative-project-plan", "config": "without_skill"}
-{"ts": "2026-06-09T03:30:29.502582+00:00", "event": "skill_routing", "skill": "ai-video-creator-style", "triggered": false, "expected": false}
+{"ts": "2026-06-09T03:57:06.023071+00:00", "event": "case_start", "case_id": "negative-project-plan", "config": "without_skill"}
+{"ts": "2026-06-09T03:57:06.023079+00:00", "event": "skill_routing", "skill": "ai-video-creator-style", "triggered": false, "expected": false}

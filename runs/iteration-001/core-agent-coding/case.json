@@ -9,7 +9,7 @@
   "prompt": "给一个 AI coding agent 做 B 站视频方案：它能读项目、拆任务、跑测试、生成交接记录。",
   "brief": {
     "product": "CodePilot Agent",
-    "category": "AI coding agent",
+    "category": "AI 编程 Agent",
     "visible_result": "一句话把 issue 拆成可运行 PR",
     "viewer": "开发者"
   }

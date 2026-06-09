@@ -9,7 +9,7 @@
   "prompt": "做一个云推理平台的视频方案，它主打低成本跑开源大模型，想要有 B 站点击感。",
   "brief": {
     "product": "InferLite Cloud",
-    "category": "cloud inference",
+    "category": "云推理",
     "visible_result": "同样模型成本下降，延迟更稳",
     "viewer": "AI 应用开发者"
   }

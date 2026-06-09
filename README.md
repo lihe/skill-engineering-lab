@@ -1,38 +1,38 @@
 # Skill Engineering Lab
 
-This lab shows how a Skill moves through the engineering loop:
+这个实验室用于展示一个 Skill 如何完成工程化闭环：
 
 ```text
 without_skill -> with_skill_v1 -> with_skill_v2
 ```
 
-The theme is an AI video creative Skill: given an AI product brief, produce a Bilibili-style creative package with titles, cover text, demo plan, outline, and spoken script.
+示例主题是“AI 视频创作风格 Skill”：输入一个 AI 产品信息，生成适合 B 站的标题、封面文案、Demo 方案、大纲和口播稿。
 
-The lab is deterministic. It does not call an LLM API. Instead, it simulates three agent states and runs rule-based grading so the lab is stable for sharing.
+这个实验室采用确定性模拟，不直接调用大模型接口。它会模拟三种 Agent 状态，并用规则评分器生成稳定、可复现的评测结果，方便汇报分享。
 
-## Run
+## 运行
 
 ```bash
 python3 scripts/run_eval.py --skill ai-video-creator-style --cases evals/cases.json
 python3 scripts/summarize_report.py runs/iteration-001
 ```
 
-The report is written to:
+报告会写入：
 
 ```text
 runs/iteration-001/report.md
 report.md
 ```
 
-## What It Demonstrates
+## 展示内容
 
-- Whether the Skill triggers correctly.
-- Whether output quality improves.
-- Whether token/time costs change.
-- How badcases point to `description`, `SKILL.md`, references, or scripts.
-- How a Skill becomes a governed asset with cases, traces, grading, and reports.
+- Skill 是否在该触发时触发、在不该触发时保持沉默。
+- 引入 Skill 后，输出质量是否提升。
+- Token 和耗时成本是否发生变化。
+- 失败样例如何反推 `description`、`SKILL.md`、参考资料或脚本的迭代。
+- 一个 Skill 如何沉淀为带有样例、轨迹、评分和报告的团队资产。
 
-## Structure
+## 目录结构
 
 ```text
 skill-engineering-lab/

@@ -1,80 +1,80 @@
-# Skill Engineering Lab Report
+# Skill Engineering Lab 评测报告
 
-## Summary
+## 摘要
 
-Skill: `ai-video-creator-style`  
-Iteration: `iteration-001`  
-Cases: 12  
-Decision: **ship**
+评测对象：`ai-video-creator-style`  
+迭代版本：`iteration-001`  
+样例数：12  
+结论：**发布**
 
-This lab compares the same evaluation set across three states:
+这个实验室用同一组评测样例对比三种状态：
 
 ```text
 without_skill -> with_skill v1 -> with_skill v2
 ```
 
-The point is not that the generated video copy is beautiful. The point is that Skill behavior becomes observable, gradable, and improvable.
+重点不是生成的视频文案有多漂亮，而是让 Skill 的行为变得可观察、可评分、可改进。
 
-## Metrics
+## 核心指标
 
-| Config | Pass Rate | Trigger Recall | Over-trigger | Avg Tokens | Avg Time |
+| 配置 | 通过率 | 触发召回率 | 过度触发率 | 平均 Token | 平均耗时 |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| without_skill | 16.7% | n/a | n/a | 720 | 480 ms |
-| with_skill v1 | 75.0% | 80.0% | 50.0% | 1142 | 828 ms |
-| with_skill v2 | 100.0% | 100.0% | 0.0% | 935 | 625 ms |
+| 无 Skill | 16.7% | 不适用 | 不适用 | 720 | 480 ms |
+| 使用 Skill v1 | 75.0% | 80.0% | 50.0% | 1142 | 828 ms |
+| 使用 Skill v2 | 100.0% | 100.0% | 0.0% | 935 | 625 ms |
 
-## Lift
+## 提升幅度
 
-| Comparison | Quality Lift | Token Delta |
+| 对比 | 质量提升 | Token 变化 |
 | --- | ---: | ---: |
-| v1 vs baseline | 58.3% | 58.7% |
-| v2 vs baseline | 83.3% | 29.9% |
-| v2 vs v1 | 25.0% | -18.2% |
+| v1 相对基线 | 58.3% | 58.7% |
+| v2 相对基线 | 83.3% | 29.9% |
+| v2 相对 v1 | 25.0% | -18.2% |
 
-## What Changed From v1 To v2
+## v1 到 v2 的变化
 
-- `description` now includes negative boundaries: no press releases, project plans, issue triage, or generic non-video writing.
-- `SKILL.md` now has a clear output contract: titles, cover text, demo plan, outline, script, self-check.
-- Required checks are hardened: title count, cover line length, demo-first opening, old/new contrast.
-- A deterministic verifier script exists for package structure and line-length checks.
+- `description` 增加负向边界：不处理新闻稿、项目计划、issue 分诊或通用非视频写作。
+- `SKILL.md` 增加清晰的产出契约：标题、封面文案、Demo 方案、大纲、口播稿和自检。
+- 必检项被硬化：标题数量、封面行长、Demo 优先开场、旧方式和新方式对比。
+- 新增确定性校验脚本，用于检查创意包结构和文案行长。
 
-## Top v1 Badcases
+## v1 主要失败样例
 
-| Case | Type | Score | Failure Patterns |
+| 样例 | 类型 | 得分 | 失败模式 |
 | --- | --- | ---: | --- |
-| `boundary-sparse-brief` | boundary | 20.0% | trigger_mismatch, outcome_incomplete, style_weak, generalization_risk |
-| `extension-cover-only` | extension | 20.0% | trigger_mismatch, outcome_incomplete, style_weak, generalization_risk |
-| `negative-press-release` | negative | 50.0% | trigger_mismatch, outcome_incomplete, efficiency_cost |
+| `boundary-sparse-brief` | 边界 | 20.0% | 触发不匹配、产出不完整、风格较弱、泛化风险 |
+| `extension-cover-only` | 扩展 | 20.0% | 触发不匹配、产出不完整、风格较弱、泛化风险 |
+| `negative-press-release` | 负向 | 50.0% | 触发不匹配、产出不完整、效率成本偏高 |
 
-## Top v2 Badcases
+## v2 主要失败样例
 
-No failing badcases.
+没有失败样例。
 
-## Failure Pattern Diagnosis
+## 失败模式诊断
 
-| Pattern | without_skill | v1 | v2 | Suggested Action |
+| 失败模式 | 无 Skill | v1 | v2 | 建议动作 |
 | --- | ---: | ---: | ---: | --- |
-| efficiency_cost | 0 | 9 | 0 | Move deterministic checks into scripts and trim references. |
-| generalization_risk | 4 | 2 | 0 | Add paraphrase/boundary cases to regression set. |
-| outcome_incomplete | 10 | 3 | 0 | Harden required output checklist. |
-| style_weak | 10 | 10 | 0 | Improve references and examples. |
-| trigger_mismatch | 0 | 3 | 0 | Tighten or broaden `description` boundaries. |
+| 产出不完整 | 10 | 3 | 0 | 硬化必选产出检查清单。 |
+| 效率成本偏高 | 0 | 9 | 0 | 把确定性检查下沉到脚本，并裁剪参考资料。 |
+| 泛化风险 | 4 | 2 | 0 | 把改写和边界样例加入回归集。 |
+| 触发不匹配 | 0 | 3 | 0 | 收紧或扩展 `description` 的触发边界。 |
+| 风格较弱 | 10 | 10 | 0 | 补强参考资料和示例。 |
 
-## Governance Assets Created
+## 已创建的治理资产
 
-- `evals/cases.json`: 12-case seed eval set.
-- `runs/iteration-001/benchmark.json`: benchmark summary.
-- `runs/iteration-001/*/trace.jsonl`: routing and reference-loading traces.
-- `runs/iteration-001/*/grading.json`: structured grading output.
-- `skills/ai-video-creator-style/scripts/validate_package.py`: deterministic verifier.
-- `governance/versions.json`: version hypotheses, risks, metrics, and decisions.
-- `governance/reason_archive.json`: badcase root-cause archive.
-- `governance/regression_set.json`: must-keep regression cases.
+- `evals/cases.json`：12 条种子评测样例。
+- `runs/iteration-001/benchmark.json`：基准汇总。
+- `runs/iteration-001/*/trace.jsonl`：路由和参考资料加载轨迹。
+- `runs/iteration-001/*/grading.json`：结构化评分结果。
+- `skills/ai-video-creator-style/scripts/validate_package.py`：确定性校验器。
+- `governance/versions.json`：版本假设、风险、指标和决策。
+- `governance/reason_archive.json`：失败样例根因归档。
+- `governance/regression_set.json`：必须保留的回归样例。
 
-## Next Actions
+## 下一步动作
 
-1. Add 3-5 real product briefs from past work as regression cases.
-2. Replace the deterministic simulator with real LLM calls behind the same grading interface.
-3. Add a small HTML dashboard if this will be used in live workshops.
-4. Track future v3 changes in `governance/versions.json`.
-5. Keep negative cases in the regression set to prevent over-triggering.
+1. 从历史项目中加入 3-5 条真实产品信息作为回归样例。
+2. 在相同评分接口后面，把确定性模拟器替换成真实大模型调用。
+3. 如果要用于现场分享，增加一个轻量 HTML 看板。
+4. 在 `governance/versions.json` 中持续记录未来 v3 的变化。
+5. 持续保留负向样例，防止 Skill 过度触发。

@@ -1,7 +1,7 @@
-# Official Announcement Draft: LaunchAI
+# 官方新闻稿草稿：LaunchAI
 
-## Summary
-LaunchAI announces a new AI product update for enterprise users.
+## 摘要
+LaunchAI 面向企业用户发布一项新的 AI 产品更新。
 
-## Body
-This draft keeps an official release tone and avoids creator video scripting.
+## 正文
+这版草稿保持官方发布口吻，不生成创作者视频脚本。

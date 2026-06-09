@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Rule-based grader for the Skill Engineering Lab."""
+"""Skill Engineering Lab 的规则评分器。"""
 
 from __future__ import annotations
 
@@ -79,7 +79,7 @@ def style_score(text: str) -> Check:
         score += 1
     if has_contrast and has_opening and line_ok:
         score += 1
-    evidence = f"hook_terms={hits}; contrast={has_contrast}; opening={has_opening}; cover_line_length={line_ok}"
+    evidence = f"命中钩子={hits}; 有对比={has_contrast}; 有开场={has_opening}; 封面行长合格={line_ok}"
     return Check("style_alignment", score, 2, evidence)
 
 
@@ -91,7 +91,7 @@ def outcome_score(text: str, should_trigger: bool) -> Check:
             has_section(text, r"##\s+Script|##\s+口播稿"),
         ]
         score = 2 if not any(video_sections) else 0
-        return Check("outcome", score, 2, f"negative_case_video_sections={video_sections}")
+        return Check("outcome", score, 2, f"负向样例视频段落={video_sections}")
 
     title_count = numbered_count(text, r"##\s+Title Candidates|##\s+标题候选")
     cover_count = numbered_count(text, r"##\s+Cover Text|##\s+封面文案")
@@ -105,17 +105,17 @@ def outcome_score(text: str, should_trigger: bool) -> Check:
     if has_demo and has_outline and has_script:
         score += 1
     evidence = (
-        f"title_count={title_count}; cover_count={cover_count}; "
-        f"has_demo={has_demo}; has_outline={has_outline}; has_script={has_script}"
+        f"标题数量={title_count}; 封面数量={cover_count}; "
+        f"有Demo={has_demo}; 有大纲={has_outline}; 有口播稿={has_script}"
     )
     return Check("outcome", score, 2, evidence)
 
 
 def trigger_score(config: str, actual_triggered: bool, should_trigger: bool) -> Check:
     if config == "without_skill":
-        return Check("trigger", 2, 2, "baseline has no skill routing; excluded from trigger metrics")
+        return Check("trigger", 2, 2, "无 Skill 基线没有路由过程，不计入触发指标")
     score = 2 if actual_triggered == should_trigger else 0
-    return Check("trigger", score, 2, f"expected={should_trigger}; actual={actual_triggered}")
+    return Check("trigger", score, 2, f"预期={should_trigger}; 实际={actual_triggered}")
 
 
 def efficiency_score(token_estimate: int, baseline_tokens: int) -> Check:
@@ -126,17 +126,17 @@ def efficiency_score(token_estimate: int, baseline_tokens: int) -> Check:
         score = 1
     else:
         score = 0
-    return Check("efficiency", score, 2, f"token_estimate={token_estimate}; baseline={baseline_tokens}; delta={delta:.2%}")
+    return Check("efficiency", score, 2, f"Token估算={token_estimate}; 基线={baseline_tokens}; 变化={delta:.2%}")
 
 
 def generalization_score(case: dict[str, Any], checks: list[Check]) -> Check:
     risky = case.get("case_type") in {"boundary", "extension"} or "implicit_trigger" in case.get("risk_tag", [])
     if not risky:
-        return Check("generalization", 2, 2, "not a generalization stress case")
+        return Check("generalization", 2, 2, "不是泛化压力样例")
     trigger = next(check for check in checks if check.id == "trigger")
     outcome = next(check for check in checks if check.id == "outcome")
     score = 2 if trigger.score == 2 and outcome.score >= 1 else 0
-    return Check("generalization", score, 2, f"risk_tags={case.get('risk_tag', [])}; trigger={trigger.score}; outcome={outcome.score}")
+    return Check("generalization", score, 2, f"风险标签={case.get('risk_tag', [])}; 触发得分={trigger.score}; 产出得分={outcome.score}")
 
 
 def grade(
@@ -151,12 +151,12 @@ def grade(
     checks = [
         trigger_score(config, actual_triggered, case["should_trigger"]),
         outcome_score(output_text, case["should_trigger"]),
-        style_score(output_text) if case["should_trigger"] else Check("style_alignment", 2, 2, "negative case; no video style expected"),
+        style_score(output_text) if case["should_trigger"] else Check("style_alignment", 2, 2, "负向样例，不需要视频风格"),
         efficiency_score(token_estimate, baseline_tokens),
     ]
     checks.append(generalization_score(case, checks))
 
-    # Trigger is not counted in baseline overall quality because no skill routing exists there.
+    # 无 Skill 基线没有路由过程，所以总质量分不计入触发项。
     counted = [check for check in checks if not (config == "without_skill" and check.id == "trigger")]
     score = sum(check.score for check in counted)
     max_score = sum(check.max_score for check in counted)
@@ -165,15 +165,15 @@ def grade(
 
     failure_patterns = []
     if config != "without_skill" and checks[0].score == 0:
-        failure_patterns.append("trigger_mismatch")
+        failure_patterns.append("触发不匹配")
     if checks[1].score < 2:
-        failure_patterns.append("outcome_incomplete")
+        failure_patterns.append("产出不完整")
     if checks[2].score < 2:
-        failure_patterns.append("style_weak")
+        failure_patterns.append("风格较弱")
     if checks[3].score < 2:
-        failure_patterns.append("efficiency_cost")
+        failure_patterns.append("效率成本偏高")
     if checks[4].score < 2:
-        failure_patterns.append("generalization_risk")
+        failure_patterns.append("泛化风险")
 
     return {
         "case_id": case["id"],
