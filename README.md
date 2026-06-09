@@ -73,6 +73,8 @@ Dashboard 展示内容：
 
 为了便于作品集展示，本项目还提供两个面向读者的展示入口：
 
+线上地址：[skill-engineering-lab.vercel.app](https://skill-engineering-lab.vercel.app)
+
 | 入口 | 文件 | 用途 |
 | --- | --- | --- |
 | 研究型项目站 | [site/index.html](site/index.html) | 以公开研究站的方式讲清楚项目命题、证据、架构、benchmark 和治理闭环 |
@@ -88,6 +90,10 @@ open docs/ai-agent-skill-engineering.html
 这两个页面与 Dashboard 互相链接，形成“研究站 -> 方法论 -> Dashboard -> 报告”的完整展示路径。
 
 ## Vercel 部署
+
+当前生产环境：
+
+- [https://skill-engineering-lab.vercel.app](https://skill-engineering-lab.vercel.app)
 
 项目已经准备好静态站点部署入口：
 
