@@ -1,5 +1,7 @@
 {
   "duration_ms": 500,
   "token_estimate": 560,
-  "simulated": true
+  "simulated": true,
+  "provider": "mock",
+  "model": "deterministic-v1"
 }

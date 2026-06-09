@@ -203,6 +203,59 @@ main {
   background: var(--line);
 }
 
+.view-tabs {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: inline-flex;
+  gap: 6px;
+  margin-bottom: 16px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow);
+}
+
+.tab-button,
+.filter-button {
+  appearance: none;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.tab-button {
+  min-width: 112px;
+  padding: 10px 14px;
+}
+
+.filter-button {
+  min-height: 32px;
+  padding: 6px 10px;
+}
+
+.tab-button.active,
+.filter-button.active {
+  border-color: #bfdbfe;
+  background: #eff6ff;
+  color: var(--blue);
+}
+
+.view-panel {
+  display: none;
+}
+
+.view-panel.active {
+  display: block;
+}
+
 .metric-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -275,6 +328,13 @@ main {
   flex: 0 0 auto;
   font-size: 13px;
   font-weight: 800;
+}
+
+.case-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
 }
 
 .comparison-table-wrap {
@@ -429,14 +489,17 @@ main {
 
 .case-type-list,
 .badcase-list,
-.governance-list {
+.governance-list,
+.regression-list,
+.skill-diff-summary {
   display: grid;
   gap: 10px;
 }
 
 .case-type-item,
 .badcase-item,
-.governance-item {
+.governance-item,
+.diff-card {
   padding: 12px;
   border: 1px solid var(--soft);
   border-radius: 8px;
@@ -452,17 +515,38 @@ main {
 
 .case-type-item strong,
 .badcase-item strong,
-.governance-item strong {
+.governance-item strong,
+.diff-card strong {
   font-size: 14px;
 }
 
 .case-type-item span,
 .badcase-item p,
-.governance-item p {
+.governance-item p,
+.diff-card p {
   margin: 6px 0 0;
   color: var(--muted);
   font-size: 13px;
   line-height: 1.5;
+}
+
+.diff-card small {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.governance-item.compact {
+  padding: 10px 12px;
+}
+
+.case-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 16px;
+  align-items: start;
 }
 
 .case-matrix {
@@ -472,10 +556,22 @@ main {
 }
 
 .case-card {
+  appearance: none;
+  width: 100%;
   padding: 12px;
   border: 1px solid var(--soft);
   border-radius: 8px;
   background: #f8fafc;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.case-card.active {
+  border-color: #93c5fd;
+  background: #eff6ff;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
 }
 
 .case-card-header {
@@ -519,9 +615,99 @@ main {
   font-weight: 900;
 }
 
+.case-detail {
+  position: sticky;
+  top: 88px;
+  min-height: 360px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: var(--shadow);
+}
+
+.case-detail h3 {
+  margin: 0 0 12px;
+  overflow-wrap: anywhere;
+  font-size: 18px;
+}
+
+.detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.detail-meta span {
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.detail-row {
+  padding: 12px 0;
+  border-top: 1px solid var(--soft);
+}
+
+.detail-row b,
+.detail-row span {
+  display: block;
+}
+
+.detail-row span {
+  margin-top: 4px;
+  color: var(--slate);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.detail-row p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.diff-block {
+  overflow-x: auto;
+  margin: 0;
+  padding: 16px;
+  border-radius: 8px;
+  background: #0f172a;
+  color: #dbeafe;
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre;
+}
+
+.diff-line {
+  display: block;
+}
+
+.diff-line.add {
+  color: #bbf7d0;
+}
+
+.diff-line.remove {
+  color: #fecaca;
+}
+
+.diff-line.hunk {
+  color: #fde68a;
+}
+
+.diff-line.file {
+  color: #93c5fd;
+}
+
 @media (max-width: 1120px) {
   .summary-band,
-  .dashboard-grid {
+  .dashboard-grid,
+  .case-workspace {
     grid-template-columns: 1fr;
   }
 
@@ -535,6 +721,10 @@ main {
 
   .case-matrix {
     grid-template-columns: repeat(2, minmax(220px, 1fr));
+  }
+
+  .case-detail {
+    position: static;
   }
 }
 
@@ -575,5 +765,19 @@ main {
 
   .panel {
     padding: 16px;
+  }
+
+  .view-tabs {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .tab-button {
+    width: 100%;
+  }
+
+  .case-filters {
+    justify-content: flex-start;
   }
 }

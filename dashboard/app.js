@@ -1,4 +1,24 @@
 const data = window.SKILL_DASHBOARD_DATA;
+const skillDiff = window.SKILL_DIFF_DATA;
+
+const typeLabels = {
+  all: "全部",
+  core: "核心",
+  boundary: "边界",
+  extension: "扩展",
+  negative: "负向",
+};
+
+const configLabels = {
+  without_skill: "无 Skill",
+  with_skill_v1: "Skill v1",
+  with_skill_v2: "Skill v2",
+};
+
+const state = {
+  caseFilter: "all",
+  selectedCaseId: data.caseMatrix[0]?.caseId,
+};
 
 const fmtPct = (value) => (value === null || value === undefined ? "不适用" : `${value.toFixed(1)}%`);
 const fmtNum = (value) => Math.round(value).toLocaleString("zh-CN");
@@ -16,6 +36,7 @@ function renderRunMeta() {
   const items = [
     data.skill,
     data.iteration,
+    `${data.provider || "mock"} / ${data.model || "deterministic-v1"}`,
     `${data.cases} 条样例`,
     `生成于 ${new Date(data.generatedAt).toLocaleString("zh-CN", { hour12: false })}`,
   ];
@@ -23,6 +44,7 @@ function renderRunMeta() {
 }
 
 function renderHeadlineMetrics() {
+  const v2 = data.metrics.find((item) => item.config === "with_skill_v2");
   const metrics = [
     {
       title: "v2 相对基线质量提升",
@@ -31,7 +53,7 @@ function renderHeadlineMetrics() {
     },
     {
       title: "v2 触发召回率",
-      value: "100.0%",
+      value: fmtPct(v2.triggerRecall),
       desc: "正向视频创作任务全部触发目标 Skill。",
     },
     {
@@ -157,14 +179,15 @@ function renderCaseTypes() {
 }
 
 function renderBadcases() {
-  const list = data.reasonArchive.slice(0, 4);
+  const list = skillDiff?.badcaseFixMap || data.reasonArchive.slice(0, 4);
   document.getElementById("badcaseList").replaceChildren(
     ...list.map((item) =>
       el(
         "div",
         "badcase-item",
-        `<strong>${item.case_id}</strong>
-        <p>${item.failure_pattern}：${item.root_cause}</p>`,
+        `<strong>${item.caseId || item.case_id}</strong>
+        <p>${item.failurePattern || item.failure_pattern}：${item.rootCause || item.root_cause}</p>
+        <p><b>修复动作</b>：${item.fix || item.suggested_action}</p>`,
       ),
     ),
   );
@@ -174,6 +197,7 @@ function renderGovernance() {
   const latest = data.versions[data.versions.length - 1];
   const items = [
     ["版本决策", `${latest.version}：${latest.decision}`],
+    ["Provider", `${data.provider || "mock"} / ${data.model || "deterministic-v1"}`],
     ["回归样例", `${data.regressionSet.must_keep_cases.length} 条必须保留`],
     ["失败归因", `${data.reasonArchive.length} 条根因归档`],
     ["下一步风险", latest.known_risks.join("；")],
@@ -185,20 +209,41 @@ function renderGovernance() {
   );
 }
 
+function renderCaseFilters() {
+  const container = document.getElementById("caseFilters");
+  if (!container) return;
+  const filters = ["all", ...data.caseTypes.map((item) => item.type)];
+  container.replaceChildren(
+    ...filters.map((filter) => {
+      const button = el("button", `filter-button ${state.caseFilter === filter ? "active" : ""}`, typeLabels[filter]);
+      button.type = "button";
+      button.addEventListener("click", () => {
+        state.caseFilter = filter;
+        const first = filteredCases()[0];
+        state.selectedCaseId = first?.caseId;
+        renderCaseFilters();
+        renderCaseMatrix();
+        renderCaseDetail();
+      });
+      return button;
+    }),
+  );
+}
+
+function filteredCases() {
+  if (state.caseFilter === "all") return data.caseMatrix;
+  return data.caseMatrix.filter((item) => item.caseType === state.caseFilter);
+}
+
 function renderCaseMatrix() {
   const labels = {
     without_skill: "无",
     with_skill_v1: "v1",
     with_skill_v2: "v2",
   };
-  const typeLabels = {
-    core: "核心",
-    boundary: "边界",
-    extension: "扩展",
-    negative: "负向",
-  };
+  const cases = filteredCases();
   document.getElementById("caseMatrix").replaceChildren(
-    ...data.caseMatrix.map((item) => {
+    ...cases.map((item) => {
       const configHtml = Object.entries(labels)
         .map(([config, label]) => {
           const result = item.configs[config];
@@ -209,29 +254,141 @@ function renderCaseMatrix() {
           </div>`;
         })
         .join("");
-      return el(
-        "div",
-        "case-card",
+      const card = el(
+        "button",
+        `case-card ${item.caseId === state.selectedCaseId ? "active" : ""}`,
         `<div class="case-card-header">
           <h3>${item.caseId}</h3>
           <span class="pill">${typeLabels[item.caseType] || item.caseType}</span>
         </div>
         <div class="case-results">${configHtml}</div>`,
       );
+      card.type = "button";
+      card.addEventListener("click", () => {
+        state.selectedCaseId = item.caseId;
+        renderCaseMatrix();
+        renderCaseDetail();
+      });
+      return card;
     }),
   );
 }
 
+function renderCaseDetail() {
+  const container = document.getElementById("caseDetail");
+  if (!container) return;
+  const selected = data.caseMatrix.find((item) => item.caseId === state.selectedCaseId) || filteredCases()[0];
+  if (!selected) {
+    container.innerHTML = "<p>当前筛选下没有样例。</p>";
+    return;
+  }
+
+  const rows = Object.entries(configLabels)
+    .map(([config, label]) => {
+      const result = selected.configs[config];
+      const status = result.pass ? "通过" : "待修复";
+      const patterns = result.failurePatterns.length ? result.failurePatterns.join("、") : "无";
+      return `<div class="detail-row">
+        <b>${label}</b>
+        <span>${status} · ${fmtPct(result.score)} · ${fmtNum(result.tokens)} token</span>
+        <p>${patterns}</p>
+      </div>`;
+    })
+    .join("");
+
+  container.innerHTML = `
+    <p class="eyebrow">Selected Case</p>
+    <h3>${selected.caseId}</h3>
+    <div class="detail-meta">
+      <span>${typeLabels[selected.caseType] || selected.caseType}</span>
+      <span>${selected.shouldTrigger ? "应触发" : "不应触发"}</span>
+    </div>
+    ${rows}
+  `;
+}
+
+function renderSkillDiff() {
+  if (!skillDiff) return;
+
+  const summary = document.getElementById("skillDiffSummary");
+  const diffBlock = document.getElementById("skillDiffBlock");
+  summary.replaceChildren(
+    el(
+      "div",
+      "diff-card",
+      `<strong>Description 收紧</strong>
+      <p>${skillDiff.description.impact}</p>
+      <small>v1：${skillDiff.description.from}</small>
+      <small>v2：${skillDiff.description.to}</small>`,
+    ),
+    el(
+      "div",
+      "diff-card",
+      `<strong>指标变化</strong>
+      <p>通过率 +${skillDiff.metricDelta.passRate.toFixed(1)}%，过度触发 ${skillDiff.metricDelta.overTriggerRate.toFixed(1)}%，平均 Token ${skillDiff.metricDelta.avgTokens}。</p>`,
+    ),
+    el(
+      "div",
+      "diff-card",
+      `<strong>改动面</strong>
+      <p>${skillDiff.changedParts.join("、")}</p>
+      <small>${skillDiff.hypothesis}</small>`,
+    ),
+  );
+
+  diffBlock.innerHTML = skillDiff.skillMdDiff
+    .map((line) => `<span class="diff-line ${line.type}">${escapeHtml(line.text)}</span>`)
+    .join("");
+}
+
+function renderRegressionList() {
+  const container = document.getElementById("regressionList");
+  if (!container) return;
+  const regression = skillDiff?.regressionSet || data.regressionSet;
+  const reason = regression.reason;
+  container.replaceChildren(
+    el("div", "governance-item", `<strong>保护原因</strong><p>${reason}</p>`),
+    ...regression.must_keep_cases.map((caseId) =>
+      el("div", "governance-item compact", `<strong>${caseId}</strong><p>必须保留在每轮回归测试中。</p>`),
+    ),
+  );
+}
+
+function setupTabs() {
+  const buttons = [...document.querySelectorAll(".tab-button")];
+  const panels = [...document.querySelectorAll(".view-panel")];
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const target = button.dataset.viewTarget;
+      buttons.forEach((item) => item.classList.toggle("active", item === button));
+      panels.forEach((panel) => panel.classList.toggle("active", panel.id === target));
+    });
+  });
+}
+
+function escapeHtml(value) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
+}
+
 function render() {
+  setupTabs();
   renderRunMeta();
   renderHeadlineMetrics();
   renderMetricTable();
   renderLiftStack();
   renderPatternChart();
   renderCaseTypes();
+  renderCaseFilters();
   renderBadcases();
   renderGovernance();
   renderCaseMatrix();
+  renderCaseDetail();
+  renderSkillDiff();
+  renderRegressionList();
 }
 
 render();

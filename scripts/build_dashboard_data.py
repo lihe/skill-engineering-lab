@@ -155,6 +155,8 @@ def build_payload(run_dir: Path) -> dict[str, Any]:
         "generatedAt": benchmark["finished_at"],
         "skill": benchmark["skill"],
         "iteration": benchmark["iteration"],
+        "provider": benchmark.get("provider", "mock"),
+        "model": benchmark.get("model", "deterministic-v1"),
         "cases": benchmark["cases"],
         "metrics": metrics,
         "headline": {

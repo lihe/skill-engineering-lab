@@ -1,3 +1,4 @@
-{"ts": "2026-06-09T03:57:05.984115+00:00", "event": "case_start", "case_id": "extension-cover-only", "config": "with_skill_v2"}
-{"ts": "2026-06-09T03:57:05.984121+00:00", "event": "skill_routing", "skill": "ai-video-creator-style", "triggered": true, "expected": true}
-{"ts": "2026-06-09T03:57:05.984122+00:00", "event": "reference_loaded", "files": ["title-formulas.md", "cover-style.md", "checklist.md"]}
+{"ts": "2026-06-09T10:34:58.777781+00:00", "event": "case_start", "case_id": "extension-cover-only", "config": "with_skill_v2"}
+{"ts": "2026-06-09T10:34:58.777786+00:00", "event": "skill_routing", "skill": "ai-video-creator-style", "triggered": true, "expected": true, "provider": "mock", "model": "deterministic-v1"}
+{"ts": "2026-06-09T10:34:58.777788+00:00", "event": "provider_generate", "provider": "mock", "model": "deterministic-v1", "simulated": true, "routing_policy": "with_skill_v2"}
+{"ts": "2026-06-09T10:34:58.777789+00:00", "event": "reference_loaded", "files": ["title-formulas.md", "cover-style.md", "checklist.md"]}

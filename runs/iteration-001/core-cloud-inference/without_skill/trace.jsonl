@@ -1,2 +1,3 @@
-{"ts": "2026-06-09T03:57:05.826031+00:00", "event": "case_start", "case_id": "core-cloud-inference", "config": "without_skill"}
-{"ts": "2026-06-09T03:57:05.826035+00:00", "event": "skill_routing", "skill": "ai-video-creator-style", "triggered": false, "expected": true}
+{"ts": "2026-06-09T10:34:58.612009+00:00", "event": "case_start", "case_id": "core-cloud-inference", "config": "without_skill"}
+{"ts": "2026-06-09T10:34:58.612013+00:00", "event": "skill_routing", "skill": "ai-video-creator-style", "triggered": false, "expected": true, "provider": "mock", "model": "deterministic-v1"}
+{"ts": "2026-06-09T10:34:58.612015+00:00", "event": "provider_generate", "provider": "mock", "model": "deterministic-v1", "simulated": true, "routing_policy": "without_skill"}

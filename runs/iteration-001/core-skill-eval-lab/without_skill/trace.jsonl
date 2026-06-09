@@ -1,2 +1,3 @@
-{"ts": "2026-06-09T03:57:05.699876+00:00", "event": "case_start", "case_id": "core-skill-eval-lab", "config": "without_skill"}
-{"ts": "2026-06-09T03:57:05.699879+00:00", "event": "skill_routing", "skill": "ai-video-creator-style", "triggered": false, "expected": true}
+{"ts": "2026-06-09T10:34:58.531211+00:00", "event": "case_start", "case_id": "core-skill-eval-lab", "config": "without_skill"}
+{"ts": "2026-06-09T10:34:58.531213+00:00", "event": "skill_routing", "skill": "ai-video-creator-style", "triggered": false, "expected": true, "provider": "mock", "model": "deterministic-v1"}
+{"ts": "2026-06-09T10:34:58.531215+00:00", "event": "provider_generate", "provider": "mock", "model": "deterministic-v1", "simulated": true, "routing_policy": "without_skill"}

@@ -1,8 +1,10 @@
 {
   "skill": "ai-video-creator-style",
   "iteration": "iteration-001",
-  "started_at": "2026-06-09T03:57:05.690786+00:00",
-  "finished_at": "2026-06-09T03:57:06.034960+00:00",
+  "provider": "mock",
+  "model": "deterministic-v1",
+  "started_at": "2026-06-09T10:34:58.527545+00:00",
+  "finished_at": "2026-06-09T10:34:58.817478+00:00",
   "cases": 12,
   "configs": [
     "without_skill",
@@ -23,7 +25,10 @@
         "风格较弱"
       ],
       "token_estimate": 760,
-      "duration_ms": 480
+      "duration_ms": 480,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "core-skill-eval-lab",
@@ -38,7 +43,10 @@
         "效率成本偏高"
       ],
       "token_estimate": 1250,
-      "duration_ms": 930
+      "duration_ms": 930,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "core-skill-eval-lab",
@@ -50,7 +58,10 @@
       "score_ratio": 1.0,
       "failure_patterns": [],
       "token_estimate": 1010,
-      "duration_ms": 650
+      "duration_ms": 650,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "core-agent-coding",
@@ -65,7 +76,10 @@
         "风格较弱"
       ],
       "token_estimate": 760,
-      "duration_ms": 480
+      "duration_ms": 480,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "core-agent-coding",
@@ -80,7 +94,10 @@
         "效率成本偏高"
       ],
       "token_estimate": 1250,
-      "duration_ms": 930
+      "duration_ms": 930,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "core-agent-coding",
@@ -92,7 +109,10 @@
       "score_ratio": 1.0,
       "failure_patterns": [],
       "token_estimate": 1010,
-      "duration_ms": 650
+      "duration_ms": 650,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "core-mcp-db",
@@ -107,7 +127,10 @@
         "风格较弱"
       ],
       "token_estimate": 760,
-      "duration_ms": 480
+      "duration_ms": 480,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "core-mcp-db",
@@ -122,7 +145,10 @@
         "效率成本偏高"
       ],
       "token_estimate": 1250,
-      "duration_ms": 930
+      "duration_ms": 930,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "core-mcp-db",
@@ -134,7 +160,10 @@
       "score_ratio": 1.0,
       "failure_patterns": [],
       "token_estimate": 1010,
-      "duration_ms": 650
+      "duration_ms": 650,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "core-ai-image",
@@ -149,7 +178,10 @@
         "风格较弱"
       ],
       "token_estimate": 760,
-      "duration_ms": 480
+      "duration_ms": 480,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "core-ai-image",
@@ -164,7 +196,10 @@
         "效率成本偏高"
       ],
       "token_estimate": 1250,
-      "duration_ms": 930
+      "duration_ms": 930,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "core-ai-image",
@@ -176,7 +211,10 @@
       "score_ratio": 1.0,
       "failure_patterns": [],
       "token_estimate": 1010,
-      "duration_ms": 650
+      "duration_ms": 650,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "core-cloud-inference",
@@ -191,7 +229,10 @@
         "风格较弱"
       ],
       "token_estimate": 760,
-      "duration_ms": 480
+      "duration_ms": 480,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "core-cloud-inference",
@@ -206,7 +247,10 @@
         "效率成本偏高"
       ],
       "token_estimate": 1250,
-      "duration_ms": 930
+      "duration_ms": 930,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "core-cloud-inference",
@@ -218,7 +262,10 @@
       "score_ratio": 1.0,
       "failure_patterns": [],
       "token_estimate": 1010,
-      "duration_ms": 650
+      "duration_ms": 650,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "core-meeting-agent",
@@ -233,7 +280,10 @@
         "风格较弱"
       ],
       "token_estimate": 760,
-      "duration_ms": 480
+      "duration_ms": 480,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "core-meeting-agent",
@@ -248,7 +298,10 @@
         "效率成本偏高"
       ],
       "token_estimate": 1250,
-      "duration_ms": 930
+      "duration_ms": 930,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "core-meeting-agent",
@@ -260,7 +313,10 @@
       "score_ratio": 1.0,
       "failure_patterns": [],
       "token_estimate": 1010,
-      "duration_ms": 650
+      "duration_ms": 650,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "boundary-sparse-brief",
@@ -276,7 +332,10 @@
         "泛化风险"
       ],
       "token_estimate": 760,
-      "duration_ms": 480
+      "duration_ms": 480,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "boundary-sparse-brief",
@@ -293,7 +352,10 @@
         "泛化风险"
       ],
       "token_estimate": 820,
-      "duration_ms": 520
+      "duration_ms": 520,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "boundary-sparse-brief",
@@ -305,7 +367,10 @@
       "score_ratio": 1.0,
       "failure_patterns": [],
       "token_estimate": 1010,
-      "duration_ms": 650
+      "duration_ms": 650,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "boundary-complex-brief",
@@ -321,7 +386,10 @@
         "泛化风险"
       ],
       "token_estimate": 760,
-      "duration_ms": 480
+      "duration_ms": 480,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "boundary-complex-brief",
@@ -336,7 +404,10 @@
         "效率成本偏高"
       ],
       "token_estimate": 1250,
-      "duration_ms": 930
+      "duration_ms": 930,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "boundary-complex-brief",
@@ -348,7 +419,10 @@
       "score_ratio": 1.0,
       "failure_patterns": [],
       "token_estimate": 1010,
-      "duration_ms": 650
+      "duration_ms": 650,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "extension-title-pool",
@@ -364,7 +438,10 @@
         "泛化风险"
       ],
       "token_estimate": 760,
-      "duration_ms": 480
+      "duration_ms": 480,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "extension-title-pool",
@@ -379,7 +456,10 @@
         "效率成本偏高"
       ],
       "token_estimate": 1250,
-      "duration_ms": 930
+      "duration_ms": 930,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "extension-title-pool",
@@ -391,7 +471,10 @@
       "score_ratio": 1.0,
       "failure_patterns": [],
       "token_estimate": 1010,
-      "duration_ms": 650
+      "duration_ms": 650,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "extension-cover-only",
@@ -407,7 +490,10 @@
         "泛化风险"
       ],
       "token_estimate": 760,
-      "duration_ms": 480
+      "duration_ms": 480,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "extension-cover-only",
@@ -424,7 +510,10 @@
         "泛化风险"
       ],
       "token_estimate": 820,
-      "duration_ms": 520
+      "duration_ms": 520,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "extension-cover-only",
@@ -436,7 +525,10 @@
       "score_ratio": 1.0,
       "failure_patterns": [],
       "token_estimate": 1010,
-      "duration_ms": 650
+      "duration_ms": 650,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "negative-press-release",
@@ -448,7 +540,10 @@
       "score_ratio": 1.0,
       "failure_patterns": [],
       "token_estimate": 520,
-      "duration_ms": 480
+      "duration_ms": 480,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "negative-press-release",
@@ -464,7 +559,10 @@
         "效率成本偏高"
       ],
       "token_estimate": 1250,
-      "duration_ms": 930
+      "duration_ms": 930,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "negative-press-release",
@@ -476,7 +574,10 @@
       "score_ratio": 1.0,
       "failure_patterns": [],
       "token_estimate": 560,
-      "duration_ms": 500
+      "duration_ms": 500,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "negative-project-plan",
@@ -488,7 +589,10 @@
       "score_ratio": 1.0,
       "failure_patterns": [],
       "token_estimate": 520,
-      "duration_ms": 480
+      "duration_ms": 480,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "negative-project-plan",
@@ -500,7 +604,10 @@
       "score_ratio": 1.0,
       "failure_patterns": [],
       "token_estimate": 820,
-      "duration_ms": 520
+      "duration_ms": 520,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     },
     {
       "case_id": "negative-project-plan",
@@ -512,7 +619,10 @@
       "score_ratio": 1.0,
       "failure_patterns": [],
       "token_estimate": 560,
-      "duration_ms": 500
+      "duration_ms": 500,
+      "provider": "mock",
+      "model": "deterministic-v1",
+      "simulated": true
     }
   ]
 }

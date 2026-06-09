@@ -43,85 +43,134 @@
         </div>
       </section>
 
-      <section class="metric-grid" id="headlineMetrics" aria-label="核心指标"></section>
+      <section class="view-tabs" aria-label="Dashboard 视图切换">
+        <button class="tab-button active" type="button" data-view-target="overviewView">Overview</button>
+        <button class="tab-button" type="button" data-view-target="casesView">Cases</button>
+        <button class="tab-button" type="button" data-view-target="governanceView">Governance</button>
+      </section>
 
-      <section class="dashboard-grid">
-        <article class="panel wide">
-          <div class="panel-heading">
-            <div>
-              <p class="eyebrow">三态对照</p>
-              <h2>质量、触发与成本</h2>
+      <section class="view-panel active" id="overviewView">
+        <section class="metric-grid" id="headlineMetrics" aria-label="核心指标"></section>
+
+        <section class="dashboard-grid">
+          <article class="panel wide">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">三态对照</p>
+                <h2>质量、触发与成本</h2>
+              </div>
+              <a href="/report.md">查看报告</a>
             </div>
-            <a href="/report.md">查看报告</a>
-          </div>
-          <div class="comparison-table-wrap">
-            <table class="comparison-table" id="metricTable"></table>
-          </div>
-        </article>
-
-        <article class="panel">
-          <div class="panel-heading">
-            <div>
-              <p class="eyebrow">Lift</p>
-              <h2>v2 相对收益</h2>
+            <div class="comparison-table-wrap">
+              <table class="comparison-table" id="metricTable"></table>
             </div>
-          </div>
-          <div class="lift-stack" id="liftStack"></div>
-        </article>
+          </article>
 
-        <article class="panel wide">
-          <div class="panel-heading">
-            <div>
-              <p class="eyebrow">Failure Taxonomy</p>
-              <h2>失败模式收敛</h2>
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Lift</p>
+                <h2>v2 相对收益</h2>
+              </div>
             </div>
-          </div>
-          <div class="pattern-chart" id="patternChart"></div>
-        </article>
+            <div class="lift-stack" id="liftStack"></div>
+          </article>
 
-        <article class="panel">
-          <div class="panel-heading">
-            <div>
-              <p class="eyebrow">Case Design</p>
-              <h2>样例分布</h2>
+          <article class="panel wide">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Failure Taxonomy</p>
+                <h2>失败模式收敛</h2>
+              </div>
             </div>
-          </div>
-          <div class="case-type-list" id="caseTypes"></div>
-        </article>
+            <div class="pattern-chart" id="patternChart"></div>
+          </article>
 
-        <article class="panel">
-          <div class="panel-heading">
-            <div>
-              <p class="eyebrow">Badcase</p>
-              <h2>v1 主要失败样例</h2>
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Case Design</p>
+                <h2>样例分布</h2>
+              </div>
             </div>
-          </div>
-          <div class="badcase-list" id="badcaseList"></div>
-        </article>
+            <div class="case-type-list" id="caseTypes"></div>
+          </article>
+        </section>
+      </section>
 
-        <article class="panel">
-          <div class="panel-heading">
-            <div>
-              <p class="eyebrow">Governance</p>
-              <h2>治理资产</h2>
-            </div>
-          </div>
-          <div class="governance-list" id="governanceList"></div>
-        </article>
-
+      <section class="view-panel" id="casesView">
         <article class="panel full">
           <div class="panel-heading">
             <div>
               <p class="eyebrow">Case Matrix</p>
               <h2>样例级回归视图</h2>
             </div>
+            <div class="case-filters" id="caseFilters"></div>
           </div>
-          <div class="case-matrix" id="caseMatrix"></div>
+          <div class="case-workspace">
+            <div class="case-matrix" id="caseMatrix"></div>
+            <aside class="case-detail" id="caseDetail" aria-label="样例详情"></aside>
+          </div>
         </article>
+      </section>
+
+      <section class="view-panel" id="governanceView">
+        <section class="dashboard-grid">
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Governance</p>
+                <h2>治理资产</h2>
+              </div>
+            </div>
+            <div class="governance-list" id="governanceList"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Version Diff</p>
+                <h2>v1 到 v2 改了什么</h2>
+              </div>
+            </div>
+            <div class="skill-diff-summary" id="skillDiffSummary"></div>
+          </article>
+
+          <article class="panel wide">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Badcase</p>
+                <h2>失败归因与修复路径</h2>
+              </div>
+            </div>
+            <div class="badcase-list" id="badcaseList"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Regression</p>
+                <h2>回归保护集</h2>
+              </div>
+            </div>
+            <div class="regression-list" id="regressionList"></div>
+          </article>
+
+          <article class="panel full">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">SKILL.md Patch</p>
+                <h2>关键文本 Diff</h2>
+              </div>
+            </div>
+            <pre class="diff-block" id="skillDiffBlock"></pre>
+          </article>
+        </section>
       </section>
     </main>
 
     <script src="/dashboard/data.js"></script>
+    <script src="/dashboard/skill_diff.js"></script>
     <script src="/dashboard/app.js"></script>
   </body>
 </html>

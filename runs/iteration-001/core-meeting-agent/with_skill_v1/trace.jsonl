@@ -1,3 +1,4 @@
-{"ts": "2026-06-09T03:57:05.846692+00:00", "event": "case_start", "case_id": "core-meeting-agent", "config": "with_skill_v1"}
-{"ts": "2026-06-09T03:57:05.846697+00:00", "event": "skill_routing", "skill": "ai-video-creator-style", "triggered": true, "expected": true}
-{"ts": "2026-06-09T03:57:05.846699+00:00", "event": "reference_loaded", "files": ["title-formulas.md", "cover-style.md", "checklist.md"]}
+{"ts": "2026-06-09T10:34:58.641656+00:00", "event": "case_start", "case_id": "core-meeting-agent", "config": "with_skill_v1"}
+{"ts": "2026-06-09T10:34:58.641660+00:00", "event": "skill_routing", "skill": "ai-video-creator-style", "triggered": true, "expected": true, "provider": "mock", "model": "deterministic-v1"}
+{"ts": "2026-06-09T10:34:58.641661+00:00", "event": "provider_generate", "provider": "mock", "model": "deterministic-v1", "simulated": true, "routing_policy": "with_skill_v1"}
+{"ts": "2026-06-09T10:34:58.641662+00:00", "event": "reference_loaded", "files": ["title-formulas.md", "cover-style.md", "checklist.md"]}

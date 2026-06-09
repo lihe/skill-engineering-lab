@@ -186,6 +186,7 @@ def summarize(run_dir: Path) -> str:
 
 评测对象：`{benchmark['skill']}`  
 迭代版本：`{benchmark['iteration']}`  
+Provider：`{benchmark.get('provider', 'mock')}` / `{benchmark.get('model', 'deterministic-v1')}`  
 样例数：{benchmark['cases']}  
 结论：**{final_decision}**
 
@@ -229,7 +230,9 @@ without_skill -> with_skill v1 -> with_skill v2
 - `evals/cases.json`：12 条种子评测样例。
 - `runs/{benchmark['iteration']}/benchmark.json`：基准汇总。
 - `runs/{benchmark['iteration']}/*/trace.jsonl`：路由和参考资料加载轨迹。
+- `runs/{benchmark['iteration']}/*/provider.json`：Provider、模型和真实 usage 信息。
 - `runs/{benchmark['iteration']}/*/grading.json`：结构化评分结果。
+- `providers/`：统一 mock、OpenAI、Anthropic 的模型运行适配层。
 - `skills/ai-video-creator-style/scripts/validate_package.py`：确定性校验器。
 - `governance/versions.json`：版本假设、风险、指标和决策。
 - `governance/reason_archive.json`：失败样例根因归档。
@@ -238,8 +241,8 @@ without_skill -> with_skill v1 -> with_skill v2
 ## 下一步动作
 
 1. 从历史项目中加入 3-5 条真实产品信息作为回归样例。
-2. 在相同评分接口后面，把确定性模拟器替换成真实大模型调用。
-3. 如果要用于现场分享，增加一个轻量 HTML 看板。
+2. 将 OpenAI / Anthropic provider 接入稳定回归环境，补齐密钥管理和费用上限。
+3. 引入 LLM Judge 作为风格评价补充，但保留确定性检查作为主验收。
 4. 在 `governance/versions.json` 中持续记录未来 v3 的变化。
 5. 持续保留负向样例，防止 Skill 过度触发。
 """

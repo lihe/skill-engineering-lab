@@ -1,0 +1,6 @@
+{
+  "provider": "mock",
+  "model": "deterministic-v1",
+  "simulated": true,
+  "raw_usage": {}
+}

@@ -1,7 +1,9 @@
 window.SKILL_DASHBOARD_DATA = {
-  "generatedAt": "2026-06-09T03:57:06.034960+00:00",
+  "generatedAt": "2026-06-09T10:34:58.817478+00:00",
   "skill": "ai-video-creator-style",
   "iteration": "iteration-001",
+  "provider": "mock",
+  "model": "deterministic-v1",
   "cases": 12,
   "metrics": [
     {
@@ -604,7 +606,7 @@ window.SKILL_DASHBOARD_DATA = {
       ],
       "main_hypothesis": "增加触发边界、显式产出契约和确定性检查，可以在提升质量的同时减少无效上下文消耗。",
       "known_risks": [
-        "上线前需要把模拟评测替换成真实大模型调用",
+        "真实 provider adapter 已接入，仍需建立稳定 API 回归环境和密钥管理策略",
         "样例集还需要补充更多历史真实产品信息"
       ],
       "iteration": "iteration-001",

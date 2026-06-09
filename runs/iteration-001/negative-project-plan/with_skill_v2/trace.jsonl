@@ -1,2 +1,3 @@
-{"ts": "2026-06-09T03:57:06.032067+00:00", "event": "case_start", "case_id": "negative-project-plan", "config": "with_skill_v2"}
-{"ts": "2026-06-09T03:57:06.032072+00:00", "event": "skill_routing", "skill": "ai-video-creator-style", "triggered": false, "expected": false}
+{"ts": "2026-06-09T10:34:58.814386+00:00", "event": "case_start", "case_id": "negative-project-plan", "config": "with_skill_v2"}
+{"ts": "2026-06-09T10:34:58.814388+00:00", "event": "skill_routing", "skill": "ai-video-creator-style", "triggered": false, "expected": false, "provider": "mock", "model": "deterministic-v1"}
+{"ts": "2026-06-09T10:34:58.814389+00:00", "event": "provider_generate", "provider": "mock", "model": "deterministic-v1", "simulated": true, "routing_policy": "with_skill_v2"}

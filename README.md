@@ -1,7 +1,7 @@
 # Skill Engineering Lab
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB)
-![Eval](https://img.shields.io/badge/Eval-deterministic-16A34A)
+![Eval](https://img.shields.io/badge/Eval-mock%20%2B%20provider%20adapter-16A34A)
 ![Skill](https://img.shields.io/badge/Agent%20Skill-engineering%20loop-2563EB)
 ![Language](https://img.shields.io/badge/Docs-%E4%B8%AD%E6%96%87-111827)
 
@@ -61,13 +61,11 @@ make dashboard-data
 open dashboard/index.html
 ```
 
-Dashboard 展示内容：
+Dashboard 按轻量评测产品设计为三个视图：
 
-- 核心指标卡：质量提升、触发召回、过度触发下降、Token 变化。
-- 三态对照表：无 Skill、Skill v1、Skill v2 的质量和成本。
-- 失败模式收敛图：展示 v1 的问题如何在 v2 中被消除。
-- 样例级回归视图：逐条 case 展示三种配置下的得分。
-- 治理资产概览：版本决策、回归样例、失败归因和后续风险。
+- Overview：核心指标卡、三态对照表、失败模式收敛、样例分布。
+- Cases：样例筛选、样例级得分矩阵、单 case 触发/质量/成本详情。
+- Governance：版本决策、v1/v2 Diff、badcase 根因、修复动作、回归保护集。
 
 ## 研究站点与方法论文章
 
@@ -129,15 +127,18 @@ vercel --prod
 | 轨迹记录 | 每次运行记录路由、触发结果、参考资料加载情况 |
 | 失败归因 | `governance/reason_archive.json` 记录根因和下一步动作 |
 | 回归治理 | `governance/regression_set.json` 固化必须保留的黄金样例 |
+| 模型适配层 | `providers/mock.py`、`providers/openai.py`、`providers/anthropic.py` 统一真实/模拟运行结果 |
+| 版本 Diff | `scripts/build_skill_diff.py` 生成 `dashboard/skill_diff.js`，展示 v1 到 v2 的工程改动 |
 
 ## 系统架构
 
 ```mermaid
 flowchart LR
     A["评测样例<br/>evals/cases.json"] --> B["评测运行器<br/>scripts/run_eval.py"]
-    B --> C1["无 Skill 基线"]
-    B --> C2["Skill v1"]
-    B --> C3["Skill v2"]
+    B --> P["Provider Adapter<br/>mock / openai / anthropic"]
+    P --> C1["无 Skill 基线"]
+    P --> C2["Skill v1"]
+    P --> C3["Skill v2"]
     C1 --> D["输出与轨迹<br/>runs/iteration-001"]
     C2 --> D
     C3 --> D
@@ -169,7 +170,14 @@ Skill = 路由入口
 运行完整评测：
 
 ```bash
-python3 scripts/run_eval.py --skill ai-video-creator-style --cases evals/cases.json
+python3 scripts/run_eval.py --skill ai-video-creator-style --cases evals/cases.json --provider mock
+```
+
+默认使用 `mock` provider，保证演示稳定、结果可复现。项目也预留真实模型适配层：
+
+```bash
+OPENAI_API_KEY=... python3 scripts/run_eval.py --provider openai --model gpt-4.1-mini
+ANTHROPIC_API_KEY=... python3 scripts/run_eval.py --provider anthropic --model claude-3-5-sonnet-latest
 ```
 
 重新生成报告：
@@ -190,6 +198,7 @@ python3 skills/ai-video-creator-style/scripts/validate_package.py \
 ```bash
 make eval
 make dashboard-data
+make skill-diff
 make verify
 make check
 make site-check
@@ -233,7 +242,13 @@ skill-engineering-lab/
 │   └── files/
 ├── runs/
 │   └── iteration-001/
+├── providers/
+│   ├── mock.py
+│   ├── openai.py
+│   └── anthropic.py
 ├── scripts/
+│   ├── build_dashboard_data.py
+│   ├── build_skill_diff.py
 │   ├── grade_output.py
 │   ├── run_eval.py
 │   └── summarize_report.py
@@ -245,7 +260,8 @@ skill-engineering-lab/
 │   ├── index.html
 │   ├── app.js
 │   ├── style.css
-│   └── data.js
+│   ├── data.js
+│   └── skill_diff.js
 ├── site/
 │   ├── index.html
 │   ├── app.js
@@ -264,9 +280,9 @@ skill-engineering-lab/
 ## 工程亮点
 
 - 把 Skill 从“提示词文件”升级为带版本、评测、回归和治理的工程资产。
-- 用确定性评测保障分享演示稳定，不依赖网络、模型波动或 API 费用。
+- 用 Provider Adapter 同时支持确定性 mock 和真实模型扩展，默认路径稳定可复现。
 - 用对照实验量化 Skill 的净增益，而不是只展示单次成功输出。
-- 用静态 Dashboard 将触发质量、失败模式和治理资产可视化，便于作品集展示和现场讲解。
+- 用三栏 Dashboard 将触发质量、失败模式、样例矩阵、版本 Diff 和治理资产可视化，便于作品集展示和现场讲解。
 - 用研究型项目站和 paper-style 方法论文章增强公开展示质感，适合简历、作品集和面试讲解。
 - 将失败样例沉淀为可行动的根因归档，直接驱动下一轮 `description`、`SKILL.md` 和脚本迭代。
 - 将可脚本化的结构检查下沉到 Python 校验器，降低自然语言评测的不确定性。
@@ -279,7 +295,7 @@ skill-engineering-lab/
 
 带 Dashboard 版本：
 
-> 我做了一个 Agent Skill 工程化评测实验室和可视化 Dashboard，用同一批样例对比无 Skill、Skill v1、Skill v2，展示触发召回、过度触发、质量提升、Token 成本和失败归因，形成从 Skill 编写、评测到治理的完整闭环。
+> 我做了一个 Agent Skill 工程化评测实验室和可视化 Dashboard，用同一批样例对比无 Skill、Skill v1、Skill v2，展示触发召回、过度触发、质量提升、Token 成本、版本 Diff 和失败归因，形成从 Skill 编写、评测到治理的完整闭环。
 
 项目讲解材料：
 
@@ -292,8 +308,7 @@ skill-engineering-lab/
 
 ## 后续路线
 
-- 接入真实大模型调用，保留当前评分与治理接口。
 - 增加真实历史产品 brief 作为回归样例。
-- 将当前研究站点发布到 Vercel 或 GitHub Pages。
+- 将 OpenAI / Anthropic provider 从结构适配升级为长期回归环境。
 - 引入 LLM Judge 作为风格评价补充，但保留确定性检查作为主验收。
 - 支持多 Skill 横向对比，识别职责重叠、触发冲突和可退休 Skill。
