@@ -20,30 +20,92 @@
         --warn-soft: #f5ecdc;
         --session: #6b7560;
         --session-bg: #ecede5;
+        --danger: #a05050;
+        --danger-soft: #f4e7e7;
         --code-bg: #ececea;
       }
+
       * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
       body {
-        font-family: ui-serif, Georgia, "Songti SC", "Source Han Serif SC", serif;
+        font-family:
+          ui-serif, "Charter", "Iowan Old Style", Georgia,
+          "Songti SC", "Source Han Serif SC", "Noto Serif CJK SC", serif;
         background: var(--paper);
         color: var(--ink);
         line-height: 1.72;
         padding: 64px 24px 96px;
+        -webkit-font-smoothing: antialiased;
       }
-      .doc { max-width: 880px; margin: 0 auto; }
+
+      .progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 20;
+        width: 100%;
+        height: 3px;
+        background: transparent;
+      }
+      .progress span {
+        display: block;
+        width: 0;
+        height: 100%;
+        background: var(--accent);
+      }
+
+      .toc {
+        position: fixed;
+        top: 72px;
+        left: 24px;
+        width: 210px;
+        font-family: ui-monospace, "SF Mono", Menlo, "PingFang SC", monospace;
+        font-size: 11px;
+        line-height: 1.8;
+      }
+      .toc-title {
+        margin-bottom: 10px;
+        color: var(--ink-faint);
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .toc a {
+        display: block;
+        border: none;
+        color: var(--ink-faint);
+      }
+      .toc a.active {
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      .doc { max-width: 920px; margin: 0 auto; }
       .doc-header {
         border-bottom: 1px solid var(--rule);
-        padding-bottom: 28px;
-        margin-bottom: 48px;
+        padding-bottom: 30px;
+        margin-bottom: 44px;
       }
-      .doc-eyebrow, .doc-meta, .tldr-label, h2 .num, th, code, pre, figcaption, .card-icon, footer h4 {
-        font-family: ui-monospace, Menlo, "PingFang SC", "Hiragino Sans GB", monospace;
+      .doc-eyebrow,
+      .doc-meta,
+      .tldr-label,
+      h2 .num,
+      th,
+      code,
+      pre,
+      figcaption,
+      .card-icon,
+      .stat-label,
+      .pill,
+      .copy-btn,
+      footer h4 {
+        font-family: ui-monospace, "SF Mono", Menlo, "PingFang SC", "Hiragino Sans GB", monospace;
       }
       .doc-eyebrow {
+        color: var(--ink-faint);
         font-size: 11px;
         letter-spacing: 0.12em;
         text-transform: uppercase;
-        color: var(--ink-faint);
         margin-bottom: 14px;
       }
       .mascot {
@@ -54,29 +116,63 @@
         margin-right: 8px;
       }
       .doc-title {
-        font-size: 36px;
+        max-width: 860px;
+        font-size: 40px;
         font-weight: 600;
-        line-height: 1.2;
+        line-height: 1.16;
+        letter-spacing: 0;
       }
       .doc-subtitle {
-        margin-top: 10px;
+        margin-top: 12px;
         color: var(--ink-soft);
+        font-size: 17px;
         font-style: italic;
       }
       .doc-meta {
         display: flex;
         flex-wrap: wrap;
         gap: 18px;
-        margin-top: 18px;
+        margin-top: 20px;
         color: var(--ink-faint);
         font-size: 11px;
       }
+      .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        margin-top: 26px;
+        border: 1px solid var(--rule);
+        background: var(--rule);
+      }
+      .hero-stat {
+        min-height: 116px;
+        padding: 16px;
+        background: #fff;
+      }
+      .stat-label {
+        color: var(--ink-faint);
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .hero-stat strong {
+        display: block;
+        margin: 10px 0 6px;
+        font-size: 26px;
+        line-height: 1;
+      }
+      .hero-stat span:last-child {
+        color: var(--ink-soft);
+        font-size: 13px;
+      }
+
       .tldr {
         background: var(--accent-faint);
         border-left: 2px solid var(--accent);
-        padding: 20px 24px;
+        padding: 22px 26px;
         margin-bottom: 56px;
-        font-size: 15px;
+        font-size: 15.5px;
       }
       .tldr-label {
         margin-bottom: 8px;
@@ -84,14 +180,17 @@
         font-size: 11px;
         font-weight: 600;
         letter-spacing: 0.12em;
+        text-transform: uppercase;
       }
-      section { margin-bottom: 56px; }
+
+      section { margin-bottom: 58px; }
       h2 {
-        font-size: 22px;
+        font-size: 23px;
         font-weight: 600;
         margin-bottom: 18px;
         padding-bottom: 10px;
         border-bottom: 1px solid var(--rule);
+        letter-spacing: 0;
       }
       h2 .num {
         margin-right: 14px;
@@ -99,9 +198,18 @@
         font-size: 12px;
         font-weight: 500;
       }
-      h3 { font-size: 16px; margin: 28px 0 10px; }
+      h3 {
+        font-size: 17px;
+        margin: 28px 0 10px;
+      }
       p { margin-bottom: 14px; }
-      a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-soft); }
+      a {
+        color: var(--accent);
+        text-decoration: none;
+        border-bottom: 1px solid var(--accent-soft);
+      }
+      a:hover { border-bottom-color: var(--accent); }
+      strong { font-weight: 600; }
       code {
         background: var(--code-bg);
         border-radius: 2px;
@@ -109,22 +217,41 @@
         font-size: 13px;
       }
       pre {
+        position: relative;
         background: var(--code-bg);
         border-left: 2px solid var(--rule);
         margin: 14px 0 18px;
-        padding: 14px 18px;
+        padding: 16px 18px;
         overflow-x: auto;
         font-size: 12.5px;
       }
-      ul, ol { margin: 8px 0 16px 22px; }
+      pre code { background: transparent; padding: 0; }
+      .copy-btn {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        border: 1px solid var(--rule);
+        background: #fff;
+        color: var(--ink-faint);
+        padding: 4px 8px;
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+      .copy-btn:hover { color: var(--ink); }
+      ul,
+      ol { margin: 8px 0 16px 22px; }
       li { margin-bottom: 6px; }
+
       table {
         width: 100%;
         border-collapse: collapse;
         margin: 14px 0 18px;
         font-size: 14px;
       }
-      th, td {
+      th,
+      td {
         padding: 10px 12px;
         border-bottom: 1px solid var(--rule-soft);
         text-align: left;
@@ -134,48 +261,46 @@
         color: var(--ink-faint);
         border-bottom: 1px solid var(--rule);
         font-size: 12px;
+        font-weight: 600;
         letter-spacing: 0.06em;
+        text-transform: uppercase;
       }
+      tbody tr:hover { background: rgba(0, 0, 0, 0.015); }
+      td.num { font-family: ui-monospace, Menlo, monospace; }
+      td.accent { color: var(--accent); font-weight: 600; }
+
       .callout {
         border: 1px solid var(--rule);
         background: #fff;
-        padding: 16px 18px;
+        padding: 17px 19px;
         margin: 16px 0 20px;
       }
       .callout.warn {
         border-color: #e6d4a8;
         background: var(--warn-soft);
       }
+      .callout.danger {
+        border-color: #d8b8b8;
+        background: var(--danger-soft);
+      }
       .callout-label {
         color: var(--ink-faint);
-        font-family: ui-monospace, Menlo, "PingFang SC", "Hiragino Sans GB", monospace;
+        font-family: ui-monospace, Menlo, "PingFang SC", monospace;
         font-size: 10.5px;
         font-weight: 600;
         letter-spacing: 0.12em;
         margin-bottom: 8px;
-      }
-      figure {
-        margin: 28px 0 32px;
-        border: 1px solid var(--rule);
-        background: #fff;
-      }
-      figure svg { display: block; width: 100%; height: auto; }
-      figcaption {
-        padding: 10px 16px;
-        border-top: 1px solid var(--rule-soft);
-        background: var(--paper-edge);
-        color: var(--ink-faint);
-        font-size: 11px;
-        letter-spacing: 0.08em;
         text-transform: uppercase;
       }
-      .fig-num { color: var(--accent); margin-right: 10px; font-weight: 600; }
+
       .cards {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 14px;
         margin: 20px 0 18px;
       }
+      .cards.cols-2 { grid-template-columns: repeat(2, 1fr); }
+      .cards.cols-4 { grid-template-columns: repeat(4, 1fr); }
       .card {
         border: 1px solid var(--rule);
         background: #fff;
@@ -187,62 +312,190 @@
         font-size: 11px;
         font-weight: 600;
         letter-spacing: 0.1em;
+        text-transform: uppercase;
       }
-      .card-name { margin-bottom: 6px; font-size: 17px; font-weight: 600; }
-      .card-desc { color: var(--ink-soft); font-size: 13px; line-height: 1.5; }
+      .card.tone-b .card-icon { color: var(--warn); }
+      .card.tone-c .card-icon { color: var(--session); }
+      .card-name {
+        margin-bottom: 6px;
+        font-size: 17px;
+        font-weight: 600;
+      }
+      .card-desc {
+        color: var(--ink-soft);
+        font-size: 13px;
+        line-height: 1.55;
+      }
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 12px 0 16px;
+      }
+      .pill {
+        border: 1px solid var(--rule);
+        background: #fff;
+        color: var(--ink-soft);
+        padding: 4px 8px;
+        font-size: 11px;
+      }
+
+      figure {
+        margin: 28px 0 32px;
+        border: 1px solid var(--rule);
+        background: #fff;
+      }
+      figure svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      figcaption {
+        padding: 10px 16px;
+        border-top: 1px solid var(--rule-soft);
+        background: var(--paper-edge);
+        color: var(--ink-faint);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .fig-num {
+        color: var(--accent);
+        margin-right: 10px;
+        font-weight: 600;
+      }
+
+      .decision-list {
+        counter-reset: decision;
+        list-style: none;
+        margin-left: 0;
+      }
+      .decision-list li {
+        counter-increment: decision;
+        position: relative;
+        border-left: 2px solid var(--rule);
+        padding-left: 18px;
+        margin-bottom: 14px;
+      }
+      .decision-list li::before {
+        content: counter(decision, decimal-leading-zero);
+        position: absolute;
+        left: -34px;
+        top: 0;
+        color: var(--ink-faint);
+        font-family: ui-monospace, Menlo, monospace;
+        font-size: 11px;
+      }
+
       footer {
-        margin-top: 80px;
+        margin-top: 82px;
         padding-top: 24px;
         border-top: 1px solid var(--rule);
         color: var(--ink-faint);
         font-size: 12px;
       }
       footer h4 {
-        margin-bottom: 10px;
+        margin: 18px 0 10px;
         color: var(--ink-soft);
         font-size: 11px;
         letter-spacing: 0.12em;
         text-transform: uppercase;
       }
-      footer ul { list-style: none; margin-left: 0; }
-      @media (max-width: 720px) {
-        body { padding: 32px 16px 64px; }
-        .doc-title { font-size: 28px; }
-        .cards { grid-template-columns: 1fr; }
+      footer h4:first-child { margin-top: 0; }
+      footer ul {
+        list-style: none;
+        margin-left: 0;
+      }
+
+      @media (max-width: 1180px) {
+        .toc { display: none; }
+      }
+      @media (max-width: 780px) {
+        body { padding: 34px 16px 64px; }
+        .doc-title { font-size: 30px; }
+        .hero-stats,
+        .cards,
+        .cards.cols-2,
+        .cards.cols-4 { grid-template-columns: 1fr; }
+        table { font-size: 13px; }
       }
     </style>
   </head>
   <body>
+    <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+    <nav class="toc" id="toc" aria-label="文章目录">
+      <div class="toc-title">Contents</div>
+    </nav>
+
     <article class="doc">
       <header class="doc-header">
         <div class="doc-eyebrow"><span class="mascot"></span>Skill Engineering Lab · Methodology Paper</div>
-        <h1 class="doc-title">AI Agent Skill 工程化实践</h1>
-        <p class="doc-subtitle">编写、评测、治理与持续迭代的一体化方法论</p>
+        <h1 class="doc-title">AI Agent Skill 工程化实践：编写、评测与治理</h1>
+        <p class="doc-subtitle">一套把 Skill 从个人技巧升级为团队能力系统的方法论</p>
         <div class="doc-meta">
           <span>STATUS · PORTFOLIO EDITION</span>
           <span>DATE · 2026-06-09</span>
+          <span>SCOPE · WRITING / EVAL / GOVERNANCE / HARNESS</span>
           <span>PROJECT · Skill Engineering Lab</span>
+        </div>
+        <div class="hero-stats" aria-label="方法论核心指标">
+          <div class="hero-stat">
+            <span class="stat-label">Operating Model</span>
+            <strong>6 Assets</strong>
+            <span>路由、契约、参考、脚本、评测、治理</span>
+          </div>
+          <div class="hero-stat">
+            <span class="stat-label">Eval Stack</span>
+            <strong>6 Layers</strong>
+            <span>触发、结果、执行、效率、泛化、治理</span>
+          </div>
+          <div class="hero-stat">
+            <span class="stat-label">Minimum Cases</span>
+            <strong>12+</strong>
+            <span>核心、边界、扩展、负向与回归样例</span>
+          </div>
+          <div class="hero-stat">
+            <span class="stat-label">Decision</span>
+            <strong>Ship / Split / Retire</strong>
+            <span>用证据决定 Skill 生命周期</span>
+          </div>
         </div>
       </header>
 
       <div class="tldr">
         <div class="tldr-label">TL;DR</div>
-        Skill 不是长 Prompt，而是一个由路由入口、任务契约、参考资料、确定性脚本、评测资产和治理资产组成的能力包。成熟的 Skill 不应只证明“能跑”，而应证明它在正确场景稳定触发、相对无 Skill 基线带来可验证净增益，并能通过失败样例、回归集和版本记录持续治理。
+        Skill 不是长 Prompt，而是由路由入口、任务契约、按需加载的知识、确定性脚本、评测资产和治理资产组成的能力包。成熟 Skill 的判断标准不是“某一次能跑”，而是它能否在正确场景稳定触发，相对无 Skill 基线带来可验证净增益，并通过 badcase、回归集、版本记录和外层 Harness 长期治理。
       </div>
 
       <section>
         <h2><span class="num">01</span>三个核心判断</h2>
-        <p>第一，Skill 不是把 Prompt 写长。它的价值在于让 Agent 在正确场景加载正确知识，沿着稳定执行路径完成任务，并避免把所有上下文一次性塞进主提示。</p>
-        <p>第二，评测不是证明它能跑。真正要测的是该触发时会不会触发、不该触发时会不会克制、触发后是否带来净增益，以及这种增益是否值得额外成本。</p>
-        <p>第三，治理不是可选项。没有治理，Skill 会逐渐变成上下文税、规则堆和无法退休的历史包袱。</p>
+        <p>这不是一份“怎么把 Prompt 写长一点”的文档，而是一份把 Skill 当成工程资产来建设的方法论。它关注的是编写、评测、治理、持续迭代如何串成闭环。</p>
+        <div class="cards">
+          <div class="card">
+            <div class="card-icon">Judgment A</div>
+            <div class="card-name">Skill 不是长 Prompt</div>
+            <div class="card-desc">价值不在写得多，而在正确触发、稳定执行、控制上下文成本，并沉淀为可复用能力。</div>
+          </div>
+          <div class="card tone-b">
+            <div class="card-icon">Judgment B</div>
+            <div class="card-name">评测不是证明能跑</div>
+            <div class="card-desc">真正要测的是触发、克制、净增益、泛化稳定性，以及增益是否值得成本。</div>
+          </div>
+          <div class="card tone-c">
+            <div class="card-icon">Judgment C</div>
+            <div class="card-name">治理不是可选项</div>
+            <div class="card-desc">没有治理，Skill 会变成上下文税、抢触发规则堆，以及无法回归和退休的历史包袱。</div>
+          </div>
+        </div>
         <div class="callout">
-          <div class="callout-label">CORE CLAIM</div>
-          成熟的 Skill，不是某次任务里“刚好成功”的说明书，而是能稳定触发、持续带来可验证净增益、并能被团队长期评测和治理的能力资产。
+          <div class="callout-label">Core Claim</div>
+          成熟的 Skill，不是某次任务里“刚好成功”的说明书，而是能稳定触发、持续带来可验证净增益，并能被团队长期评测和治理的能力资产。
         </div>
       </section>
 
       <section>
-        <h2><span class="num">02</span>重新定义 Skill</h2>
+        <h2><span class="num">02</span>重新定义 Skill：从 Prompt 到能力包</h2>
+        <p>很多团队默认把 Skill 当成“保存起来的 Prompt”。这个理解太浅，也会直接误导设计方式。更准确的定义是一个可路由、可执行、可验证、可维护的能力包。</p>
         <pre><code>Skill = 路由入口
       + 任务契约
       + 按需加载的知识与模板
@@ -254,104 +507,201 @@
             <tr><th>组成部分</th><th>主要职责</th><th>工程含义</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>name / description</code></td><td>让主 Agent 发现并决定是否使用</td><td>它是路由入口，不是装饰摘要。</td></tr>
-            <tr><td><code>SKILL.md</code></td><td>定义任务契约、主流程、边界与关键规则</td><td>首要读者是 Agent，而不是人类。</td></tr>
-            <tr><td><code>references / templates</code></td><td>承载长知识、模板、示例和分支说明</td><td>用于渐进披露，避免主文档膨胀。</td></tr>
-            <tr><td><code>scripts</code></td><td>承载校验、解析、格式转换等确定性动作</td><td>能脚本化的事情，不要靠自然语言反复提醒。</td></tr>
-            <tr><td><code>evals / governance</code></td><td>验证净增益，沉淀回归和版本决策</td><td>决定 Skill 是一次性技巧还是团队资产。</td></tr>
+            <tr><td><code>name / description</code></td><td>让主 Agent 发现并决定是否使用</td><td>这是路由入口，不是装饰信息。入口写不好，正文再好也没有意义。</td></tr>
+            <tr><td><code>SKILL.md</code></td><td>定义任务契约、主流程、边界与关键规则</td><td>它更像执行说明书，首要读者是 Agent，而不是人类。</td></tr>
+            <tr><td><code>references / templates / examples</code></td><td>承载长知识、模板、示例和分支说明</td><td>用于渐进披露，避免主文档膨胀成上下文税。</td></tr>
+            <tr><td><code>scripts</code></td><td>承载校验、解析、格式转换和生成等确定性动作</td><td>凡是能脚本化的事情，尽量不要交给自然语言反复提醒。</td></tr>
+            <tr><td><code>evals</code></td><td>验证 Skill 是否带来真实增益</td><td>目标不是看起来不错，而是验证 with_skill 相比 without_skill 是否更好。</td></tr>
+            <tr><td><code>governance assets</code></td><td>支持回归、版本记录、错因归档与退休决策</td><td>决定 Skill 是一次性技巧，还是团队能力资产。</td></tr>
           </tbody>
         </table>
+        <div class="callout warn">
+          <div class="callout-label">Route First</div>
+          <code>description</code> 不是摘要，而是给主 Agent 看的 API docstring。一个好的 description 至少要回答：什么时候应该用、用来解决什么问题、什么时候不该用。
+        </div>
       </section>
 
       <section>
-        <h2><span class="num">03</span>生命周期视角</h2>
+        <h2><span class="num">03</span>生命周期视角：写完只是开始</h2>
+        <p>与其把 Skill 看成“写完一个文件”，不如把它看成一条完整生命周期。真正的成熟发生在评测、失败归因和治理闭环里。</p>
         <figure>
-          <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" font-family="ui-monospace, Menlo, monospace" font-size="12">
-            <rect width="760" height="260" fill="#fff"/>
-            <g fill="#eef4f8" stroke="#6f9bb8" stroke-width="1.5">
-              <rect x="28" y="82" width="94" height="72"/>
-              <rect x="142" y="82" width="94" height="72"/>
-              <rect x="256" y="82" width="94" height="72"/>
-              <rect x="370" y="82" width="94" height="72"/>
-              <rect x="484" y="82" width="94" height="72"/>
-              <rect x="598" y="82" width="132" height="72"/>
+          <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" font-family="ui-monospace, Menlo, monospace" font-size="12">
+            <rect width="760" height="300" fill="#fff"/>
+            <text x="380" y="34" fill="#4a4a4a" text-anchor="middle">Skill Lifecycle · from design hypothesis to governed asset</text>
+            <g fill="#eef4f8" stroke="#6f9bb8" stroke-width="1.4">
+              <rect x="24" y="82" width="94" height="76"/>
+              <rect x="132" y="82" width="94" height="76"/>
+              <rect x="240" y="82" width="94" height="76"/>
+              <rect x="348" y="82" width="94" height="76"/>
+              <rect x="456" y="82" width="94" height="76"/>
+              <rect x="564" y="82" width="172" height="76"/>
             </g>
-            <g fill="#1a1a1a" text-anchor="middle">
-              <text x="75" y="113">场景选择</text>
-              <text x="189" y="113">能力抽象</text>
-              <text x="303" y="113">编写实现</text>
-              <text x="417" y="113">评测验证</text>
-              <text x="531" y="113">迭代优化</text>
-              <text x="664" y="113">发布治理</text>
+            <g fill="#1a1a1a" text-anchor="middle" font-weight="600">
+              <text x="71" y="113">场景选择</text>
+              <text x="179" y="113">能力抽象</text>
+              <text x="287" y="113">编写实现</text>
+              <text x="395" y="113">评测验证</text>
+              <text x="503" y="113">迭代优化</text>
+              <text x="650" y="113">发布治理</text>
             </g>
-            <g stroke="#b88a4a" stroke-width="2" marker-end="url(#arrow)">
-              <line x1="122" y1="118" x2="142" y2="118"/>
-              <line x1="236" y1="118" x2="256" y2="118"/>
-              <line x1="350" y1="118" x2="370" y2="118"/>
-              <line x1="464" y1="118" x2="484" y2="118"/>
-              <line x1="578" y1="118" x2="598" y2="118"/>
-              <path d="M664 154 C664 206 310 216 310 154" fill="none"/>
+            <g fill="#7a7a7a" text-anchor="middle" font-size="10.5">
+              <text x="71" y="136">success criteria</text>
+              <text x="179" y="136">common flow</text>
+              <text x="287" y="136">skill package</text>
+              <text x="395" y="136">benchmark</text>
+              <text x="503" y="136">badcase loop</text>
+              <text x="650" y="136">ship / split / retire</text>
             </g>
             <defs>
-              <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+              <marker id="arrowLifecycle" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
                 <path d="M0,0 L10,3 L0,6 Z" fill="#b88a4a"/>
               </marker>
             </defs>
-            <text x="380" y="34" fill="#4a4a4a" text-anchor="middle">Skill 不是写完即交付，而是在评测与治理闭环中变成熟</text>
-            <text x="380" y="224" fill="#7a7a7a" text-anchor="middle">badcase → root cause → targeted change → regression</text>
+            <g stroke="#b88a4a" stroke-width="2" marker-end="url(#arrowLifecycle)">
+              <line x1="118" y1="120" x2="132" y2="120"/>
+              <line x1="226" y1="120" x2="240" y2="120"/>
+              <line x1="334" y1="120" x2="348" y2="120"/>
+              <line x1="442" y1="120" x2="456" y2="120"/>
+              <line x1="550" y1="120" x2="564" y2="120"/>
+              <path d="M650 158 C650 238 290 246 286 160" fill="none"/>
+            </g>
+            <text x="380" y="252" fill="#7a7a7a" text-anchor="middle">badcase → root cause → targeted change → regression set → benchmark history</text>
           </svg>
-          <figcaption><span class="fig-num">FIG 1</span>Skill 生命周期 · 从设计到治理的闭环</figcaption>
+          <figcaption><span class="fig-num">FIG 1</span>Skill 生命周期 · 设计、评测、治理形成闭环</figcaption>
         </figure>
       </section>
 
       <section>
-        <h2><span class="num">04</span>高质量 Skill 的编写原则</h2>
-        <div class="cards">
-          <div class="card">
-            <div class="card-icon">ROUTE</div>
-            <div class="card-name">先定义边界</div>
-            <div class="card-desc">明确解决什么任务、典型输入、成功标准、不负责什么，以及最容易和哪些 Skill 冲突。</div>
-          </div>
-          <div class="card">
-            <div class="card-icon">CONTRACT</div>
-            <div class="card-name">主文档短硬</div>
-            <div class="card-desc"><code>SKILL.md</code> 只放任务契约、主流程、关键边界、必检项和何时读取哪个 reference。</div>
-          </div>
-          <div class="card">
-            <div class="card-icon">SCRIPT</div>
-            <div class="card-name">确定性逻辑脚本化</div>
-            <div class="card-desc">JSON 解析、schema 校验、文件结构检查、格式转换、固定规则判定都应优先交给脚本。</div>
-          </div>
-        </div>
-        <div class="callout warn">
-          <div class="callout-label">COMMON FAILURE</div>
-          很多 Skill 失败不在正文，而在 <code>description</code>。写得太泛会过度触发，写得太窄会漏掉真实表达；只写能力、不写场景，会让主 Agent 无法判断何时使用。
+        <h2><span class="num">04</span>编写原则：从 Prompt 思维切到能力包思维</h2>
+        <p>最稳的路径不是先想一个“通用 Skill”，而是先手动完成 1 到 2 次真实任务，记录关键步骤、判断点与失败点，再抽象成 Skill。</p>
+        <ol class="decision-list">
+          <li><strong>先做真实任务。</strong> 真实任务会暴露输入缺失、边界含混、工具选择和输出验收问题，这些摩擦比抽象设想更有价值。</li>
+          <li><strong>先定义能力边界。</strong> 在写正文前，先说清它解决什么、典型输入是什么、可接受输出是什么、明确不负责什么。</li>
+          <li><strong>让主文档短、硬、可执行。</strong> <code>SKILL.md</code> 只放任务契约、主流程、关键边界、必须遵守的规则和按需加载指令。</li>
+          <li><strong>用渐进披露管理上下文。</strong> 领域知识、长示例、反例、模板和特殊分支流程应该拆到 references，而不是堆在主文件里。</li>
+          <li><strong>能脚本化的，不要靠自然语言念咒。</strong> 结构化校验、格式转换、固定规则判定、低容错高频步骤都应优先脚本化。</li>
+        </ol>
+        <table>
+          <thead>
+            <tr><th>交给 Skill 文本</th><th>交给脚本</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>模糊判断、流程组织、分支选择、何时澄清用户、何时调用工具</td><td>机械执行、结构化校验、可重复转换、固定规则判定、文件结构检查</td></tr>
+          </tbody>
+        </table>
+        <div class="callout">
+          <div class="callout-label">Human In The Loop</div>
+          成熟 Skill 不等于完全自动。需求歧义、多方案取舍、风格偏好、高风险操作、关键输入缺失时，好的 Skill 应该知道什么时候继续，什么时候停下来问人。
         </div>
       </section>
 
       <section>
-        <h2><span class="num">05</span>评测要看 lift，不只看 pass</h2>
-        <p>每条关键样例至少跑三类配置：<code>without_skill</code>、<code>with_skill</code>、<code>old_skill</code>。真正值得看的不是绝对分，而是差值。</p>
-        <pre><code>lift = with_skill pass rate - without_skill pass rate
-net_value = quality lift - token/time/complexity cost</code></pre>
+        <h2><span class="num">05</span>常见误区：上下文税是怎样形成的</h2>
         <table>
           <thead>
-            <tr><th>层级</th><th>核心问题</th><th>如果出问题，优先改哪里</th></tr>
+            <tr><th>误区</th><th>典型表现</th><th>后果</th></tr>
           </thead>
           <tbody>
-            <tr><td>触发层</td><td>该触发时是否触发，不该触发时是否沉默</td><td><code>description</code>、负面样例、边界</td></tr>
-            <tr><td>结果层</td><td>最终产物是否可用</td><td>主流程、模板、schema、示例</td></tr>
-            <tr><td>执行层</td><td>是否遵守规则与约束</td><td><code>SKILL.md</code> 指令、checklist</td></tr>
-            <tr><td>效率层</td><td>是否更省、更稳、更少绕路</td><td>渐进披露、脚本化、流程收缩</td></tr>
-            <tr><td>泛化层</td><td>换说法、换场景、换噪声时是否仍成立</td><td>补边界、补反例、扩展样例分布</td></tr>
-            <tr><td>治理层</td><td>是否便于回归、定位、维护和退休</td><td>版本记录、失败归因、回归集</td></tr>
+            <tr><td>把 Skill 写成长 Prompt</td><td>背景很多，执行规则很少，主文件不断膨胀</td><td>触发后负担重，关键约束反而被淹没</td></tr>
+            <tr><td><code>description</code> 只写能力</td><td>“用于文档处理”“帮助完成分析”等笼统描述</td><td>不触发或乱触发</td></tr>
+            <tr><td>确定性逻辑交给模型猜</td><td>格式校验、解析、工具参数都靠自然语言要求</td><td>不稳定、难复现、难评测</td></tr>
+            <tr><td>不写负面边界</td><td>没有“何时不要使用”</td><td>相邻任务大量串扰</td></tr>
+            <tr><td>没有定义完成标准</td><td>只写“帮我更好地做某事”</td><td>后续 eval 与 badcase 都无从落地</td></tr>
           </tbody>
         </table>
       </section>
 
       <section>
-        <h2><span class="num">06</span>从失败样例到迭代</h2>
-        <p>badcase 不是问题清单，而是优化驱动器。每个失败都应该被翻译成可执行动作：改入口、改契约、补示例、拆 references，或者把确定性逻辑下沉到 scripts。</p>
+        <h2><span class="num">06</span>评测原则：看 lift，不只看 pass</h2>
+        <p>评测一个 Skill，至少要回答 6 个问题：该触发时能否触发，不该触发时能否克制，触发后是否更好，提升是否稳定，换表达或噪声后是否仍成立，提升是否值得 Token、时延和维护成本。</p>
+        <pre><code>lift = with_skill pass rate - without_skill pass rate
+net_value = quality lift - token/time/complexity cost</code></pre>
+        <figure>
+          <svg viewBox="0 0 760 360" xmlns="http://www.w3.org/2000/svg" font-family="ui-monospace, Menlo, monospace" font-size="12">
+            <rect width="760" height="360" fill="#fff"/>
+            <text x="380" y="32" fill="#4a4a4a" text-anchor="middle">Six-layer Skill Evaluation Model</text>
+            <g>
+              <rect x="92" y="58" width="576" height="42" fill="#eef4f8" stroke="#6f9bb8"/>
+              <rect x="92" y="108" width="576" height="42" fill="#fff" stroke="#d8d8d2"/>
+              <rect x="92" y="158" width="576" height="42" fill="#f5ecdc" stroke="#b88a4a"/>
+              <rect x="92" y="208" width="576" height="42" fill="#fff" stroke="#d8d8d2"/>
+              <rect x="92" y="258" width="576" height="42" fill="#ecede5" stroke="#6b7560"/>
+              <rect x="92" y="308" width="576" height="32" fill="#fff" stroke="#d8d8d2"/>
+            </g>
+            <g fill="#1a1a1a" font-weight="600">
+              <text x="112" y="84">01 Trigger</text>
+              <text x="112" y="134">02 Outcome</text>
+              <text x="112" y="184">03 Execution</text>
+              <text x="112" y="234">04 Efficiency</text>
+              <text x="112" y="284">05 Generalization</text>
+              <text x="112" y="330">06 Governance</text>
+            </g>
+            <g fill="#4a4a4a">
+              <text x="278" y="84">该触发时触发，不该触发时沉默</text>
+              <text x="278" y="134">最终产物是否可用，文件、报告、接口是否完整</text>
+              <text x="278" y="184">是否遵守 Skill 规则、工具策略和红线</text>
+              <text x="278" y="234">token、耗时、tool call、重试是否可接受</text>
+              <text x="278" y="284">换说法、换场景、换噪声时是否仍成立</text>
+              <text x="278" y="330">是否便于回归、定位、维护与退休</text>
+            </g>
+          </svg>
+          <figcaption><span class="fig-num">FIG 2</span>六层 Skill 评测模型 · 从触发到治理</figcaption>
+        </figure>
+        <table>
+          <thead>
+            <tr><th>层级</th><th>核心问题</th><th>典型证据</th><th>优先修哪里</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>触发层</td><td>该触发时是否触发，不该触发时是否沉默</td><td>trace 是否加载 Skill，negative case 是否未加载</td><td><code>description</code>、边界、负面样例</td></tr>
+            <tr><td>结果层</td><td>最终产物是否可用</td><td>文件存在、测试通过、报告完整、接口正确</td><td>主流程、模板、schema、示例</td></tr>
+            <tr><td>执行层</td><td>是否遵守 Skill 规则与约束</td><td>工具、SDK、命令、流程是否符合预期</td><td><code>SKILL.md</code> 指令、checklist、红线</td></tr>
+            <tr><td>效率层</td><td>是否更省、更稳、更少绕路</td><td>token、耗时、tool call 数、重试次数</td><td>渐进披露、脚本化、流程收缩</td></tr>
+            <tr><td>泛化层</td><td>换说法、换场景、换噪声时是否仍成立</td><td>改写 case、真实历史 case、新批次数据</td><td>补边界、补反例、扩展 case 分布</td></tr>
+            <tr><td>治理层</td><td>是否便于回归、定位、维护与退休</td><td>badcase 归档、版本记录、回归集、benchmark history</td><td>治理资产建设与平台接入</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2><span class="num">07</span>样例库与对照实验：不要只堆 prompt</h2>
+        <p>单个 Skill 起步时，建议先做一个结构完整的小样例库，而不是盲目追求数量。最小可行样例库应覆盖核心、边界、扩展、负向和回归场景。</p>
+        <div class="pill-row">
+          <span class="pill">6-8 core cases</span>
+          <span class="pill">3-4 boundary cases</span>
+          <span class="pill">2-3 extension cases</span>
+          <span class="pill">2+ negative cases</span>
+          <span class="pill">badcase reflux</span>
+        </div>
+        <pre><code>{
+  "id": "case_id",
+  "prompt": "用户输入",
+  "should_trigger": true,
+  "expected_checks": ["check_1", "check_2"],
+  "case_type": "core | boundary | negative | regression",
+  "risk_tag": ["trigger_boundary"],
+  "source": "manual_discovery | online_case | badcase"
+}</code></pre>
+        <p>每条关键 case 至少跑三类配置：<code>without_skill</code> 看基础模型本来会不会，<code>with_skill</code> 看 Skill 是否带来增益，<code>old_skill</code> 看新版本是否优于旧版本。条件允许时再加入 ablation 与 shadow eval。</p>
+      </section>
+
+      <section>
+        <h2><span class="num">08</span>评分与诊断：把 badcase 翻译成动作</h2>
+        <p>评分建议使用 0 / 1 / 2 分制，并同步记录触发召回率、误触发率、结果通过率、指令违背率、trial 波动、token / time delta、新旧版本差值。不要只盯总平均数，很多严重问题都藏在平均数里。</p>
+        <div class="callout warn">
+          <div class="callout-label">Deterministic First</div>
+          能用代码检验的，不要交给 LLM Judge。文件存在、JSON 合法、构建测试、工具参数、禁用项、trace 调用都应优先用确定性检查，LLM Judge 只补充语义质量。
+        </div>
+        <table>
+          <thead>
+            <tr><th>根因类型</th><th>典型表现</th><th>真正的问题</th><th>优先动作</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>路由问题</td><td>该触发不触发，或相邻任务误触发</td><td>入口和边界写得不对</td><td>先改 <code>description</code>、补负面 case</td></tr>
+            <tr><td>规则问题</td><td>触发后执行偏离，忘关键步骤</td><td>任务契约不清、优先级不清</td><td>改 <code>SKILL.md</code>、加 checklist、加示例</td></tr>
+            <tr><td>工程问题</td><td>机械步骤重复出错，输出结构不稳</td><td>本可脚本化的内容仍在靠模型猜</td><td>补脚本、schema、模板、校验器</td></tr>
+            <tr><td>评测问题</td><td>所有配置都失败，或 grader 明显不可信</td><td>case 设计不准，评测本身有偏差</td><td>先修 case / grader，再修 Skill</td></tr>
+          </tbody>
+        </table>
         <pre><code>{
   "case_id": "boundary-sparse-brief",
   "run_config": "with_skill_v1",
@@ -359,37 +709,283 @@ net_value = quality lift - token/time/complexity cost</code></pre>
   "observed_behavior": "v1 没有触发",
   "failure_pattern": "触发不匹配",
   "root_cause": "description 没覆盖创作者式稀疏表达",
-  "suggested_action": "扩展 description 并加入回归集"
+  "suggested_action": "扩展 description 并加入回归集",
+  "should_regress": true
 }</code></pre>
       </section>
 
       <section>
-        <h2><span class="num">07</span>Skill Engineering Lab 的落地样例</h2>
-        <p>本仓库用 <code>ai-video-creator-style</code> 作为示例 Skill，构建了 12 条样例、三态对照、规则评分器、确定性校验器、报告和治理资产。</p>
+        <h2><span class="num">09</span>人机一致率：让分歧变成可优化信号</h2>
+        <p>当 Skill 评测接入人评 / 机评体系后，很多 badcase 不应笼统归为“做错了”，而要进一步区分边界型分歧、严重度型分歧和平台运行型问题。</p>
+        <div class="cards">
+          <div class="card">
+            <div class="card-icon">Boundary</div>
+            <div class="card-name">边界型分歧</div>
+            <div class="card-desc">人认为该处理，模型认为不该处理，或反过来。重点动作是收敛入口、补白名单 / 黑名单、提升触发边界清晰度。</div>
+          </div>
+          <div class="card tone-b">
+            <div class="card-icon">Severity</div>
+            <div class="card-name">严重度型分歧</div>
+            <div class="card-desc">模型知道该处理，但判断太松，把 1 / 0 看成 2。重点动作是定义硬失败条件、补低分触发器、要求正反证据。</div>
+          </div>
+          <div class="card tone-c">
+            <div class="card-icon">Platform</div>
+            <div class="card-name">平台运行型问题</div>
+            <div class="card-desc">规则本身也许没错，但样本抽样、字段映射、调度执行出了偏差。重点动作是修输入链路、FieldMap、调度幂等与看板可观测性。</div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2><span class="num">10</span>治理：发布、拆分、退休都要有证据</h2>
+        <p>治理的目标不是多留文档，而是让 Skill 可发布、可回归、可退休。它解决的是修改有证据、回归有抓手、发布有门槛、退休有依据。</p>
         <table>
           <thead>
-            <tr><th>配置</th><th>通过率</th><th>触发召回率</th><th>过度触发率</th><th>平均 Token</th></tr>
+            <tr><th>资产</th><th>作用</th><th>没有它会怎样</th></tr>
           </thead>
           <tbody>
-            <tr><td>无 Skill</td><td>16.7%</td><td>不适用</td><td>不适用</td><td>720</td></tr>
-            <tr><td>Skill v1</td><td>75.0%</td><td>80.0%</td><td>50.0%</td><td>1142</td></tr>
-            <tr><td>Skill v2</td><td>100.0%</td><td>100.0%</td><td>0.0%</td><td>935</td></tr>
+            <tr><td><code>all_cases</code></td><td>全量样例池，承载历史积累</td><td>每轮都像从头开始</td></tr>
+            <tr><td><code>disagreement_cases</code></td><td>聚焦人机分歧与难样本</td><td>最值得修的问题会被淹没</td></tr>
+            <tr><td><code>reason_archive</code></td><td>错因 taxonomy 与行动建议</td><td>失败只会重复出现，不会沉淀规律</td></tr>
+            <tr><td><code>regression_set</code></td><td>每轮必测的黄金样例集</td><td>修一处坏一片，没人第一时间知道</td></tr>
+            <tr><td><code>rule_versions</code></td><td>记录每轮改了什么、为什么改、预期风险是什么</td><td>团队无法复盘为什么变成今天这样</td></tr>
+            <tr><td><code>benchmark_history</code></td><td>记录不同版本、不同模型、不同样本批次的结果</td><td>无法判断收益是在变好，还是只是在漂移</td></tr>
+          </tbody>
+        </table>
+        <pre><code>{
+  "skill_version": "v0.6.2",
+  "changed_parts": ["description", "examples"],
+  "main_hypothesis": "improve implicit trigger recall",
+  "expected_risk": ["slightly more over-trigger"],
+  "evaluated_on": "2026-06-08",
+  "decision": "iterate"
+}</code></pre>
+        <table>
+          <thead>
+            <tr><th>信号</th><th>说明</th><th>建议动作</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>with_skill</code> 明显优于 <code>without_skill</code></td><td>有稳定净增益</td><td class="accent">发布或继续保留</td></tr>
+            <tr><td>略有收益但成本偏高</td><td>价值存在，但实现不经济</td><td>精简、脚本化或拆分</td></tr>
+            <tr><td>两者长期持平</td><td>模型能力可能已追平</td><td>考虑退休或降级为参考资料</td></tr>
+            <tr><td><code>with_skill</code> 更差</td><td>Skill 在误导 Agent</td><td>停用并重写</td></tr>
+            <tr><td>子任务行为差异越来越大</td><td>Skill 边界过宽、正文过载</td><td>拆分成多个更清晰的 Skills</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2><span class="num">11</span>识别假优化：别被平均数骗了</h2>
+        <p>很多团队最容易掉进的陷阱，不是没优化，而是优化方向错了。pass rate 提高并不等于 Skill 更有价值。</p>
+        <div class="callout danger">
+          <div class="callout-label">False Optimization</div>
+          典型假优化包括：pass rate 提高但误触发更高，分数提高但 Token / 时延暴涨，旧 case 提升但新 case 退化，更像 grader 偏好而不是真正目标行为，或者 <code>without_skill</code> 已经能过，Skill 反而成了上下文税。
+        </div>
+      </section>
+
+      <section>
+        <h2><span class="num">12</span>Harness Engineering：稳定性来自反馈，而不是堆上下文</h2>
+        <p>写好 Skill 只能解决“给 Agent 什么能力包”。当任务变长、跨多轮甚至跨会话时，系统稳定性很快会卡在 Skill 之外，需要外层 Harness 补齐可观测性、反馈回路、记忆分层和上下文治理。</p>
+        <figure>
+          <svg viewBox="0 0 760 340" xmlns="http://www.w3.org/2000/svg" font-family="ui-monospace, Menlo, monospace" font-size="12">
+            <rect width="760" height="340" fill="#fff"/>
+            <text x="380" y="34" fill="#4a4a4a" text-anchor="middle">Harness Engineering · feedback loops around Skill execution</text>
+            <g>
+              <rect x="80" y="70" width="600" height="60" fill="#eef4f8" stroke="#6f9bb8"/>
+              <text x="98" y="94" fill="#6f9bb8" font-weight="600">秒级回路</text>
+              <text x="220" y="94" fill="#4a4a4a">build / test / lint / schema / deterministic scripts</text>
+              <rect x="80" y="150" width="600" height="60" fill="#f5ecdc" stroke="#b88a4a"/>
+              <text x="98" y="174" fill="#7a6420" font-weight="600">小时级回路</text>
+              <text x="220" y="174" fill="#4a4a4a">semantic review / design review / behavior consistency</text>
+              <rect x="80" y="230" width="600" height="60" fill="#ecede5" stroke="#6b7560"/>
+              <text x="98" y="254" fill="#5a5a3a" font-weight="600">日级/周级回路</text>
+              <text x="220" y="254" fill="#4a4a4a">trend patrol / regression rerun / drift check / retire decision</text>
+            </g>
+            <defs>
+              <marker id="arrowHarness" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <path d="M0,0 L10,3 L0,6 Z" fill="#7a7a7a"/>
+              </marker>
+            </defs>
+            <path d="M690 100 C735 100 735 260 690 260" fill="none" stroke="#7a7a7a" stroke-width="1.5" marker-end="url(#arrowHarness)"/>
+            <path d="M70 260 C25 260 25 100 70 100" fill="none" stroke="#7a7a7a" stroke-width="1.5" marker-end="url(#arrowHarness)"/>
+          </svg>
+          <figcaption><span class="fig-num">FIG 3</span>Harness Engineering · 秒级、小时级、日级反馈回路</figcaption>
+        </figure>
+        <div class="callout">
+          <div class="callout-label">System Principle</div>
+          Context Engineering 负责让 Agent 看得更对，Harness Engineering 负责让系统偏了也能回来。
+        </div>
+        <table>
+          <thead>
+            <tr><th>外层能力</th><th>解决什么问题</th><th>典型做法</th><th>与 Skill 的关系</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>可观测性</td><td>知道系统做到了哪里、错在哪里</td><td>trace、日志、工具轨迹、状态快照、质量看板</td><td>没有它，就无法准确评估 Skill 的真实作用</td></tr>
+            <tr><td>反馈回路</td><td>系统偏了以后能被拉回来</td><td>测试、Lint、Review Agent、趋势巡检、定时回归</td><td>Skill 的价值要通过反馈回路维持</td></tr>
+            <tr><td>记忆分层</td><td>避免长期规则、经验、临时状态混在一起</td><td>规则层、经验层、状态层分离治理</td><td>防止 Skill 规则与其他记忆互相污染</td></tr>
+            <tr><td>上下文治理</td><td>避免历史大块内容长期占坑</td><td>渐进披露、文件系统外存、Context Offloading、压缩分层</td><td>让 Skill 真正做到低上下文成本运行</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2><span class="num">13</span>记忆分层与 Context Offloading</h2>
+        <p>长期规则、自动沉淀经验、当前会话状态必须分层治理。否则规则互相冲突，当前任务噪声挤压长期约束，低价值历史信息不断侵占上下文。</p>
+        <div class="cards">
+          <div class="card">
+            <div class="card-icon">Rules</div>
+            <div class="card-name">规则层</div>
+            <div class="card-desc">长期稳定约束、团队规范、安全边界。它应该少变、清晰、可审计。</div>
+          </div>
+          <div class="card tone-b">
+            <div class="card-icon">Experience</div>
+            <div class="card-name">经验层</div>
+            <div class="card-desc">长期有效、可复用的偏好与隐性知识。它需要持续回流，但不能污染任务状态。</div>
+          </div>
+          <div class="card tone-c">
+            <div class="card-icon">State</div>
+            <div class="card-name">状态层</div>
+            <div class="card-desc">当前会话的临时上下文、任务过程信息。任务结束后应被归档、压缩或丢弃。</div>
+          </div>
+        </div>
+        <p>Context Offloading 给 Skill 设计的启发是：原始大块内容经常只是中间燃料，不是长期记忆本体；优化重点不是某一轮少几个 Token，而是减少大块信息在 50 轮任务里的累计占用面积。</p>
+      </section>
+
+      <section>
+        <h2><span class="num">14</span>组织协作与平台化落地</h2>
+        <table>
+          <thead>
+            <tr><th>角色</th><th>主要责任</th><th>最容易失守的点</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Skill 作者</td><td>定义能力边界，编写入口、流程、模板和脚本策略</td><td>只顾正文，不顾触发边界和评测接口</td></tr>
+            <tr><td>评测负责人</td><td>建设样例库、grader、benchmark 与回归集</td><td>只看 pass rate，不做分层诊断</td></tr>
+            <tr><td>工程支持</td><td>脚本化校验、trace 接入、自动化运行、看板与平台能力</td><td>只做基础设施，不反向参与规则设计</td></tr>
+            <tr><td>业务 / 使用方</td><td>提供真实 case，定义“有用”的标准，确认实际收益</td><td>只给抽象需求，不给可验证标准</td></tr>
+          </tbody>
+        </table>
+        <pre><code>需求提出
+  -> 场景澄清
+  -> 先跑一次真实任务
+  -> 抽象 Skill 草稿
+  -> 手动试跑
+  -> 建 MVP eval
+  -> 跑 with_skill / without_skill 对照
+  -> 修 description / body / scripts
+  -> 发布候选版本
+  -> 加入回归集
+  -> 定期重跑与退休判断</code></pre>
+      </section>
+
+      <section>
+        <h2><span class="num">15</span>从 0 到 1 的最小落地方案</h2>
+        <p>如果团队还没有完整平台，不必等万事俱备。可以先跑一个最小可行闭环，让 Skill 进入真实迭代。</p>
+        <table>
+          <thead>
+            <tr><th>发布前最低要素</th><th>说明</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>清晰的 <code>description</code></td><td>包含 When to Use / When Not to Use / 负向边界</td></tr>
+            <tr><td>轻量但可执行的 <code>SKILL.md</code></td><td>主流程、检查项、引用文件和脚本调用路径</td></tr>
+            <tr><td>真实示例与脚本化检查点</td><td>至少 1 个真实示例，至少 1 个确定性校验点</td></tr>
+            <tr><td>12 条以上 eval case</td><td>至少 2 条 negative case，并包含边界与扩展样例</td></tr>
+            <tr><td>对照结果与治理资产</td><td>with_skill / without_skill 对照、badcase 归因、版本记录与回归集</td></tr>
+          </tbody>
+        </table>
+        <ol class="decision-list">
+          <li><strong>统一 Skill 结构模板。</strong> 至少统一入口、正文结构、references、scripts、evals、governance 目录。</li>
+          <li><strong>把 description 评审纳入正式流程。</strong> 最高杠杆往往不在正文，而在路由入口。</li>
+          <li><strong>优先把确定性步骤脚本化。</strong> 从最容易出错、最常重复的环节开始。</li>
+          <li><strong>建立可持续增长的 regression set。</strong> 每修一个高价值 badcase，就纳入黄金样例池。</li>
+          <li><strong>记录 benchmark history。</strong> 没有时间序列，就无法识别假优化与退化。</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2><span class="num">16</span>Skill Engineering Lab 的落地样例</h2>
+        <p>本仓库用 <code>ai-video-creator-style</code> 作为示例 Skill，构建了 12 条样例、三态对照、规则评分器、确定性校验器、报告、Dashboard、研究站点和治理资产。</p>
+        <table>
+          <thead>
+            <tr><th>配置</th><th>通过率</th><th>触发召回率</th><th>过度触发率</th><th>平均 Token</th><th>结论</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>无 Skill</td><td class="num">16.7%</td><td>不适用</td><td>不适用</td><td class="num">720</td><td>泛化输出，结构缺失</td></tr>
+            <tr><td>Skill v1</td><td class="num">75.0%</td><td class="num">80.0%</td><td class="num">50.0%</td><td class="num">1142</td><td>质量提升，但触发边界过宽</td></tr>
+            <tr><td>Skill v2</td><td class="num">100.0%</td><td class="num">100.0%</td><td class="num">0.0%</td><td class="num">935</td><td class="accent">发布 MVP</td></tr>
           </tbody>
         </table>
         <p>这个结果展示的不是“视频文案生成器更会写”，而是一个 Skill 如何通过 <code>description</code>、<code>SKILL.md</code>、references、scripts、evals 和 governance assets 进入工程闭环。</p>
+        <div class="callout">
+          <div class="callout-label">Final Statement</div>
+          Skill 的长期价值，不在于“我终于写出一个很强的 Prompt”，而在于它能否在真实系统里被稳定触发、带来可验证净增益，并随着评测、反馈和治理不断演进，而不是不断膨胀。
+        </div>
       </section>
 
       <footer>
+        <h4>Project Artifacts</h4>
+        <ul>
+          <li>Skill Engineering Lab · <a href="/site">Research Site</a></li>
+          <li>Skill Engineering Lab · <a href="/dashboard">Evaluation Dashboard</a></li>
+          <li>Skill Engineering Lab · <a href="/report.md">Benchmark Report</a></li>
+        </ul>
         <h4>References</h4>
         <ul>
           <li>Anthropic Claude Docs · <a href="https://docs.claude.com/en/docs/claude-code/skills">Agent Skills</a></li>
           <li>Claude Code Docs · <a href="https://code.claude.com/docs/en/skills">Extend Claude with skills</a></li>
           <li>OpenAI API Reference · <a href="https://platform.openai.com/docs/api-reference/evals">Evals</a></li>
           <li>OpenAI Cookbook · <a href="https://cookbook.openai.com/examples/evaluation/getting_started_with_openai_evals">Getting Started with OpenAI Evals</a></li>
-          <li>Project artifact · <a href="../dashboard/index.html">Skill Engineering Lab Dashboard</a></li>
-          <li>Project artifact · <a href="../site/index.html">Research Site</a></li>
         </ul>
       </footer>
     </article>
+
+    <script>
+      (function () {
+        const toc = document.getElementById("toc");
+        const sections = [...document.querySelectorAll("section > h2")];
+        sections.forEach((h, i) => {
+          const id = h.id || `sec-${i + 1}`;
+          h.id = id;
+          const a = document.createElement("a");
+          a.href = `#${id}`;
+          a.textContent = h.textContent.trim();
+          toc.appendChild(a);
+        });
+        const links = [...toc.querySelectorAll("a")];
+        const obs = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              links.forEach((a) => {
+                a.classList.toggle("active", a.getAttribute("href") === `#${entry.target.id}`);
+              });
+            });
+          },
+          { rootMargin: "-40% 0px -50% 0px" },
+        );
+        sections.forEach((h) => obs.observe(h));
+
+        const progress = document.getElementById("progressBar");
+        const updateProgress = () => {
+          const doc = document.documentElement;
+          const max = doc.scrollHeight - doc.clientHeight;
+          const ratio = max > 0 ? doc.scrollTop / max : 0;
+          progress.style.width = `${Math.max(0, Math.min(1, ratio)) * 100}%`;
+        };
+        updateProgress();
+        document.addEventListener("scroll", updateProgress, { passive: true });
+
+        document.querySelectorAll("pre").forEach((pre) => {
+          const btn = document.createElement("button");
+          btn.className = "copy-btn";
+          btn.textContent = "copy";
+          btn.addEventListener("click", async () => {
+            await navigator.clipboard.writeText(pre.innerText.replace(/copy$/, "").trim());
+            btn.textContent = "copied";
+            setTimeout(() => (btn.textContent = "copy"), 1200);
+          });
+          pre.appendChild(btn);
+        });
+      })();
+    </script>
   </body>
 </html>
