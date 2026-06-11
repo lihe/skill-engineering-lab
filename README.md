@@ -131,7 +131,7 @@ vercel --prod
 
 | 能力 | 本项目中的实现 |
 | --- | --- |
-| Skill 版本管理 | `skills/ai-video-creator-style/v1` 与 `v2` 对照 |
+| Skill 版本管理 | `skills/ai-video-creator-style/current` 是可安装生产版，`v1` 与 `v2` 用于评测对照 |
 | 样例库 | `evals/cases.json`，包含核心、边界、扩展、负向样例 |
 | 对照实验 | 同一批样例同时跑 `without_skill`、`with_skill_v1`、`with_skill_v2` |
 | 分层评分 | 触发、产出、风格、效率、泛化五类检查 |
@@ -245,6 +245,7 @@ make site-check
 skill-engineering-lab/
 ├── skills/
 │   └── ai-video-creator-style/
+│       ├── current/
 │       ├── v1/
 │       ├── v2/
 │       ├── references/
